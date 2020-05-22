@@ -1,16 +1,24 @@
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <form>
-                <h4>Title</h4>
-                <input type="text"> 
+    <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-md-12">
+            <form (ngSubmit)="onSubmit(blogForm)" #blogForm="ngForm">  
+                <div class="ui-inputgroup" style="margin-bottom: 10px;">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+                    <input type="text" pInputText placeholder="heading" name="heading" ngModel>         
+                </div> 
                 <p-editor [(ngModel)]="blogtext" [style]="{'height':'220px'}" name="blogtext"></p-editor>
                 <p>Value: {{blogtext||'empty'}}</p>
-                                <h4>Tags</h4>
-                <input type="text"> 
-                <hr/>
-                <button type="submit">Save</button>
+                
+                <div class="ui-inputgroup" style="margin-bottom: 10px;">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+                    <input type="text" pInputText placeholder="category" name="category" ngModel>         
+                </div>
+                <div class="ui-inputgroup" style="margin-bottom: 10px;">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+                    <input type="text" pInputText placeholder="tags" name="tags" ngModel>         
+                </div>
+
+                <button pButton type="submit" icon="pi pi-check" iconPos="left" label="Save"></button>
+
             </form>
         </div>
     </div>
-</div>

@@ -1,0 +1,36 @@
+<div class="">
+    <h4>{{heading}} </h4>
+    <div id="scrolling-container">
+      <div id="quill-container">
+       <p-editor  [(ngModel)]="blogtext"  name="blogtext" [readonly]="true"> 
+        <p-header> </p-header>    
+      </p-editor>  
+      </div>
+    </div>
+    <hr>
+    <div>
+        <div *ngFor="let comment of comments">
+            <h4>{{comment.value.comment_heading}} </h4>  
+            <p-editor  [(ngModel)]="comment.value.comment_text"  name="commenttext" [readonly]="false"> 
+                <p-header> </p-header>    
+              </p-editor>  
+              <button pButton type="button" icon="pi pi-check" iconPos="left" (click)="updateComment($event,comment)"label="Update"></button>
+              <button pButton type="button" icon="pi pi-check" iconPos="left" (click)="deleteComment($event,comment)"label="Delete"></button>
+
+        </div>
+    </div>
+    <hr>
+    <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-md-12">
+            <form (ngSubmit)="onSubmit(blogForm)" #blogForm="ngForm">  
+                <div class="ui-inputgroup" style="margin-bottom: 10px;">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+                    <input type="text" pInputText placeholder="commentheading" name="commentheading" ngModel>         
+                </div> 
+                <p-editor [(ngModel)]="commenttext" [style]="{'height':'220px'}" name="commenttext"></p-editor>
+                <button pButton type="submit" icon="pi pi-check" iconPos="left" label="Save Comment"></button>
+            </form>
+        </div>
+    </div>
+
+</div>

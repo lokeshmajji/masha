@@ -21,6 +21,10 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ViewBlogComponent } from './blog/view-blog/view-blog.component';
+import { QuillModule } from 'ngx-quill';
+import { EditBlogComponent } from './blog/edit-blog/edit-blog.component';
+import { ViewSingleComponent } from './blog/view-single/view-single.component';  
 
 
 @NgModule({
@@ -33,6 +37,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SpinnerComponent,
     HomeComponent,
     AddBlogComponent,
+    ViewBlogComponent,
+    EditBlogComponent,
+    ViewSingleComponent,
     
   ],
   imports: [
@@ -45,8 +52,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TableModule,
     InputTextModule,
     DialogModule,
-    ButtonModule
-    
+    ButtonModule,
+    QuillModule
   ],
   providers: [ {provide : HTTP_INTERCEPTORS , useClass: AuthInterceptorService,multi: true}],
   bootstrap: [AppComponent]

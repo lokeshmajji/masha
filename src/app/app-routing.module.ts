@@ -6,6 +6,9 @@ import { AuthComponent } from './auth/auth.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/auth-guard.component';
 import { AddBlogComponent } from './blog/add-blog/add-blog.component';
+import { ViewBlogComponent } from './blog/view-blog/view-blog.component';
+import { EditBlogComponent } from './blog/edit-blog/edit-blog.component';
+import { ViewSingleComponent } from './blog/view-single/view-single.component';
 
 
 const routes: Routes = [
@@ -13,7 +16,11 @@ const routes: Routes = [
    { path : 'home', component: HomeComponent , canActivate :[AuthGuard]},
    { path : 'blog' , component: BlogComponent , canActivate :[AuthGuard], 
      children : [
-       { path : 'add', component: AddBlogComponent }
+       { path : 'add', component: AddBlogComponent },
+       { path : 'view', component: ViewBlogComponent },
+       { path : 'edit', component: EditBlogComponent },
+       { path : 'fullview', component : ViewSingleComponent}
+
      ]},
    { path : 'auth', component: AuthComponent}
 ];

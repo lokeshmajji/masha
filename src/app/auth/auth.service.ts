@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import {  HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap  } from 'rxjs/operators'
+import { catchError, tap, take, exhaustMap  } from 'rxjs/operators'
 import { throwError, Subject, BehaviorSubject} from 'rxjs'
 import { User } from './user.model';
 import { Router } from '@angular/router';
@@ -108,6 +108,12 @@ export class AuthService implements OnInit{
         },expiration)
     }
 
+    getUserEmail(){
+       return this.user.pipe(take(1),exhaustMap( user => {
+            return user.email
+        }));
+
+    }
 
 
 

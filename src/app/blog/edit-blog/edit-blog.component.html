@@ -1,0 +1,22 @@
+<div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-12">
+        <form (ngSubmit)="onSubmit(blogForm)" #blogForm="ngForm">  
+            <div class="ui-inputgroup" style="margin-bottom: 10px;">
+                <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+                <input type="text" pInputText placeholder="heading" name="heading" [(ngModel)]="heading">         
+            </div> 
+            <p-editor [(ngModel)]="blogtext" [style]="{'height':'500px'}" name="blogtext"></p-editor>            
+            <div class="ui-inputgroup" style="margin-bottom: 10px;">
+                <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+                <input type="text" pInputText placeholder="category" name="category" [(ngModel)]="category">         
+            </div>
+            <div class="ui-inputgroup" style="margin-bottom: 10px;">
+                <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+                <input type="text" pInputText placeholder="tags" name="tags" [(ngModel)]="tags">         
+            </div>
+
+            <button pButton type="submit" icon="pi pi-check" iconPos="left" label="Update"></button>
+
+        </form>
+    </div>
+</div>

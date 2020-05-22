@@ -1,0 +1,34 @@
+    <div>
+      <h4>Search</h4>
+      <input type="text" class="" (keydown)="keypressEvent($event)" [(ngModel)]="searchInput">
+      <div> Results:{{searchInput}} </div>
+    </div>
+    <div class="" *ngFor="let blog of blogs">
+
+            <div *ngIf="searchInput !== undefined && searchInput !== ' '  && blog.value.heading.includes(searchInput)">
+                    <h4>{{blog.value.heading}}            </h4>
+                  <div>
+                    <a  class="badge badge-primary" (click)="onFullPageView($event,blog)">Full Page View</a>
+                    <a  class="badge badge-primary" (click)="onEdit($event,blog)">Edit</a>
+                    <a  class="badge badge-primary" (click)="onAddComment($event,blog)">Add Comment</a>
+                    <a  class="badge badge-primary" (click)="onDeletePost($event,blog)">Delete Post</a>
+
+                  </div>
+                  <!-- <div [innerHTML]="blog.blogtext"></div> -->
+                  
+                  
+                  <!-- <div class="ql-container ql-snow">
+                      <div class="ql-editor" [innerHTML]="blog.blogtext">
+                      </div>
+                  </div> -->
+
+                  <div id="scrolling-container">
+                    <div id="quill-container">
+                    <p-editor  [(ngModel)]="blog.value.blogtext"  name="blogtext" [readonly]="true"> 
+                      <p-header> </p-header>    
+                    </p-editor>  
+                    </div>
+                  </div>
+            </div>
+
+    </div>
