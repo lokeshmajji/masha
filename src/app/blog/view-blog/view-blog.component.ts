@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DataService } from 'src/app/dao/data.service';
 import { Router } from '@angular/router';
 import { Blog } from 'src/app/model/blog.model';
-
+import { SharedService} from '../../shared/shared.service'
 
 @Component({
   selector: 'app-view-blog',
@@ -15,7 +15,7 @@ export class ViewBlogComponent implements OnInit {
   searchInput : string = ''
   @Output('editBlogItem') editBlogEvent = new EventEmitter<{ key: string, blog: Blog}>();
   
-  constructor(private dataService : DataService,private router:  Router) { }
+  constructor(private dataService : DataService,private router:  Router, private sharedService : SharedService) { }
 
   ngOnInit() {
    this.dataService.getBlogs().subscribe( res => {
@@ -57,13 +57,14 @@ export class ViewBlogComponent implements OnInit {
     this.router.navigate(['blog','edit'])
   }
 
-  onAddComment(event : Event){
+  onAddComment(event : Event,blogkv: {key: string, value: Blog}){
       
   }
 
   onFullPageView(event : Event, blogkv: {key: string, value: Blog}){
     console.log("Sending to full page view:" + blogkv.key + " at " + new Date())
     this.dataService.blogSubject.next(blogkv);
+    this.sharedService.tabChangeIndex.next(2)
     this.router.navigate(['blog','fullview'])
   }
 
@@ -74,9 +75,11 @@ export class ViewBlogComponent implements OnInit {
 
   onDeletePost(event : Event,post){
       this.dataService.deletePost(post.key).subscribe( msg => {
-        console.log(msg)
+        //console.log(msg)
+        this.sharedService.openSnackBar('Post Deleted Successfully','Tadaaa')
       }, err => {
         console.log(err)
+        this.sharedService.openSnackBar('Post Delete failed','Dingg')
       })
   }
 

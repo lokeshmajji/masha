@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, ResponseData } from './auth.service';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 import { error } from 'protractor';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit{
         this.switchMode = !this.switchMode
     }
 
-    onSubmit(authForm: FormGroup){
+    onSubmit(authForm: NgForm){
         this.loading = true;
 
         let authObservable : Observable<ResponseData>;

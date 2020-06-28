@@ -1,13 +1,26 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12">
         <a class="btn btn-primary" routerLink="/blog/add">Add Post</a>
         <a class="btn btn-primary" routerLink="/blog/view">View Posts</a>
 
     </div>
-</div>
-<div class="container" >
-    <router-outlet></router-outlet>
+</div> -->
 
+
+<div class="container" >
+    <mat-tab-group [selectedIndex]="selectedIndex"   (selectedIndexChange)="selectedIndexChange($event)">
+        <router-outlet></router-outlet>
+    <mat-tab label="Add Post"> 
+            <app-add-blog></app-add-blog>
+    </mat-tab>
+    <mat-tab label="View Posts">
+        <app-view-blog></app-view-blog>
+    </mat-tab>
+    <mat-tab label="Full Page View">
+        <app-view-single></app-view-single>
+    </mat-tab>
+  </mat-tab-group>
+   
 </div>
 
 

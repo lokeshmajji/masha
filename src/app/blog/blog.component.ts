@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../shared/shared.service';
 
 @Component({
   selector: 'app-blog',
@@ -6,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent implements OnInit {
+  selectedIndex : number = 1;
+
+  selectedIndexChange(val :number ){
+    this.selectedIndex=val;
+  }
 
   blogs = [{
     id : 1,
@@ -17,9 +23,12 @@ export class BlogComponent implements OnInit {
     heading: 'Second',
     blogtext : 'Something goes here'
   }]
-  constructor() { }
+  constructor(public sharedService : SharedService) { }
 
   ngOnInit() {
+      this.sharedService.tabChangeIndex.subscribe( index => {
+        this.selectedIndex = index;
+      })
   }
 
 }

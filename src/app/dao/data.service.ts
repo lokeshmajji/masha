@@ -12,7 +12,7 @@ import { BlogComment } from '../model/comment.model';
 })
 export class DataService implements OnInit{
 
-    blogSubject  = new BehaviorSubject<{key: string, value: Blog}>({key : "TEST ", value : new Blog("","",new Date(),new Date(),[""],"",[]) });
+    blogSubject  = new BehaviorSubject<{key: string, value: Blog}>({key : "gsdgf", value : new Blog("","",new Date(),new Date(),[""],"",[]) });
     //blogSubject  = new Subject<{key: string, value: Blog}>();
 
 

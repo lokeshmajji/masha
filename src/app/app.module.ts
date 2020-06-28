@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 
+import { MaterialModule} from './material.module'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,7 +54,8 @@ import { ViewSingleComponent } from './blog/view-single/view-single.component';
     InputTextModule,
     DialogModule,
     ButtonModule,
-    QuillModule
+    QuillModule,
+    MaterialModule
   ],
   providers: [ {provide : HTTP_INTERCEPTORS , useClass: AuthInterceptorService,multi: true}],
   bootstrap: [AppComponent]

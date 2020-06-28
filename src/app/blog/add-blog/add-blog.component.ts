@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/dao/data.service';
 import { NgForm } from '@angular/forms';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'app-add-blog',
@@ -10,7 +11,9 @@ import { NgForm } from '@angular/forms';
 export class AddBlogComponent implements OnInit {
 
   blogtext;
-  constructor(private dataservice : DataService) { }
+  @ViewChild('blogForm') blogForm;
+
+  constructor(private dataservice : DataService, private sharedService: SharedService) { }
 
   ngOnInit() {
   }
@@ -29,9 +32,16 @@ export class AddBlogComponent implements OnInit {
       }
     ).subscribe( res => {
       console.log(res)
+      this.sharedService.openSnackBar("Blog Saved successfully","Yay")
+      form.reset()
     }, err => {
       console.log(err)
+      this.sharedService.openSnackBar("Blog Saved failed","Naa")
     });
 
+  }
+
+  clearForm(){
+      this.blogForm.clear();
   }
 }
