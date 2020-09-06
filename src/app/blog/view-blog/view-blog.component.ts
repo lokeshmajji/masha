@@ -13,6 +13,8 @@ export class ViewBlogComponent implements OnInit {
 
   blogs  = []
   searchInput : string = ''
+  searchInputFilter : string = ''
+
   @Output('editBlogItem') editBlogEvent = new EventEmitter<{ key: string, blog: Blog}>();
   
   constructor(private dataService : DataService,private router:  Router, private sharedService : SharedService) { }
@@ -54,6 +56,7 @@ export class ViewBlogComponent implements OnInit {
   onEdit(event : Event, blogkv: {key: string, value: Blog}){
     console.log("Sending:" + blogkv.key + " at " + new Date())
     this.dataService.blogSubject.next(blogkv);
+    this.sharedService.tabChangeIndex.next(2)
     this.router.navigate(['blog','edit'])
   }
 
@@ -64,13 +67,19 @@ export class ViewBlogComponent implements OnInit {
   onFullPageView(event : Event, blogkv: {key: string, value: Blog}){
     console.log("Sending to full page view:" + blogkv.key + " at " + new Date())
     this.dataService.blogSubject.next(blogkv);
-    this.sharedService.tabChangeIndex.next(2)
+    this.sharedService.tabChangeIndex.next(3)
     this.router.navigate(['blog','fullview'])
   }
 
   keypressEvent(event){
       //console.log(event);
       //console.log(this.searchInput)
+  }
+  handleSearch(event){
+    this.searchInputFilter = this.searchInput;
+  }
+  handleClear(event){
+    this.searchInputFilter = ''
   }
 
   onDeletePost(event : Event,post){

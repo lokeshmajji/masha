@@ -16,6 +16,9 @@ import { HomeComponent } from './home/home.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AddBlogComponent } from './blog/add-blog/add-blog.component';
 
+import { QuillModule } from 'ngx-quill'
+
+
 import { EditorModule} from 'primeng/editor';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -23,7 +26,6 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewBlogComponent } from './blog/view-blog/view-blog.component';
-import { QuillModule } from 'ngx-quill';
 import { EditBlogComponent } from './blog/edit-blog/edit-blog.component';
 import { ViewSingleComponent } from './blog/view-single/view-single.component';  
 
@@ -54,7 +56,7 @@ import { ViewSingleComponent } from './blog/view-single/view-single.component';
     InputTextModule,
     DialogModule,
     ButtonModule,
-    QuillModule,
+    QuillModule.forRoot(),
     MaterialModule
   ],
   providers: [ {provide : HTTP_INTERCEPTORS , useClass: AuthInterceptorService,multi: true}],
