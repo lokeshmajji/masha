@@ -79,7 +79,7 @@ export class ViewBlogComponent implements OnInit {
         this.sharedService.openSnackBar('Post Deleted Successfully','Tadaaa')
       }, err => {
         console.log(err)
-        this.sharedService.openSnackBar('Post Delete failed','Dingg')
+        this.sharedService.openSnackBar('Post Delete failed','Ding...')
       })
   }
 
