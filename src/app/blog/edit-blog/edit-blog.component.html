@@ -5,7 +5,20 @@
                 <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
                 <input type="text" pInputText placeholder="heading" name="heading" [(ngModel)]="heading">         
             </div> 
-            <p-editor [(ngModel)]="blogtext" [style]="{'height':'500px'}" name="blogtext"></p-editor>            
+    
+            <button type="button" (click)="handleRefresh($event)">Format Editor Text</button>
+            <p-editor [ngModel]="blogtext"  [style]="{'height':'300px'}" name="blogtext" #peditor>
+                  
+            </p-editor>  
+            <!-- <quill-editor [style]="{'height':'200px'}" name="blogtext" [sanitize]="true" #peditor></quill-editor> -->
+
+            <!-- <quill-view [content]="blogtext" format="html" theme="snow"></quill-view> -->
+
+            <!-- <div class="ql-container ql-snow" style="border-width: 0; height: 500px;">
+                <div class="ql-editor" [innerHTML]="blogtext">
+                </div>
+              </div> -->
+
             <div class="ui-inputgroup" style="margin-bottom: 10px;">
                 <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
                 <input type="text" pInputText placeholder="category" name="category" [(ngModel)]="category">         
