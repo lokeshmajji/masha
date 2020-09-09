@@ -3,26 +3,34 @@
 
     <!--  <quill-view [innerHTML]="blogtext" format="html" theme="snow"></quill-view> -->
 
-    <div class="ql-container ql-snow" style="border-width: 0;">
+    <!-- <div class="ql-container ql-snow" style="border-width: 0;">
         <div class="ql-editor" [innerHTML]="blogtext">
         </div>
-      </div>
+      </div> -->
+      <div id="quill-container">
+        <p-editor  [(ngModel)]="blogtext"  name="blogtext" [readonly]="true"> 
+          <p-header> </p-header>    
+        </p-editor>  
+        </div>
 
     <hr>
     <div>
-        <div class="ui-g" *ngFor="let comment of comments">
-            <div class="ui-g-12">
-                <input type="text" [(ngModel)]="comment.value.comment_heading">  
+        <div class="ui-g ui-fluid" *ngFor="let comment of comments">
+            <div class="ui-g-12 ui-md-12">
+                <div class="ui-inputgroup" style="margin-bottom: 10px;">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+                    <input type="text" pInputText [(ngModel)]="comment.value.comment_heading">  
+                </div> 
                 <p-editor  [(ngModel)]="comment.value.comment_text"  name="commenttext" [readonly]="false"> 
-                    <p-header> </p-header>    
                   </p-editor>  
                 
             </div>
-            <div class="ui-g-12">
+            <div style="float:right;">
                 <button pButton type="button" icon="pi pi-check" iconPos="left" (click)="updateComment($event,comment)"label="Update"></button>
+            </div>
+            <div >
                 <button pButton type="button" icon="pi pi-check" iconPos="left" (click)="deleteComment($event,comment)"label="Delete"></button>
-  
-            </div>              
+            </div>
         </div>
     </div>
     <hr>

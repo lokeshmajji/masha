@@ -27,4 +27,10 @@
     min-height: 100%;
     overflow-y: auto;
 }
+
+.view-heading{
+  display: flex;
+  justify-content: space-between;
+
+}
   

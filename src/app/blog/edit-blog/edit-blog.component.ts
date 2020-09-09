@@ -3,6 +3,7 @@ import { DataService } from 'src/app/dao/data.service';
 import { NgForm } from '@angular/forms';
 import { Editor } from 'primeng/editor/editor';
 import { QuillEditorComponent } from 'ngx-quill';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-edit-blog',
@@ -18,7 +19,6 @@ export class EditBlogComponent implements OnInit, AfterViewChecked, OnDestroy {
   key : string;
 
   @ViewChild('peditor') peditor; 
-  @ViewChild('qeditor') qeditor; 
  public modules = {
     toolbar: [      
       [{ header: [1, 2, false] }],
@@ -28,7 +28,7 @@ export class EditBlogComponent implements OnInit, AfterViewChecked, OnDestroy {
   };
 
 
-  constructor(private dataservice : DataService) { }
+  constructor(private dataservice : DataService, private sharedService: SharedService) { }
 
   ngOnInit() {
    console.log("EditBlog->NgOnInit->" + this.heading);
@@ -107,7 +107,9 @@ export class EditBlogComponent implements OnInit, AfterViewChecked, OnDestroy {
       datemodified: new Date(),
       comments : [new Comment()]
     }).subscribe( res => {
-       console.log(res)
+       //console.log(res)
+       this.sharedService.openSnackBar('Post updated successfully','Yayyy')
+
     }, err => {
       console.log(err)
     })

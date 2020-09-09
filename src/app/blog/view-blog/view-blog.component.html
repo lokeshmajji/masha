@@ -9,13 +9,28 @@
     <div class="" *ngFor="let blog of blogs">
 
             <div *ngIf="searchInputFilter !== undefined && searchInputFilter !== ' '  && blog.value.heading.includes(searchInputFilter)">
-                    <h4>{{blog.value.heading}}            </h4>
-                  <div>
-                    <a  class="badge badge-primary" (click)="onFullPageView($event,blog)">Full Page View</a>
-                    <a  class="badge badge-primary" (click)="onEdit($event,blog)">Edit</a>
-                    <a  class="badge badge-primary" (click)="onDeletePost($event,blog)">Delete Post</a>
 
+                  <div class="view-heading">
+                    <h4>{{blog.value.heading}}</h4>
+                    <div>
+                      <span *ngIf="blog.value.category"><span class="material-icons">
+                        groups
+                        </span>: {{blog.value.category}} &nbsp;</span>
+                      <!-- <a  class="badge badge-dark" (click)="onFullPageView($event,blog)">Full Page View</a> -->
+                      <span class="material-icons" (click)="onFullPageView($event,blog)">
+                        preview
+                        </span>
+                      <!-- <a  class="badge badge-primary" (click)="onEdit($event,blog)">Edit</a> -->
+                      <span class="material-icons" (click)="onEdit($event,blog)">
+                        edit
+                        </span>
+                      <!-- <a  class="badge badge-primary" (click)="onDeletePost($event,blog)">Delete Post</a> -->
+                      <span class="material-icons" (click)="onDeletePost($event,blog)">
+                        delete_forever
+                        </span>
+                    </div>
                   </div>
+             
                   <!-- <div [innerHTML]="blog.blogtext"></div> -->
                   
                   

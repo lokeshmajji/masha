@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { DataService } from 'src/app/dao/data.service';
 import { Router } from '@angular/router';
 import { Blog } from 'src/app/model/blog.model';
@@ -9,7 +9,7 @@ import { SharedService} from '../../shared/shared.service'
   templateUrl: './view-blog.component.html',
   styleUrls: ['./view-blog.component.css']
 })
-export class ViewBlogComponent implements OnInit {
+export class ViewBlogComponent implements OnInit,OnDestroy {
 
   blogs  = []
   searchInput : string = ''
@@ -20,6 +20,7 @@ export class ViewBlogComponent implements OnInit {
   constructor(private dataService : DataService,private router:  Router, private sharedService : SharedService) { }
 
   ngOnInit() {
+    console.log("View Blog: Init")
    this.dataService.getBlogs().subscribe( res => {
 
         for(let key of Object.keys(res)){
@@ -90,6 +91,10 @@ export class ViewBlogComponent implements OnInit {
         console.log(err)
         this.sharedService.openSnackBar('Post Delete failed','Ding...')
       })
+  }
+
+  ngOnDestroy()	{
+    console.log("Destroying: ViewBlog")
   }
 
 }
