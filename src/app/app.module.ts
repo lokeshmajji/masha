@@ -27,7 +27,8 @@ import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewBlogComponent } from './blog/view-blog/view-blog.component';
 import { EditBlogComponent } from './blog/edit-blog/edit-blog.component';
-import { ViewSingleComponent } from './blog/view-single/view-single.component';  
+import { ViewSingleComponent } from './blog/view-single/view-single.component';
+import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';  
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { ViewSingleComponent } from './blog/view-single/view-single.component';
     ViewBlogComponent,
     EditBlogComponent,
     ViewSingleComponent,
+    ConfirmDialogComponent,
     
   ],
   imports: [

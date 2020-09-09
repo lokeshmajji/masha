@@ -1,18 +1,38 @@
     <div>
       <h4>Search</h4>
-      <input type="text" class="" (keydown)="keypressEvent($event)" [(ngModel)]="searchInput">
-      <button type="button" (click)="handleSearch($event)">Search</button>
-      <button type="button" (click)="handleClear($event)">Clear</button>
+      <!-- <input matInput type="text" class="" (keydown)="keypressEvent($event)" [(ngModel)]="searchInput"> -->
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Search </mat-label>
+          <input matInput placeholder="Ex. Pizza" name="search" [(ngModel)]="searchInput">
+        </mat-form-field>
+        <button mat-button type="button" (click)="handleSearch($event)">Go</button>
+        <button mat-button type="button" (click)="handleClear($event)">Clear</button>
+        <mat-form-field appearance="fill">
+          <mat-label>Categories</mat-label>
+          <mat-select [(value)]="selected" (selectionChange)="onCategoryChange($event)">
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{category}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
 
+
+   
       <div> Results:{{searchInput}} </div>
+      <p>You selected: {{selected}}</p>
+
     </div>
     <div class="" *ngFor="let blog of blogs">
 
-            <div *ngIf="searchInputFilter !== undefined && searchInputFilter !== ' '  && blog.value.heading.includes(searchInputFilter)">
+            <div *ngIf="searchInputFilter !== undefined && searchInputFilter !== ' '  && blog.value.heading.includes(searchInputFilter) && (blog.value.category == selected || selected == 'All' || (selected == 'NA' && blog.value.category == ''))">
 
                   <div class="view-heading">
                     <h4>{{blog.value.heading}}</h4>
                     <div>
+
+                      
                       <span *ngIf="blog.value.category"><span class="material-icons">
                         groups
                         </span>: {{blog.value.category}} &nbsp;</span>
@@ -25,7 +45,11 @@
                         edit
                         </span>
                       <!-- <a  class="badge badge-primary" (click)="onDeletePost($event,blog)">Delete Post</a> -->
-                      <span class="material-icons" (click)="onDeletePost($event,blog)">
+
+                      <!-- <span class="material-icons" (click)="onDeletePost($event,blog)"> -->
+                        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon">delete_forever</mat-icon> -->
+
+                        <span class="material-icons" (click)="openDialog($event,blog)">
                         delete_forever
                         </span>
                     </div>

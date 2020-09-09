@@ -3,6 +3,8 @@ import { DataService } from 'src/app/dao/data.service';
 import { Router } from '@angular/router';
 import { Blog } from 'src/app/model/blog.model';
 import { SharedService} from '../../shared/shared.service'
+import {MatDialog} from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-view-blog',
@@ -12,12 +14,14 @@ import { SharedService} from '../../shared/shared.service'
 export class ViewBlogComponent implements OnInit,OnDestroy {
 
   blogs  = []
+  categories = new Set<string>().add('All')
   searchInput : string = ''
   searchInputFilter : string = ''
+  selected = 'All'
 
   @Output('editBlogItem') editBlogEvent = new EventEmitter<{ key: string, blog: Blog}>();
   
-  constructor(private dataService : DataService,private router:  Router, private sharedService : SharedService) { }
+  constructor(private dataService : DataService,private router:  Router, private sharedService : SharedService, private dialog: MatDialog) { }
 
   ngOnInit() {
     console.log("View Blog: Init")
@@ -30,7 +34,9 @@ export class ViewBlogComponent implements OnInit,OnDestroy {
               key : key,
               value : res[key]
             });
+            this.categories.add( res[key].category == "" ? 'NA' : res[key].category )
         }
+       
         // for(let obj of Object.values(res)){
         //       console.log(obj)
         //       this.blogs.push(obj);
@@ -93,6 +99,26 @@ export class ViewBlogComponent implements OnInit,OnDestroy {
       })
   }
 
+  openDialog(event,blog): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+         title : "Confirm",
+         message : "Do you wanna delete the item?"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed' + result);
+      if(result == true) {
+        this.onDeletePost(event,blog);
+      }
+    });
+  }
+  onCategoryChange(event) {
+    console.log("filter")
+    //this.blogs = this.blogs.filter(x => x.value.category == this.selected)
+  }
   ngOnDestroy()	{
     console.log("Destroying: ViewBlog")
   }
