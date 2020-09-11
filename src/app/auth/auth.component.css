@@ -1,0 +1,22 @@
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.loginform{
+    /* border: 1px solid #E98074; */
+}
+
+.customcolor {
+    /* color: #E98074; */
+    color: #EDF5E1;
+}
+.custombgcolor {
+    /* background-color: #E98074; */
+    background-color: #05386B;
+    color: #EDF5E1;
+
+}

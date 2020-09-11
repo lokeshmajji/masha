@@ -1,11 +1,11 @@
     <div class="ui-g ui-fluid">
         <div class="ui-g-12 ui-md-12">
             <form (ngSubmit)="onSubmit(blogForm)" #blogForm="ngForm">  
-                <div class="ui-inputgroup" style="margin-bottom: 10px;">
+                <div class="ui-inputgroup lightdarkcolor" style="margin-bottom: 10px;">
                     <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
-                    <input type="text" pInputText placeholder="heading" name="heading" ngModel>         
+                    <input type="text" pInputText placeholder="heading" name="heading" ngModel required>         
                 </div> 
-                <p-editor [(ngModel)]="blogtext" [style]="{'height':'220px'}" name="blogtext"></p-editor>
+                <p-editor [(ngModel)]="blogtext"  [style]="{'height':'220px'}" name="blogtext"></p-editor>
                 <!-- <p>Value: {{blogtext||'empty'}}</p> -->
                 
                 <div class="ui-inputgroup" style="margin-bottom: 10px;">
@@ -17,7 +17,7 @@
                     <input type="text" pInputText placeholder="tags" name="tags" ngModel>         
                 </div>
 
-                <button pButton type="submit" icon="pi pi-check" iconPos="left" label="Save"></button>
+                <button class="lightdarkcolor customcolordark" pButton type="submit" icon="pi pi-check" iconPos="left" label="Save"></button>
 
             </form>
         </div>

@@ -4,10 +4,10 @@
       <form class="example-form">
         <mat-form-field class="example-full-width">
           <mat-label>Search </mat-label>
-          <input matInput placeholder="Ex. Pizza" name="search" [(ngModel)]="searchInput">
+          <input type="text" style=" color:#05386B ; margin-left: 10px; width: 4rem !important;" size="50" matInput placeholder="Ex. Pizza" name="search" [(ngModel)]="searchInput">
         </mat-form-field>
-        <button mat-button type="button" (click)="handleSearch($event)">Go</button>
-        <button mat-button type="button" (click)="handleClear($event)">Clear</button>
+        <button style="background-color: #05386B; color:#EDF5E1 ; margin-left: 10px;margin-right: 10px;" mat-button type="button" (click)="handleSearch($event)">Go</button>
+        <button style="background-color: #05386B; color:#EDF5E1 ; margin-right: 10px;" mat-button type="button" (click)="handleClear($event)">Clear</button>
         <mat-form-field appearance="fill">
           <mat-label>Categories</mat-label>
           <mat-select [(value)]="selected" (selectionChange)="onCategoryChange($event)">
@@ -16,25 +16,34 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <span style="color:#05386B ; margin-left: 10px;font-size: 1.2rem;">Sort:</span>
+        <span class="material-icons" style="color:#05386B ; margin-left: 10px;font-size: 2rem;" (click)="onSort($event)">
+          sort
+          </span>
       </form>
 
 
    
       <div> Results:{{searchInput}} </div>
-      <p>You selected: {{selected}}</p>
-
+      <!-- <p>You selected: {{selected}}</p> -->
+      <hr>
     </div>
+    <app-spinner *ngIf="loading"></app-spinner>
+
     <div class="" *ngFor="let blog of blogs">
 
-            <div *ngIf="searchInputFilter !== undefined && searchInputFilter !== ' '  && blog.value.heading.includes(searchInputFilter) && (blog.value.category == selected || selected == 'All' || (selected == 'NA' && blog.value.category == ''))">
+            <div *ngIf="searchInputFilter !== undefined && searchInputFilter !== ' '  && blog.value.heading.toLowerCase().includes(searchInputFilter.toLowerCase()) && (blog.value.category == selected || selected == 'All' || (selected == 'NA' && blog.value.category == ''))">
 
                   <div class="view-heading">
                     <h4>{{blog.value.heading}}</h4>
                     <div>
+                      <span class="material-icons">
+                        event
+                        </span>
+                      <span>{{blog.value.datemodified | date}}</span>
 
-                      
                       <span *ngIf="blog.value.category"><span class="material-icons">
-                        groups
+                        category
                         </span>: {{blog.value.category}} &nbsp;</span>
                       <!-- <a  class="badge badge-dark" (click)="onFullPageView($event,blog)">Full Page View</a> -->
                       <span class="material-icons" (click)="onFullPageView($event,blog)">
@@ -65,7 +74,7 @@
 
                   <div id="scrolling-container">
                     <div id="quill-container">
-                    <p-editor  [(ngModel)]="blog.value.blogtext"  name="blogtext" [readonly]="true"> 
+                    <p-editor  [(ngModel)]="blog.value.blogtext"  [style]="{'height':'150px'}"  name="blogtext" [readonly]="true"> 
                       <p-header> </p-header>    
                     </p-editor>  
                     </div>

@@ -5,6 +5,7 @@ import { Blog } from 'src/app/model/blog.model';
 import { SharedService} from '../../shared/shared.service'
 import {MatDialog} from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-view-blog',
@@ -18,14 +19,18 @@ export class ViewBlogComponent implements OnInit,OnDestroy {
   searchInput : string = ''
   searchInputFilter : string = ''
   selected = 'All'
+  loading : boolean
+  sortOrder : boolean = false;
 
   @Output('editBlogItem') editBlogEvent = new EventEmitter<{ key: string, blog: Blog}>();
+  subs: Subscription;
   
   constructor(private dataService : DataService,private router:  Router, private sharedService : SharedService, private dialog: MatDialog) { }
 
   ngOnInit() {
     console.log("View Blog: Init")
-   this.dataService.getBlogs().subscribe( res => {
+    this.loading = true;
+   this.subs = this.dataService.getBlogs().subscribe( res => {
 
         for(let key of Object.keys(res)){
             //console.log(key)
@@ -36,13 +41,15 @@ export class ViewBlogComponent implements OnInit,OnDestroy {
             });
             this.categories.add( res[key].category == "" ? 'NA' : res[key].category )
         }
-       
+        this.loading = false;
+
         // for(let obj of Object.values(res)){
         //       console.log(obj)
         //       this.blogs.push(obj);
         // }
    }, err => {
      console.log(err);
+     this.loading = false;
    });
 
   //  var quill = new Quill('#quill-container', {
@@ -87,6 +94,7 @@ export class ViewBlogComponent implements OnInit,OnDestroy {
   }
   handleClear(event){
     this.searchInputFilter = ''
+    this.searchInput = ''
   }
 
   onDeletePost(event : Event,post){
@@ -119,8 +127,20 @@ export class ViewBlogComponent implements OnInit,OnDestroy {
     console.log("filter")
     //this.blogs = this.blogs.filter(x => x.value.category == this.selected)
   }
+
+  onSort(event){
+    //console.log(this.blogs[0])
+    this.sortOrder = !this.sortOrder
+    if(this.sortOrder){
+      this.blogs.sort((x,y) => Date.parse(x.value.datemodified) - Date.parse(y.value.datemodified)  )
+    } else {
+      this.blogs.sort((x,y) => Date.parse(y.value.datemodified) - Date.parse(x.value.datemodified)  )
+    }
+
+  }
   ngOnDestroy()	{
     console.log("Destroying: ViewBlog")
+    this.subs.unsubscribe();
   }
 
 }

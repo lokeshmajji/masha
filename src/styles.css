@@ -4,6 +4,27 @@
 @import '~quill/dist/quill.bubble.css';
 @import '~quill/dist/quill.snow.css';
 
-body{
+html, body{
     /* background-color: #296ca8; */
+    background-color: #5CDB95;
+    height: 100%;
+}
+.lightdarkcolor {
+    /* background-color: #379683 !important; */
+    background-color: #8EE4AF !important;
+    /* background-color: #8EE4AF; */
+}  
+.customcolor {
+    /* color: #E98074; */
+    color: #EDF5E1;
+}
+.customcolordark {
+    /* color: #E98074; */
+    color: #05386B !important;
+}
+.custombgcolor {
+    /* background-color: #E98074; */
+    background-color: #05386B;
+    color: #EDF5E1;
+
 }

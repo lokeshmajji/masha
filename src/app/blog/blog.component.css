@@ -3,7 +3,10 @@
     /* background-color: #4992d3; */
 }
 
+.tabContainer{
+    background-color:#EDF5E1;
 
+}
 .myblog{
     display: flex;
     color: #fff;
