@@ -24,18 +24,27 @@
 
 
    
-      <div> Results:{{searchInput}} </div>
+      <div> 
+        <div class="paginator">
+           <div><span style="margin-right: 40px;">Results:{{searchInput}} </span></div>
+          <div><input type="number" [(ngModel)]="pageSize" name="pageSize" size="2" style="width: 60px;" (change)="handleFirstPage()" min="1"></div>
+          <div><button style="background-color: #05386B; color:#EDF5E1 ; margin-left: 10px;margin-right: 10px;" pButton type="submit" iconPos="left" label="&lt;&lt;" (click)="handlePrev($event)"></button></div>
+          <div><input type="number" [(ngModel)]="currentPage" name="pageNumber" size="2" style="width: 60px;" disabled></div>
+          <div><button style="background-color: #05386B; color:#EDF5E1 ; margin-left: 10px;margin-right: 10px;" pButton type="submit" iconPos="left" label="&gt;&gt;" (click)="handleNext($event)"></button></div>
+       </div>
+      </div>
       <!-- <p>You selected: {{selected}}</p> -->
       <hr>
     </div>
     <app-spinner *ngIf="loading"></app-spinner>
 
-    <div class="" *ngFor="let blog of blogs">
+
+    <div class="" *ngFor="let blog of blogsPager; index as i">
 
             <div *ngIf="searchInputFilter !== undefined && searchInputFilter !== ' '  && blog.value.heading.toLowerCase().includes(searchInputFilter.toLowerCase()) && (blog.value.category == selected || selected == 'All' || (selected == 'NA' && blog.value.category == ''))">
 
                   <div class="view-heading">
-                    <h4>{{blog.value.heading}}</h4>
+                    <h4>{{ (i+1 + ((currentPage - 1) * pageSize)) }}.{{blog.value.heading}}</h4>
                     <div>
                       <span class="material-icons">
                         event

@@ -21,6 +21,10 @@ export class ViewBlogComponent implements OnInit,OnDestroy {
   selected = 'All'
   loading : boolean
   sortOrder : boolean = false;
+  blogsPager = []
+  currentPage : number = 1;
+  pageSize : number = 10;
+  currentpagessize : number
 
   @Output('editBlogItem') editBlogEvent = new EventEmitter<{ key: string, blog: Blog}>();
   subs: Subscription;
@@ -41,6 +45,7 @@ export class ViewBlogComponent implements OnInit,OnDestroy {
             });
             this.categories.add( res[key].category == "" ? 'NA' : res[key].category )
         }
+        this.handleFirstPage();
         this.loading = false;
 
         // for(let obj of Object.values(res)){
@@ -51,20 +56,51 @@ export class ViewBlogComponent implements OnInit,OnDestroy {
      console.log(err);
      this.loading = false;
    });
-
-  //  var quill = new Quill('#quill-container', {
-  //   modules: {
-  //     toolbar: [
-  //       [{ header: [1, 2, false] }],
-  //       ['bold', 'italic', 'underline'],
-  //       ['image', 'code-block']
-  //     ]
-  //   },
-  //   scrollingContainer: '#scrolling-container', 
-  //   placeholder: 'Compose an epic...',
-  //   theme: 'bubble'
-  // });
    
+  }
+
+  handleFirstPage(){
+    console.log(this.pageSize)
+    if(this.blogs.length <= this.pageSize){
+      this.blogsPager = this.blogs;
+    } else {
+      this.blogsPager = []
+      for(let i=0; i < this.pageSize; i++) this.blogsPager.push(this.blogs[i]);
+    }
+  }
+
+
+  handleNext(event){
+    //console.log("Blog Count:" + this.blogs.length)
+    this.loading = true;
+    this.currentpagessize = this.currentPage * this.pageSize
+    //console.log("current page size:" + this.currentpagessize )
+     let limit = this.blogs.length / this.pageSize;
+     //console.log("Limit : " + limit)
+
+    if(this.currentPage <= limit){
+      this.currentPage++
+      this.blogsPager = []
+      for(let i= this.currentpagessize; i <  this.blogs.length; i++) 
+      {
+       // console.log( this.currentpagessize + " " +  this.currentpagessize + " " + this.pageSize )
+        this.blogsPager.push(this.blogs[i]);
+      }
+    }
+    this.loading = false;
+  }
+
+  handlePrev(event){
+    this.currentpagessize = this.currentPage * this.pageSize;
+    //console.log("page size = " +this.currentpagessize)
+    if(this.currentPage > 1) {
+        this.currentPage--;
+        this.blogsPager = []
+        for(let i = (this.currentPage -1) * this.pageSize; i < this.currentPage * this.pageSize; i++){
+          //console.log("i=" + i )
+          this.blogsPager.push(this.blogs[i]);
+        }
+    }
   }
 
   onEdit(event : Event, blogkv: {key: string, value: Blog}){
