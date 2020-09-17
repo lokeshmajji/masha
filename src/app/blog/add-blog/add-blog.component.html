@@ -1,5 +1,7 @@
     <div class="ui-g ui-fluid">
         <div class="ui-g-12 ui-md-12">
+            <app-spinner *ngIf="loading"></app-spinner>
+
             <form (ngSubmit)="onSubmit(blogForm)" #blogForm="ngForm">  
                 <div class="ui-inputgroup lightdarkcolor" style="margin-bottom: 10px;">
                     <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>

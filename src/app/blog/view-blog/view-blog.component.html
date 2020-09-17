@@ -1,5 +1,5 @@
     <div>
-      <h4>Search</h4>
+      <!-- <h4>Search</h4> -->
       <!-- <input matInput type="text" class="" (keydown)="keypressEvent($event)" [(ngModel)]="searchInput"> -->
       <form class="example-form">
         <mat-form-field class="example-full-width">
@@ -8,6 +8,8 @@
         </mat-form-field>
         <button style="background-color: #05386B; color:#EDF5E1 ; margin-left: 10px;margin-right: 10px;" mat-button type="button" (click)="handleSearch($event)">Go</button>
         <button style="background-color: #05386B; color:#EDF5E1 ; margin-right: 10px;" mat-button type="button" (click)="handleClear($event)">Clear</button>
+        <button style="background-color: #05386B; color:#EDF5E1 ; margin-right: 10px;" mat-button type="button" (click)="handleRefresh(false)">Refresh Data</button>
+
         <mat-form-field appearance="fill">
           <mat-label>Categories</mat-label>
           <mat-select [(value)]="selected" (selectionChange)="onCategoryChange($event)">
@@ -17,7 +19,7 @@
           </mat-select>
         </mat-form-field>
         <span style="color:#05386B ; margin-left: 10px;font-size: 1.2rem;">Sort:</span>
-        <span class="material-icons" style="color:#05386B ; margin-left: 10px;font-size: 2rem;" (click)="onSort($event)">
+        <span class="material-icons" style="color:#05386B ; margin-left: 10px;font-size: 2rem; cursor: pointer;" (click)="onSort($event)">
           sort
           </span>
       </form>
@@ -26,11 +28,46 @@
    
       <div> 
         <div class="paginator">
-           <div><span style="margin-right: 40px;">Results:{{searchInput}} </span></div>
-          <div><input type="number" [(ngModel)]="pageSize" name="pageSize" size="2" style="width: 60px;" (change)="handleFirstPage()" min="1"></div>
-          <div><button style="background-color: #05386B; color:#EDF5E1 ; margin-left: 10px;margin-right: 10px;" pButton type="submit" iconPos="left" label="&lt;&lt;" (click)="handlePrev($event)"></button></div>
-          <div><input type="number" [(ngModel)]="currentPage" name="pageNumber" size="2" style="width: 60px;" disabled></div>
-          <div><button style="background-color: #05386B; color:#EDF5E1 ; margin-left: 10px;margin-right: 10px;" pButton type="submit" iconPos="left" label="&gt;&gt;" (click)="handleNext($event)"></button></div>
+           <div>
+             <span style="margin-right: 40px;">Results for:{{searchInput}} </span> 
+             <span *ngIf="filtered"> {{blogsFiltered.length}} item(s) found in {{selected}} category</span >
+              <span *ngIf="!filtered"> {{blogs.length}} items in {{selected}} category</span >
+
+          </div>
+           
+           <div class="paginator">
+            <div>
+              <span > Items per page &nbsp;</span> 
+              <input type="number" [(ngModel)]="pageSize" name="pageSize" size="2" class="paginatorinput" (change)="handlePageNumberChange($event)" min="1"></div>
+            <div>
+              <button style="background-color: #05386B; color:#EDF5E1 ;" pButton type="submit" iconPos="left" label="&lt;&lt;" (click)="handleFirst($event)"></button>
+              <button style="background-color: #05386B; color:#EDF5E1 ;" pButton type="submit" iconPos="left" label="&lt;" (click)="handlePrevV2()"></button>
+            </div>
+              <div><a *ngIf="showPage1" (click)="handlePage(page1)">{{page1}}</a></div>
+              <div><a *ngIf="showPage2" (click)="handlePage(page2)">{{page2}}</a></div>
+            <div><input type="number" [(ngModel)]="currentPage" name="pageNumber" size="2" class="paginatorinput" disabled></div>
+              <div><a *ngIf="showPage3" (click)="handlePage(page3)">{{page3}}</a></div>
+              <div><a *ngIf="showPage4" (click)="handlePage(page4)">{{page4}}</a></div>
+            <div>
+              <button style="background-color: #05386B; color:#EDF5E1 ; " pButton type="submit" iconPos="left" label="&gt;" (click)="handleNextV2()"></button>
+              <button style="background-color: #05386B; color:#EDF5E1 ; " pButton type="submit" iconPos="left" label="&gt;&gt;" (click)="handleLast($event)"></button>
+            </div>
+           </div>
+           <!-- <div class="paginator">
+            <div>
+              <span class="material-icons"> note </span>
+              <input type="number" [(ngModel)]="pageSize" name="pageSize" size="2" style="width: 60px;" (change)="handlePageNumberChange($event)" min="1"></div>
+            <div>
+              <button style="background-color: #05386B; color:#EDF5E1 ;" pButton type="submit" iconPos="left" label="&lt;&lt;" (click)="handleFirst($event)"></button>
+              <button style="background-color: #05386B; color:#EDF5E1 ;" pButton type="submit" iconPos="left" label="&lt;" (click)="handlePrev($event)"></button>
+            </div>
+            <div><input type="number" [(ngModel)]="currentPage" name="pageNumber" size="2" style="width: 60px;" disabled></div>
+            <div>
+              <button style="background-color: #05386B; color:#EDF5E1 ; " pButton type="submit" iconPos="left" label="&gt;" (click)="handleNext($event)"></button>
+              <button style="background-color: #05386B; color:#EDF5E1 ; " pButton type="submit" iconPos="left" label="&gt;&gt;" (click)="handleLast($event)"></button>
+            </div>
+           </div> -->
+        
        </div>
       </div>
       <!-- <p>You selected: {{selected}}</p> -->
@@ -41,7 +78,8 @@
 
     <div class="" *ngFor="let blog of blogsPager; index as i">
 
-            <div *ngIf="searchInputFilter !== undefined && searchInputFilter !== ' '  && blog.value.heading.toLowerCase().includes(searchInputFilter.toLowerCase()) && (blog.value.category == selected || selected == 'All' || (selected == 'NA' && blog.value.category == ''))">
+      <!-- <div *ngIf="searchInputFilter !== undefined && searchInputFilter !== ' '  && blog.value.heading.toLowerCase().includes(searchInputFilter.toLowerCase()) && (blog.value.category == selected || selected == 'All' || (selected == 'NA' && blog.value.category == ''))"> -->
+        <div>
 
                   <div class="view-heading">
                     <h4>{{ (i+1 + ((currentPage - 1) * pageSize)) }}.{{blog.value.heading}}</h4>

@@ -34,11 +34,34 @@
 
 }
 
-.mat-icon {
-  font-size: 50px;
+mat-icon {
+  font-size: 70px;
 }
   
 .paginator{
   display: flex;
+  justify-content: space-between;
+
+}
+span {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+a {
+  font-size: 20px;
+  font-weight: 600;
+  color: #05386B;
+  border-bottom: 2px solid black;
+  /* border: 2px solid black; */
+  margin: 5px;
   
+}
+
+.paginatorinput{
+  font-size: 20px;
+  font-weight: 600;
+  color: #05386B;
+  width: 40px;
+  padding: 0px;
 }

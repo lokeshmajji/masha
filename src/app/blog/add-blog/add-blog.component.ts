@@ -10,6 +10,7 @@ import { SharedService } from 'src/app/shared/shared.service';
 })
 export class AddBlogComponent implements OnInit {
 
+  loading : boolean
   blogtext;
   @ViewChild('blogForm') blogForm;
 
@@ -20,6 +21,7 @@ export class AddBlogComponent implements OnInit {
 
   onSubmit(form: NgForm){
     console.log(form.value);
+    this.loading = true;
     this.dataservice.saveBlog(
       {
         heading : form.value.heading,
@@ -32,10 +34,12 @@ export class AddBlogComponent implements OnInit {
       }
     ).subscribe( res => {
       console.log(res)
+      this.loading = false
       this.sharedService.openSnackBar("Blog Saved successfully","Yay")
       form.reset()
     }, err => {
       console.log(err)
+      this.loading = false
       this.sharedService.openSnackBar("Blog Saved failed","Naa")
     });
 
