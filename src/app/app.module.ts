@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
 import { MaterialModule} from './material.module'
 
@@ -59,7 +59,9 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
     DialogModule,
     ButtonModule,
     QuillModule.forRoot(),
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+
   ],
   providers: [ {provide : HTTP_INTERCEPTORS , useClass: AuthInterceptorService,multi: true}],
   bootstrap: [AppComponent]

@@ -9,6 +9,7 @@
 .loginform{
     border: 3px solid #EDF5E1;
     padding : 20px;
+    border-radius: 15px;
 }
 
 .customcolor {

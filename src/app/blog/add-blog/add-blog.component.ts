@@ -35,6 +35,7 @@ export class AddBlogComponent implements OnInit {
     ).subscribe( res => {
       console.log(res)
       this.loading = false
+      this.sharedService.blogAddedSubject.next(true);
       this.sharedService.openSnackBar("Blog Saved successfully","Yay")
       form.reset()
     }, err => {

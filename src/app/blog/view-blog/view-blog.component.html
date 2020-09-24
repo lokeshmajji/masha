@@ -18,8 +18,14 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field appearance="fill" >
+          <mat-label>Tags</mat-label>
+          <mat-select [(ngModel)]="selectedTagValue" [formControl]="tagsFormControl" multiple (selectionChange)="handleTagChange($event)" (openedChange)="handleTagOpenChange($event)">
+            <mat-option *ngFor="let tag of tagsArr" [value]="tag">{{tag}}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <span style="color:#05386B ; margin-left: 10px;font-size: 1.2rem;">Sort:</span>
-        <span class="material-icons" style="color:#05386B ; margin-left: 10px;font-size: 2rem; cursor: pointer;" (click)="onSort($event)">
+        <span class="material-icons" style="color:#05386B ; margin-left: 10px;font-size: 2rem; cursor: pointer;" (click)="onSortGlobal($event)">
           sort
           </span>
       </form>
@@ -30,13 +36,12 @@
         <div class="paginator">
            <div>
              <span style="margin-right: 40px;">Results for:{{searchInput}} </span> 
-             <span *ngIf="filtered"> {{blogsFiltered.length}} item(s) found in {{selected}} category</span >
-              <span *ngIf="!filtered"> {{blogs.length}} items in {{selected}} category</span >
-
           </div>
            
            <div class="paginator">
             <div>
+              <span *ngIf="filtered"> {{blogsFiltered.length}} item(s) found in category:{{selected}}.&nbsp;</span >
+              <span *ngIf="!filtered"> {{blogs.length}} items in category:{{selected}}. &nbsp;</span >
               <span > Items per page &nbsp;</span> 
               <input type="number" [(ngModel)]="pageSize" name="pageSize" size="2" class="paginatorinput" (change)="handlePageNumberChange($event)" min="1"></div>
             <div>
@@ -88,6 +93,10 @@
                         event
                         </span>
                       <span>{{blog.value.datemodified | date}}</span>
+
+                      <span *ngIf="blog.value.tags"><span class="material-icons">
+                        loyalty
+                        </span>: {{blog.value.tags}} &nbsp;</span>
 
                       <span *ngIf="blog.value.category"><span class="material-icons">
                         category

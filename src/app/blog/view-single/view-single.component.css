@@ -1,0 +1,14 @@
+.updateButtonsDiv{
+    width: 100%;
+    display: flex;
+    flex-direction: rrow;
+    text-align: right;
+    justify-content: flex-end;
+
+}
+
+.comments{
+    border-top: 2px solid rgb(228, 230, 232);
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

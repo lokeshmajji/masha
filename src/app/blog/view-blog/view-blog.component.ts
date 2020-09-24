@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, AfterViewInit, OnChanges } from '@angular/core';
 import { DataService } from 'src/app/dao/data.service';
 import { Router } from '@angular/router';
 import { Blog } from 'src/app/model/blog.model';
@@ -6,21 +6,23 @@ import { SharedService } from '../../shared/shared.service'
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 import { Subscription } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-view-blog',
   templateUrl: './view-blog.component.html',
   styleUrls: ['./view-blog.component.css']
 })
-export class ViewBlogComponent implements OnInit, OnDestroy {
+export class ViewBlogComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
 
   blogs = []
   categories = new Set<string>().add('All')
+  tags = new Map<string, number>();
   searchInput: string = ''
   searchInputFilter: string = ''
   selected = 'All'
   loading: boolean
-  sortOrder: boolean = false;
+  sortOrder: boolean = true;
   blogsFiltered = []
   blogsPager = []
   currentPage: number = 0;
@@ -35,29 +37,72 @@ export class ViewBlogComponent implements OnInit, OnDestroy {
   showPage2: boolean = false;
   showPage3: boolean = false;
   showPage4: boolean = false;
+  selectedTagValue
+
+  tagsFormControl = new FormControl();
+  tagsArr = []
 
   @Output('editBlogItem') editBlogEvent = new EventEmitter<{ key: string, blog: Blog }>();
   subs: Subscription;
 
+  ngAfterViewInit(){
+    console.log("NgAfterViewInit: ViewBlog: ")
+  }
+  ngOnChanges()	{
+    console.log("ngOnChanges: ViewBlog: ")
+
+  }
+
   constructor(private dataService: DataService, private router: Router, private sharedService: SharedService, private dialog: MatDialog) { }
 
   ngOnInit() {
-    console.log("View Blog: Init")
+    console.log("View Blog: Init" + this.currentPage)
     this.fetchData(true); 
+    // this.sharedService.blogAddedSubject.subscribe(val => {
+    //   console.log("blog added/updated")
+    //   this.fetchData(false)
+    //   //this.handleFirstPage()
+    // })
+    this.sharedService.blogReloadSubject.subscribe(val=> {
+      console.log("blog added/updated")
+      this.fetchData(false)
+      this.handleFirstPage()
+    })
   }
 
-  fetchData(initialLoad : boolean){
+  fetchData(initialLoad : boolean,keyDeleted? : string ){
+
     this.loading = true;
     this.blogs = []
+    this.categories.clear();
+    this.categories.add('All')
+    this.blogsPager = this.blogsPager.filter(item => item.key != keyDeleted) 
+    //this.blogsFiltered.filter(item => item.key != keyDeleted) 
     this.subs = this.dataService.getBlogs().subscribe(res => {
-                                            for (let key of Object.keys(res)) {
-                                              //console.log(key)
-                                              //console.log(res[key])
-                                              this.blogs.push({
-                                                key: key,
-                                                value: res[key]
-                                              });
+                                              for (let key of Object.keys(res)) {
+                                                //console.log(key)
+                                                //console.log(res[key])
+                                                this.blogs.push({
+                                                  key: key,
+                                                  value: res[key]
+                                                });
                                               this.categories.add(res[key].category == "" ? 'NA' : res[key].category)
+                                              
+                                              res[key].tags.split(" ").forEach(element => {
+                                                    if(element == "") {
+                                                      //console.log("NA")
+                                                      if(this.tags.get("NA")) this.tags.set("NA",this.tags.get("NA") + 1)
+                                                      else this.tags.set("NA",1)
+                                                    } 
+                                                    else if(this.tags.has(element)) this.tags.set(element,this.tags.get(element) + 1);
+                                                    else {
+                                                      this.tags.set(element,1)
+                                                    }
+                                              });
+                                            }
+                                            //console.log(this.tags.values)
+                                            for(let tag of this.tags.keys()) {
+                                              this.tagsArr.push(tag + " : " + this.tags.get(tag))
                                             }
                                             // this.handleFirstPage();
                                             // this.blogsFiltered = this.blogs;
@@ -259,23 +304,83 @@ export class ViewBlogComponent implements OnInit, OnDestroy {
     this.blogsPager = []
     if (this.searchInputFilter !== undefined && this.searchInputFilter !== ' ') {
       this.blogsFiltered = this.blogs
-        .filter(x => x.value.heading.toLowerCase().includes(this.searchInputFilter.toLowerCase()) && ((x.value.category == this.selected || this.selected == 'All') || (this.selected == 'NA' && x.value.category == '')))
+        .filter(x => ( x.value.heading.toLowerCase().includes(this.searchInputFilter.toLowerCase()) ||    
+                     (x.value.tags.includes(this.tagsFormControl.value)))
+                      && 
+                    (
+                      (x.value.category == this.selected || this.selected == 'All') || 
+                      (this.selected == 'NA' && x.value.category == '')  
+                   
+                    )
+               )
       //this.blogsPager = this.blogsFiltered
     } else {
       this.blogsFiltered = this.blogs
-        .filter(x => (x.value.category == this.selected || this.selected == 'All') || (this.selected == 'NA' && x.value.category == ''))
+        .filter(x => ((x.value.category == this.selected || this.selected == 'All') || (this.selected == 'NA' && x.value.category == ''))
+        )
     }
     console.log(this.blogsFiltered)
     this.filtered = true;
     this.currentPage = 0;
     this.handleNext(null)
   }
+
+  handleTagOpenChange(event){
+    let searchArr = this.tagsFormControl.value ? this.tagsFormControl.value.map(x => x.split(":")[0].trim()) : null
+    if(searchArr == null || searchArr.length <= 0) {
+      //console.log("Return from the search")
+      return;
+    }
+  }
+  handleTagChange(event) {
+    let searchArr = this.tagsFormControl.value ? this.tagsFormControl.value.map(x => x.split(":")[0].trim()) : null
+    if(searchArr == null || searchArr.length <= 0) {
+      console.log("Return from the search")
+      this.filtered = false;
+    this.currentPage = 0;
+    this.handleNext(null)
+      return;
+    }
+
+    this.hidePageNos();
+    this.searchInputFilter = this.searchInput;
+    this.blogsFiltered = []
+    this.blogsPager = []
+
+    if (this.searchInputFilter !== undefined && this.searchInputFilter !== ' ') {
+      this.blogsFiltered = this.blogs
+        .filter(x => {
+                      //console.log(x.value.tags + " :comparing: " +  searchArr.filter(y => (x.value.tags.includes(y)  ) ) )
+                      //console.log(searchArr.filter(y => (x.value.tags.includes(y) )))
+                      
+                      return searchArr.filter(y => { 
+                          //console.log(y + " : " + x.value.tags)
+                          if(y == "NA") return x.value.tags == ""
+                          else return (x.value.tags.includes(y))
+                      
+                       }).length > 0 
+                     }
+               )
+      //this.blogsPager = this.blogsFiltered
+    } else {
+      this.blogsFiltered = this.blogs
+        .filter(x => (x.value.tags.includes(this.tagsFormControl.value))
+        )
+    }
+    console.log("Filtered Blogs")
+    console.log(this.blogsFiltered)
+    this.filtered = true;
+    this.currentPage = 0;
+    this.handleNext(null)
+  }
+
   handleClear(event) {
     this.searchInputFilter = ''
     this.searchInput = ''
     this.currentPage = 0;
     this.filtered = false
     this.selected = 'All'
+    this.selectedTagValue = ''
     this.handleNext(null)
     this.hidePageNos();
   }
@@ -290,6 +395,7 @@ export class ViewBlogComponent implements OnInit, OnDestroy {
     this.dataService.deletePost(post.key).subscribe(msg => {
       //console.log(msg)
       this.sharedService.openSnackBar('Post Deleted Successfully', 'Tadaaa')
+      this.fetchData(false,post.key); 
     }, err => {
       console.log(err)
       this.sharedService.openSnackBar('Post Delete failed', 'Ding...')
@@ -326,13 +432,36 @@ export class ViewBlogComponent implements OnInit, OnDestroy {
     this.handleSearch(null)
   }
 
+  onTagChange(event){
+    console.log("tag change")
+    this.handleSearch(null)
+
+  }
+
   handlePageNumberChange(event) {
     this.currentPage = 0
     this.handleSearch(null)
 
   }
 
-  onSort(event) {
+  onSortGlobal(event) {
+    //console.log(this.blogs[0])
+    this.sortOrder = !this.sortOrder
+    if (this.sortOrder) {
+       if(this.filtered) this.blogsFiltered.sort((x, y) => Date.parse(x.value.datemodified) - Date.parse(y.value.datemodified))
+       else this.blogs.sort((x, y) => Date.parse(x.value.datemodified) - Date.parse(y.value.datemodified))
+    } else {
+      if(this.filtered) this.blogsFiltered.sort((x, y) => Date.parse(y.value.datemodified) - Date.parse(x.value.datemodified))
+      else this.blogs.sort((x, y) => Date.parse(y.value.datemodified) - Date.parse(x.value.datemodified))
+    }
+    this.handlePage(1)
+    // this.handleFirstPage()
+    // this.handlePage(1)
+    //this.handleFirst(null)
+
+  }
+
+  onSortSearch(event) {
     //console.log(this.blogs[0])
     this.sortOrder = !this.sortOrder
     if (this.sortOrder) {

@@ -33,8 +33,8 @@ export class EditBlogComponent implements OnInit, AfterViewChecked, OnDestroy {
   ngOnInit() {
    console.log("EditBlog->NgOnInit->" + this.heading);
    this.dataservice.blogSubject.subscribe( item => {
-                console.log("Received:--------"+ new Date())
-                console.log( item.value.blogtext);
+                //console.log("Received:--------"+ new Date())
+                //console.log( item.value.blogtext);
                 this.blogtext = item.value.blogtext;
                 this.heading = item.value.heading;
                 this.tags = item.value.tags;
@@ -93,7 +93,7 @@ export class EditBlogComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   ngOnDestroy()	{
-    console.log("Destroying:" + this.heading)
+    console.log("Destroying Edit Blog:" + this.heading)
   }
 
   onSubmit(form : NgForm){
@@ -108,8 +108,9 @@ export class EditBlogComponent implements OnInit, AfterViewChecked, OnDestroy {
       comments : [new Comment()]
     }).subscribe( res => {
        //console.log(res)
+        this.sharedService.blogAddedSubject.next(true)
        this.sharedService.openSnackBar('Post updated successfully','Yayyy')
-
+       
     }, err => {
       console.log(err)
     })

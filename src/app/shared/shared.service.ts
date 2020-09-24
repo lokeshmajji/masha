@@ -8,6 +8,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SharedService {
 
     tabChangeIndex = new Subject<number>();
+    public blogAddedSubject = new Subject<boolean>();
+    public blogReloadSubject = new Subject<boolean>();
 
     constructor(private snackBar : MatSnackBar){
 
