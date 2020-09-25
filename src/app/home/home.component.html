@@ -1,12 +1,15 @@
 <div class="container">
-    <div class="row">
+  <app-spinner *ngIf="loading"></app-spinner>  
+  <div class="row" *ngIf="!loading">
         <div class="col-md-12">
-            <h4>Welcome Voyager</h4>
+          <h4 class="heading">Welcome Voyager {{userEmail}}</h4>
+
             <mat-card class="example-card">
+
                 <mat-card-header>
                   <mat-card-title>{{randomBlog.heading}}</mat-card-title>
-                  <mat-card-subtitle>{{randomBlog.category}}</mat-card-subtitle>
-                  <mat-card-subtitle>{{randomBlog.tags}}</mat-card-subtitle>
+                  <mat-card-subtitle>Category:{{randomBlog.category}}, Tags:{{randomBlog.tags}}</mat-card-subtitle>
+                  <mat-card-subtitle></mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
                     <div id="scrolling-container">

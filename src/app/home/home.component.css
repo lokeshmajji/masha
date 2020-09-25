@@ -3,9 +3,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .scrolling-container{
     background-color: #EDF5E1;
 }
+
+.heading{
+    text-align: center;
+    color: #05386B ;
+}
+

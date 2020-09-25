@@ -110,6 +110,7 @@ export class AuthService implements OnInit{
 
     getUserEmail(){
        return this.user.pipe(take(1),exhaustMap( user => {
+           //console.log("AuthService:" + user.email)
             return user.email
         }));
 

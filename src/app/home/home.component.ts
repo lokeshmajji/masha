@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DataService } from '../dao/data.service';
 import { Blog } from '../model/blog.model';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +10,18 @@ import { Blog } from '../model/blog.model';
 })
 export class HomeComponent implements OnInit , AfterViewInit{
 
+  loading : boolean = false;
   blogs = []
   randomBlog : Blog
-  constructor(private dataService: DataService) { }
+  userEmail = ''
+  constructor(private dataService: DataService, private authService: AuthService) { }
 
   ngOnInit() {
+    this.loading = true;
+    this.authService.getUserEmail().subscribe(email => {
+      //console.log(email)
+      this.userEmail += email
+    })
     this.dataService.getBlogs().subscribe(res => {
       for (let key of Object.keys(res)) {
         //console.log(key)
@@ -25,9 +33,14 @@ export class HomeComponent implements OnInit , AfterViewInit{
       }  
       //console.log(this.blogs[2])
       this.randomBlog = this.blogs[this.getRandomInt(this.blogs.length)].value
-      console.log(this.randomBlog)   
+      //console.log(this.randomBlog)   
+      
+      this.loading = false;
     }
-  )
+  , err => {
+     console.log(err)
+     this.loading = false;
+  })
   
   }
   ngAfterViewInit(){
