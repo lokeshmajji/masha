@@ -14,7 +14,7 @@ import { ViewSingleComponent } from './blog/view-single/view-single.component';
 const routes: Routes = [
    { path : '' , redirectTo: '/home' , pathMatch : 'full'},
    { path : 'home', component: HomeComponent , canActivate :[AuthGuard]},
-   { path : 'blog' , component: BlogComponent , canActivate :[AuthGuard], 
+   { path : 'blogs' , component: BlogComponent , canActivate :[AuthGuard], 
      children : [
        { path : 'add', component: AddBlogComponent },
        { path : 'view', component: ViewBlogComponent },

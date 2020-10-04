@@ -5,8 +5,9 @@ import { Blog } from 'src/app/model/blog.model';
 import { SharedService } from '../../shared/shared.service'
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-blog',
@@ -42,6 +43,11 @@ export class ViewBlogComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   tagsFormControl = new FormControl();
   tagsArr = []
 
+  tagsControl = new FormControl();
+  tagsOptions: string[] = [];
+  filteredTagsOptions: Observable<string[]>;
+
+
   @Output('editBlogItem') editBlogEvent = new EventEmitter<{ key: string, blog: Blog }>();
   subs: Subscription;
 
@@ -54,7 +60,11 @@ export class ViewBlogComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   }
 
   constructor(private dataService: DataService, private router: Router, private sharedService: SharedService, private dialog: MatDialog) { }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
 
+    return this.tagsOptions.filter(option => option.toLowerCase().includes(filterValue));
+  }
   ngOnInit() {
     console.log("View Blog: Init" + this.currentPage)
     this.fetchData(true); 
@@ -63,6 +73,8 @@ export class ViewBlogComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
     //   this.fetchData(false)
     //   //this.handleFirstPage()
     // })
+
+
     this.sharedService.blogReloadSubject.subscribe(val=> {
       console.log("blog added/updated")
       this.fetchData(false)
@@ -103,7 +115,14 @@ export class ViewBlogComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
                                             //console.log(this.tags.values)
                                             for(let tag of this.tags.keys()) {
                                               this.tagsArr.push(tag + " : " + this.tags.get(tag))
+                                              this.tagsOptions.push(tag)
                                             }
+                                            this.filteredTagsOptions = this.tagsControl.valueChanges
+                                            .pipe(
+                                              startWith(''),
+                                              map(value => this._filter(value))
+                                            );
+
                                             // this.handleFirstPage();
                                             // this.blogsFiltered = this.blogs;
                                             //this.blogsPager = this.blogs;
@@ -299,22 +318,30 @@ export class ViewBlogComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   }
   handleSearch(event) {
     this.hidePageNos();
-    this.searchInputFilter = this.searchInput;
+    this.searchInputFilter = this.searchInput.toLowerCase();
     this.blogsFiltered = []
     this.blogsPager = []
+    console.log("searching for " + this.searchInputFilter)
     if (this.searchInputFilter !== undefined && this.searchInputFilter !== ' ') {
       this.blogsFiltered = this.blogs
-        .filter(x => ( x.value.heading.toLowerCase().includes(this.searchInputFilter.toLowerCase()) ||    
-                     (x.value.tags.includes(this.tagsFormControl.value)))
-                      && 
-                    (
-                      (x.value.category == this.selected || this.selected == 'All') || 
-                      (this.selected == 'NA' && x.value.category == '')  
-                   
-                    )
-               )
+        .filter(x => 
+          {
+         
+            return (( x.value.heading.toLowerCase().includes(this.searchInputFilter) ||    
+              (this.tagsFormControl.value != "" && x.value.tags.includes(this.tagsFormControl.value)) 
+            )
+            && 
+            (
+              (x.value.category == this.selected || this.selected == 'All') || 
+              (this.selected == 'NA' && x.value.category == '')  
+            
+            ));
+
+          }
+         )
       //this.blogsPager = this.blogsFiltered
     } else {
+      console.log("Else case")
       this.blogsFiltered = this.blogs
         .filter(x => ((x.value.category == this.selected || this.selected == 'All') || (this.selected == 'NA' && x.value.category == ''))
         )
@@ -325,6 +352,20 @@ export class ViewBlogComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
     this.handleNext(null)
   }
 
+  handleAutoCompleteSelectChange(event){
+    let selectedTag = event.option.value
+    //console.log(selectedTag)
+    this.blogsFiltered = this.blogs
+        .filter(x => {
+          //console.log(x.value.tags);
+          return x.value.tags.toLowerCase().includes(selectedTag.toLowerCase())
+          }
+        )
+        this.filtered = true;
+        this.currentPage = 0;
+        this.handleNext(null)
+  }
+
   handleTagOpenChange(event){
     let searchArr = this.tagsFormControl.value ? this.tagsFormControl.value.map(x => x.split(":")[0].trim()) : null
     if(searchArr == null || searchArr.length <= 0) {
@@ -333,6 +374,8 @@ export class ViewBlogComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
     }
   }
   handleTagChange(event) {
+    //console.log(event);
+
     let searchArr = this.tagsFormControl.value ? this.tagsFormControl.value.map(x => x.split(":")[0].trim()) : null
     if(searchArr == null || searchArr.length <= 0) {
       console.log("Return from the search")

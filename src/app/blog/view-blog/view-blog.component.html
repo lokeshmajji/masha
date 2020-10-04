@@ -6,11 +6,25 @@
           <mat-label>Search </mat-label>
           <input type="text" style=" color:#05386B ; margin-left: 10px; width: 4rem !important;" size="50" matInput placeholder="Ex. Pizza" name="search" [(ngModel)]="searchInput">
         </mat-form-field>
-        <button style="background-color: #05386B; color:#EDF5E1 ; margin-left: 10px;margin-right: 10px;" mat-button type="button" (click)="handleSearch($event)">Go</button>
-        <button style="background-color: #05386B; color:#EDF5E1 ; margin-right: 10px;" mat-button type="button" (click)="handleClear($event)">Clear</button>
-        <button style="background-color: #05386B; color:#EDF5E1 ; margin-right: 10px;" mat-button type="button" (click)="handleRefresh(false)">Refresh Data</button>
 
-        <mat-form-field appearance="fill">
+        <span class="material-icons big-icons" (click)="handleSearch($event)">
+          search
+          </span>
+        <!-- <button style="background-color: #05386B; color:#EDF5E1 ; margin-left: 10px;margin-right: 10px;" mat-button type="button" (click)="handleSearch($event)">Go</button> -->
+        
+        <span class="material-icons big-icons" (click)="handleClear($event)">
+          backspace
+          </span>
+        <!-- <button style="background-color: #05386B; color:#EDF5E1 ; margin-right: 10px;" mat-button type="button" (click)="handleClear($event)">Clear</button> -->
+        <!-- <button style="background-color: #05386B; color:#EDF5E1 ; margin-right: 10px;" mat-button type="button" (click)="handleRefresh(false)">Refresh Data</button> -->
+        <span class="material-icons big-icons" (click)="handleRefresh(false)">
+          refresh
+          </span>
+          <span class="material-icons big-icons"  (click)="onSortGlobal($event)">
+            sort
+            </span>
+
+        <mat-form-field appearance="fill" class="margin">
           <mat-label>Categories</mat-label>
           <mat-select [(value)]="selected" (selectionChange)="onCategoryChange($event)">
             <mat-option *ngFor="let category of categories" [value]="category">
@@ -18,16 +32,30 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill" >
+        <mat-form-field appearance="fill" class="margin">
           <mat-label>Tags</mat-label>
           <mat-select [(ngModel)]="selectedTagValue" [formControl]="tagsFormControl" multiple (selectionChange)="handleTagChange($event)" (openedChange)="handleTagOpenChange($event)">
             <mat-option *ngFor="let tag of tagsArr" [value]="tag">{{tag}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <span style="color:#05386B ; margin-left: 10px;font-size: 1.2rem;">Sort:</span>
-        <span class="material-icons" style="color:#05386B ; margin-left: 10px;font-size: 2rem; cursor: pointer;" (click)="onSortGlobal($event)">
-          sort
-          </span>
+        <mat-form-field class="example-full-width">
+          <input type="text"
+                 placeholder="Search Tags"
+                 aria-label="Number"
+                 matInput
+                 [formControl]="tagsControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="handleAutoCompleteSelectChange($event)" >
+            <mat-option *ngFor="let option of filteredTagsOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- <span style="color:#05386B ; margin-left: 10px;font-size: 1.2rem;">Sort:</span> -->
+      
+    
+    
       </form>
 
 

@@ -37,7 +37,24 @@
 mat-icon {
   font-size: 70px;
 }
+
+.material-icons {
+  font-size: 30px;
+
+}
+.big-icons{
+  font-size: 35px;
+}
+.big-icons:hover{
+  font-size: 30px;
+  padding: 5px;
+  margin: 1px;
+  border: 2px solid #05386B;
+  border-radius: 2px;
+  cursor: pointer;
+}
   
+
 .paginator{
   display: flex;
   justify-content: space-between;
@@ -56,6 +73,11 @@ a {
   /* border: 2px solid black; */
   margin: 5px;
   
+}
+
+.margin{
+  margin: 5px;
+
 }
 
 .paginatorinput{

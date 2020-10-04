@@ -7,7 +7,7 @@ import { SharedService } from '../shared/shared.service';
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent implements OnInit {
-  selectedIndex : number = 1;
+  selectedIndex : number = 0;
   blogUpdated : boolean = false;
 
   selectedIndexChange(val :number ){

@@ -10,18 +10,20 @@
 <div class="tabContainer" >
     <mat-tab-group [selectedIndex]="selectedIndex"   (selectedIndexChange)="selectedIndexChange($event)">
         <router-outlet></router-outlet>
+        <mat-tab label="View Posts">
+            <!-- This will create the component once -->
+            <!-- <ng-template matTabContent> -->
+                    <app-view-blog></app-view-blog>
+            <!-- </ng-template> -->
+    
+        </mat-tab>
+        
     <mat-tab label="Add Post"> 
         <ng-template matTabContent>
             <app-add-blog></app-add-blog>
           </ng-template>
     </mat-tab>
-    <mat-tab label="View Posts">
-        <!-- This will create the component once -->
-        <!-- <ng-template matTabContent> -->
-                <app-view-blog></app-view-blog>
-        <!-- </ng-template> -->
 
-    </mat-tab>
     <mat-tab label="Edit Post">
         <!-- This will load the component everytime -->
         <ng-template matTabContent>
