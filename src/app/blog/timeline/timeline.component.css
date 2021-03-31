@@ -1,0 +1,30 @@
+.timeline-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.lcontainer {
+    display: grid;
+    grid-template-columns: 40% 10%;
+
+}
+.rcontainer {
+    border: 1px solid black;
+
+    display: grid;
+    grid-template-columns: 50% 10% 40%;
+
+}
+
+.left {
+    border: 1px solid red;
+}
+.right {
+    border: 1px solid blue;
+}
+.lcenter {
+    border: 1px solid green;
+}
+.rcenter {
+    border: 1px solid greenyellow;
+}
