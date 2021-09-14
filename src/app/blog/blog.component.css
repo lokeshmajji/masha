@@ -1,32 +1,36 @@
-.row{
-    /* color: #fff; */
-    /* background-color: #4992d3; */
-}
-
 .tabContainer{
-    background-color:#EDF5E1;
-    margin-top: 10px;
+    background-color:var(  --main-bg-color-light);
+    margin-top: 50px;
     padding: 20px;
-
-}
-.myblog{
-    display: flex;
-    color: #fff;
-    background-color: #4992d3;
-    position: relative;
+    border: 1px solid black;
 }
 
-.blogid{
-    background-color: #4992d3;
-    color:white;
-    /* border: 1px solid white; */
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;  
-    text-align: center;
-    top: -15px;
-    left: -15px;
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+    height: 500px;
+    border: 1px solid black;
     position: absolute;
-}
+    top: 30;
+    left: 5;
+  }
+  
+  /* The slider itself */
+  .slider {
+    
+    width: 400px; /* Full-width */
+    height: 50px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    /* -webkit-transform:  translateX(-50%) translateY(-50%) rotate(-90deg);
+    -moz-transform: translateX(-50%) translateY(-50%) rotate(-90deg); */
+    /* transform:  translateX(-50%) translateY(100%) rotate(45deg); */
+    -webkit-appearance: slider-vertical;
+    /* -webkit-appearance: none; */
+    background-color: 3f91e5;
+    width: 250px;
+    height:100px;
+  }
+  
+  /* Mouse-over effects */
+  .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }

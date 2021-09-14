@@ -4,27 +4,35 @@
 @import '~quill/dist/quill.bubble.css';
 @import '~quill/dist/quill.snow.css';
 
+:root {
+    /* --main-bg-color-dark: #5CDB95;
+    --main-bg-color-light: #5CDB95;
+    --main-text-color-dark : #05386B ;
+    --custom-bg-color-dark : #05386B ;
+    --main-text-color-light: #EDF5E1; */
+
+    --main-bg-color-dark: white;
+    --main-bg-color-light: white;
+    --main-text-color-dark : black ;
+    --custom-bg-color-dark : white ;
+    --main-text-color-light:white;
+  }
+
 html, body{
     /* background-color: #296ca8; */
-    background-color: #5CDB95;
+    background-color: var(  --main-bg-color-dark);
     height: 100%;
 }
 .lightdarkcolor {
-    /* background-color: #379683 !important; */
-    background-color: #8EE4AF !important;
-    /* background-color: #8EE4AF; */
+    background-color: var(--main-bg-color-light) !important;
 }  
 .customcolor {
-    /* color: #E98074; */
-    color: #EDF5E1;
+    color: var(--main-bg-color-light);
 }
 .customcolordark {
-    /* color: #E98074; */
-    color: #05386B !important;
+    color: var( --main-text-color-dark) !important;
 }
 .custombgcolor {
-    /* background-color: #E98074; */
-    background-color: #05386B;
-    color: #EDF5E1;
-
+    background-color: var( --custom-bg-color-dark);
+    color: var(--main-text-color-light);
 }

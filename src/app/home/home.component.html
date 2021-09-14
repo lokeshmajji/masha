@@ -2,14 +2,15 @@
   <app-spinner *ngIf="loading"></app-spinner>  
   <div class="row" *ngIf="!loading">
         <div class="col-md-12">
-          <h4 class="heading">Welcome Voyager {{userEmail}}</h4>
+          <h4 class="heading">Welcome {{userEmail}}</h4>
 
             <mat-card class="example-card">
 
                 <mat-card-header>
                   <mat-card-title>{{randomBlog.heading}}</mat-card-title>
                   <mat-card-subtitle>Category:{{randomBlog.category}}, Tags:{{randomBlog.tags}}</mat-card-subtitle>
-                  <mat-card-subtitle></mat-card-subtitle>
+                  <mat-card-subtitle>                  <a routerLink="/blogs">View Blogs</a>
+                  </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
                     <div id="scrolling-container">
@@ -23,6 +24,8 @@
                         {{randomBlog.blogtext}}
                       </code> -->
                 </mat-card-content>
+                <mat-card-footer>
+                </mat-card-footer>
               </mat-card>
         </div>
     </div>

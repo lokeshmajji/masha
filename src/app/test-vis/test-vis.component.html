@@ -1,0 +1,16 @@
+<div class="master-container">
+        <div class="slider-container">
+                <div class="line" ></div>
+                <div class="control" [style.top.px]="dragged" (click)="lineClick($event)" draggable="true" (dragstart)="onDragStart($event)" (dragend)="onDragEnd($event)"></div>
+                <div class="tick" *ngFor="let no of ticksarr;let i = index" [style.top.px]="no"></div>
+                <div class="tick-text" *ngFor="let no of ticksarr;let i = index" [style.top.px]="no">{{datesarr[i]}}</div>
+        </div>
+        <div class="blog-container">
+                <div class="blog">
+                        <p>{{this.blog}}</p>
+                </div>
+        </div>
+        
+</div>
+
+

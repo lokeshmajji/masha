@@ -9,7 +9,7 @@ import { SharedService } from '../shared/shared.service';
 export class BlogComponent implements OnInit {
   selectedIndex : number = 0;
   blogUpdated : boolean = false;
-
+  selectedRange;
   selectedIndexChange(val :number ){
     this.selectedIndex=val;
     console.log(this.selectedIndex)
@@ -39,6 +39,11 @@ export class BlogComponent implements OnInit {
         console.log("Blog: Received " + val)
         this.blogUpdated = true;
       })
+  }
+
+  outputUpdate(vol) {
+    console.log(vol)
+    this.selectedRange = vol.srcElement.value
   }
 
 }
