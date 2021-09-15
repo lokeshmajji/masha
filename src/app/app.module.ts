@@ -30,6 +30,7 @@ import { EditBlogComponent } from './blog/edit-blog/edit-blog.component';
 import { ViewSingleComponent } from './blog/view-single/view-single.component';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
 import { TestVisComponent } from './test-vis/test-vis.component';  
+import { NgxEditorModule } from 'ngx-editor';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { TestVisComponent } from './test-vis/test-vis.component';
     QuillModule.forRoot(),
     MaterialModule,
     ReactiveFormsModule,
+    NgxEditorModule,
 
   ],
   providers: [ {provide : HTTP_INTERCEPTORS , useClass: AuthInterceptorService,multi: true}],

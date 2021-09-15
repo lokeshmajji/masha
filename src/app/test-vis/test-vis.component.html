@@ -1,13 +1,41 @@
-<div class="master-container">
+
+<app-spinner *ngIf="loading"></app-spinner>
+<div *ngIf="!loading" class="master-container">
+        
         <div class="slider-container">
-                <div class="line" ></div>
-                <div class="control" [style.top.px]="dragged" (click)="lineClick($event)" draggable="true" (dragstart)="onDragStart($event)" (dragend)="onDragEnd($event)"></div>
+                <div class="line" (dragover)="onDragOver($event)" ></div>
+                <div class="control" (dragover)="onDragOver($event)" [style.top.px]="dragged" (click)="lineClick($event)" draggable="true" (dragstart)="onDragStart($event)" (dragend)="onDragEnd($event)"></div>
                 <div class="tick" *ngFor="let no of ticksarr;let i = index" [style.top.px]="no"></div>
                 <div class="tick-text" *ngFor="let no of ticksarr;let i = index" [style.top.px]="no">{{datesarr[i]}}</div>
         </div>
         <div class="blog-container">
-                <div class="blog">
-                        <p>{{this.blog}}</p>
+                <div id="{{i}}" class="blog" *ngFor="let obj of blogItems;let i=index">
+                        <div class="header">
+                                <h3>{{obj.heading}}</h3>
+                                <h4>{{obj.category}}</h4>
+                                <h4>{{obj.datecreated.split("T")[0]}}</h4>
+                        </div>
+ 
+
+                        <!-- <pre>{{obj.blogtext}}</pre> -->
+                  <!-- <div id="scrolling-container">
+                        <div id="quill-container">
+                        <p-editor  [(ngModel)]="obj.blogtext"   name="blogtext" [readonly]="true"> 
+                          <p-header> </p-header>    
+                        </p-editor>  
+                        </div>
+                  </div> -->
+                  <div class="NgxEditor__Wrapper">
+                        <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+                        <ngx-editor
+                          [editor]="editor"
+                          [ngModel]="obj.blogtext"
+                          [disabled]="false"
+                          [placeholder]="'Type here...'"
+                        ></ngx-editor>
+                      </div>
+
+                       
                 </div>
         </div>
         
