@@ -2,22 +2,23 @@
 <app-spinner *ngIf="loading"></app-spinner>
 <div *ngIf="!loading" class="master-container">
         
-        <div class="slider-container">
-                <div class="line" (dragover)="onDragOver($event)" ></div>
-                <div class="control" (dragover)="onDragOver($event)" [style.top.px]="dragged" (click)="lineClick($event)" draggable="true" (dragstart)="onDragStart($event)" (dragend)="onDragEnd($event)"></div>
-                <div class="tick" *ngFor="let no of ticksarr;let i = index" [style.top.px]="no"></div>
-                <div class="tick-text" *ngFor="let no of ticksarr;let i = index" [style.top.px]="no">{{datesarr[i]}}</div>
+        <div class="categories-container">
+                <div class="category" *ngFor="let category of categories; let i=index">
+                        {{i}}-{{category}}
+                </div>
         </div>
+  
         <div class="blog-container">
-                <div id="{{i}}" class="blog" *ngFor="let obj of blogItems;let i=index">
-                        <div class="header">
-                                <h3>{{obj.heading}}</h3>
-                                <h4>{{obj.category}}</h4>
-                                <h4>{{obj.datecreated.split("T")[0]}}</h4>
+                <div id="{{obj.key}}" class="blog-group" *ngFor="let obj of blogItems | keyvalue">
+                        <div class="blog" *ngFor="let obj of obj.value">
+                                <div class="header">
+                                        <h3>{{obj.heading}}</h3>
+                                        <h4>{{obj.category}}</h4>
+                                        <h4>{{obj.datecreated.split("T")[0]}}</h4>
+                                </div>
+                                <div [innerHTML]="obj.blogtext"></div>
                         </div>
- 
-
-                        <!-- <pre>{{obj.blogtext}}</pre> -->
+             
                   <!-- <div id="scrolling-container">
                         <div id="quill-container">
                         <p-editor  [(ngModel)]="obj.blogtext"   name="blogtext" [readonly]="true"> 
@@ -25,18 +26,29 @@
                         </p-editor>  
                         </div>
                   </div> -->
-                  <div class="NgxEditor__Wrapper">
+                  <!-- <div class="NgxEditor__Wrapper">
                         <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
                         <ngx-editor
                           [editor]="editor"
-                          [ngModel]="obj.blogtext"
+                          [(ngModel)]="obj.blogtext"
                           [disabled]="false"
                           [placeholder]="'Type here...'"
                         ></ngx-editor>
-                      </div>
+                      </div> -->
 
                        
                 </div>
+        </div>
+        <div class="slider-container">
+                <div class="line" (dragover)="onDragOver($event)" ></div>
+                <div class="control" (dragover)="onDragOver($event)" [style.top.px]="dragged" (click)="lineClick($event)" draggable="true" (dragstart)="onDragStart($event)" (dragend)="onDragEnd($event)"></div>
+                <!-- <div class="tick" *ngFor="let no of ticksarr;let i = index" [style.top.px]="no"></div> -->
+                <!-- <div class="tick-text" *ngFor="let no of ticksarr;let i = index" [style.top.px]="no">{{datesarr[i] | date}}</div> -->
+                <div class="tick-text" [style.top.px]="ticksarr[0]">{{datesarr[0] | date}}</div> 
+                <div class="tick-text" style="color: gray;" [style.top.px]="prevDrag">{{datesarr[prevTick] | date}}</div> 
+                <div class="tick-text" style="color: rgb(207, 146, 207);" [style.top.px]="dragged">{{datesarr[currentTick] | date}}</div> 
+                <div class="tick-text" *ngIf="showEnd" style="color: rgb(235, 175, 175);" [style.top.px]="nextDrag">{{datesarr[nextTick] | date}}</div> 
+                <div class="tick-text" [style.top.px]="ticksarr[ticksarr.length - 1]">{{datesarr[datesarr.length - 1] | date}}</div> 
         </div>
         
 </div>

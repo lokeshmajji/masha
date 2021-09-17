@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Editor } from 'ngx-editor';
-import { config } from 'rxjs';
 import { DataService } from '../dao/data.service';
 
 @Component({
@@ -13,9 +12,9 @@ import { DataService } from '../dao/data.service';
 })
 export class TestVisComponent implements OnInit , OnDestroy {
   dragged = 0
-  startpos = 10
+  startpos = 0
   curpos = 0
-  endpos = 730
+  endpos = 735
   noofticks = 5
   stepsize = this.endpos / this.noofticks
   ticksarr = [this.startpos,...[...Array(this.noofticks).keys()].map(x => (x+1)* this.endpos/this.noofticks), this.endpos ]
@@ -64,12 +63,12 @@ export class TestVisComponent implements OnInit , OnDestroy {
       date: "2021-06-01",
       blog: "6666 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis incidunt repudiandae ratione ullam numquam consequatur, dignissimos corrupti, voluptas eveniet atque voluptate sunt dolorem architecto non nisi? Amet quaerat facere est!"
     }
-  ]
+          ]
   slider = new FormControl();
 
   constructor(private scroller: ViewportScroller, private router: Router,private dataService: DataService) { }
 
-  blogItems = []
+  blogItems = {}
   editor: Editor; //https://github.com/sibiraj-s/ngx-editor#demo
   html: '';
 //   {
@@ -80,22 +79,39 @@ export class TestVisComponent implements OnInit , OnDestroy {
 //     "heading": "Jenkins",
 //     "tags": "Jenkins"
 // }
-  loading : boolean = true
+  loading: boolean = true
+  
+  sortDate(d1: any, d2: any) {
+    if (typeof d1 === "object") {
+      console.log("sorting ")
+      d1 = new Date(d1["datecreated"])
+      d2 = new Date(d2["datecreated"])
+    }
+    if (d1 < d2) return 1
+    else if(d1 > d2) return -1
+    else return 0
+  }
+  categoriesset = new Set()
+  categories = []
   ngOnInit(): void {
 
     this.editor = new Editor();
-
+    
     this.dataService.getBlogs().subscribe(data => {
       Object.keys(data).forEach(key => {
-        this.blogItems.push(data[key])
+        this.categoriesset.add(data[key]["category"])
+        const dateKey = data[key]["datecreated"].split("T")[0]
+        dateKey in this.blogItems ?  this.blogItems[dateKey].push(data[key]) : this.blogItems[dateKey ] = [data[key]]
         this.datesset.add(data[key]["datecreated"].split("T")[0])
       })
+
+      // this.datesarr = [...this.datesset].map((date: string) => new Date(date))
+      this.datesarr = [...Object.keys(this.blogItems)].map((date: string) => new Date(date))
+      // this.blogItems.sort(this.sortDate)
+      // this.datesarr.sort(this.sortDate)
+      this.categories = [...this.categoriesset]
       console.log(this.blogItems)
-      this.datesarr = [...this.datesset]
-      this.noofticks = this.datesarr.length
-      this.stepsize = this.endpos / this.noofticks
-      this.ticksarr = [this.startpos, ...[...Array(this.noofticks).keys()].map(x => (x + 1) * this.endpos / this.noofticks), this.endpos]
-      this.loading = false;
+      this.setTicks()
     })
     
   }
@@ -103,6 +119,20 @@ export class TestVisComponent implements OnInit , OnDestroy {
     ngOnDestroy(): void {
       this.editor.destroy();
     }
+  
+  setTicks() {
+    this.noofticks = this.datesarr.length
+    this.stepsize = this.endpos / this.noofticks
+    this.ticksarr = [this.startpos, ...[...Array(this.noofticks).keys()].map(x => (x + 1) * this.endpos / this.noofticks), this.endpos]
+    this.loading = false;
+  }
+  setTicks1() {
+    this.noofticks = 5
+    this.stepsize = this.endpos / this.noofticks
+    this.ticksarr = [this.startpos, this.endpos / 2, this.endpos]
+    this.loading = false;
+  }
+
 
   onDragStart(event: DragEvent) {
     console.log(`starting`, event);
@@ -113,14 +143,28 @@ export class TestVisComponent implements OnInit , OnDestroy {
   onDragEnd(event: DragEvent) {
     console.log('drag end', event);
     console.log('y=',event.clientY)
-    console.log('dragged=', this.dragged)
-    if(event.clientY <= 0) this.dragged = 0
-    if (event.clientY < this.endpos && event.clientY >= this.startpos) this.dragged = event.clientY - 40 > 0 ? event.clientY - 40 : 0
-    if(event.clientY >= this.endpos) this.dragged = this.endpos - 10 
-    this.getTickRange(this.dragged)
+    this.changeDragged(event)
   }
 
+
+  prevDrag
+  nextDrag
+  showEnd = true
+  changeDragged(event) {
+    if(event.clientY <= 0) this.dragged = 0
+    if (event.clientY < this.endpos && event.clientY >= this.startpos) {
+      this.prevDrag = event.clientY - 80 > 0 ?  event.clientY - 80 : undefined
+      this.dragged = event.clientY - 40 > 0 ? event.clientY - 40 : 0
+      this.nextDrag = event.clientY < this.endpos ?  event.clientY : undefined
+
+    }
+    if (event.clientY >= this.endpos) this.dragged = this.endpos - 10
+    this.scrollToDiv(this.dragged)
+  }
+ 
+
   onDragOver($event) {
+      $event.preventDefault()
     // console.log(event)
   }
 
@@ -129,18 +173,31 @@ export class TestVisComponent implements OnInit , OnDestroy {
   }
 
   blog
-  getTickRange(curpos) {
+  prevTick
+  currentTick
+  nextTick
+  scrollToDiv(curpos) {
     const endIndex = this.ticksarr.findIndex(v => v > curpos) 
     const startIndex = endIndex ? endIndex - 1 : 0
-    
-    
+    this.currentTick = startIndex
+    this.prevTick = startIndex > 2 ? startIndex - 1 : undefined
+    this.nextTick = startIndex < this.ticksarr.length  - 2 ? startIndex + 1 : undefined
     // this.scroller.scrollToAnchor("" + startIndex);
-    document.getElementById("" + startIndex).scrollIntoView({
+    let datekey = this.datesarr[startIndex].toISOString().split("T")[0]
+    document.getElementById(datekey).scrollIntoView({
       behavior: "smooth",
       block: "start",
       inline: "nearest"
     });
     
   }
+
+  // Month wise
+  // Day Wise
+
+  // show first 1-5 6 end date
+  // when scrolled to 5, load 6-10 11 end date
+  //
+  //
 
 }

@@ -1,3 +1,9 @@
 .navbar{
-    border: 2px solid #EDF5E1;
+    border-bottom: 2px solid #ffc6f0;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: #fff3fc;
+    overflow: hidden;
 }
