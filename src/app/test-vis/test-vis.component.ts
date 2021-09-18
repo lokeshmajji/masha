@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Editor } from 'ngx-editor';
+import { config } from 'rxjs';
 import { DataService } from '../dao/data.service';
 
 @Component({
@@ -98,27 +99,37 @@ export class TestVisComponent implements OnInit , OnDestroy {
     this.editor = new Editor();
     
     this.dataService.getBlogs().subscribe(data => {
-      Object.keys(data).forEach(key => {
-        this.categoriesset.add(data[key]["category"])
-        const dateKey = data[key]["datecreated"].split("T")[0]
-        dateKey in this.blogItems ?  this.blogItems[dateKey].push(data[key]) : this.blogItems[dateKey ] = [data[key]]
-        this.datesset.add(data[key]["datecreated"].split("T")[0])
-      })
-
-      // this.datesarr = [...this.datesset].map((date: string) => new Date(date))
-      this.datesarr = [...Object.keys(this.blogItems)].map((date: string) => new Date(date))
-      // this.blogItems.sort(this.sortDate)
-      // this.datesarr.sort(this.sortDate)
-      this.categories = [...this.categoriesset]
-      console.log(this.blogItems)
-      this.setTicks()
+      this.processInput(data)
+      this.processBlogs(this.blogItems);
     })
     
   }
+ 
+  processInput(data) {
+    Object.keys(data).forEach(key => {
+      this.categoriesset.add(data[key]["category"])
+      const dateKey = data[key]["datecreated"].split("T")[0]
+      dateKey in this.blogItems ?  this.blogItems[dateKey].push(data[key]) : this.blogItems[dateKey ] = [data[key]]
+      // this.datesset.add(data[key]["datecreated"].split("T")[0])
+    })
+        // this.datesarr = [...this.datesset].map((date: string) => new Date(date))
+      // this.blogItems.sort(this.sortDate)
+      // this.datesarr.sort(this.sortDate)
+    this.filteredBlogs = this.blogItems
+  }
+  filteredBlogs = {}
+  processBlogs(blogItems) {
+    this.datesarr = [...Object.keys(blogItems)].map((date: string) => new Date(date))
+    this.categories = [...this.categoriesset]
+    this.setTicks()
+  }
+  
     // make sure to destory the editor
     ngOnDestroy(): void {
       this.editor.destroy();
     }
+  
+  
   
   setTicks() {
     this.noofticks = this.datesarr.length
@@ -192,12 +203,19 @@ export class TestVisComponent implements OnInit , OnDestroy {
     
   }
 
-  // Month wise
-  // Day Wise
-
-  // show first 1-5 6 end date
-  // when scrolled to 5, load 6-10 11 end date
-  //
-  //
+  handleCategoryClick(event, category) {
+    if (category == 'All') {
+      this.filteredBlogs = this.blogItems
+      return
+    }
+    this.filteredBlogs = {}
+    for (let item in this.blogItems) {
+      const fb = this.blogItems[item].filter(blog => blog.category == category)
+      console.log(fb)
+      if(fb.length > 0) this.filteredBlogs[item] = fb
+    }
+    this.processBlogs(this.filteredBlogs)
+    console.log(this.filteredBlogs)
+  }
 
 }

@@ -3,18 +3,18 @@
 <div *ngIf="!loading" class="master-container">
         
         <div class="categories-container">
-                <div class="category" *ngFor="let category of categories; let i=index">
-                        {{i}}-{{category}}
+                <div class="category" (click)="handleCategoryClick($event, category)" *ngFor="let category of categories; let i=index">
+                        {{category}}
                 </div>
         </div>
   
         <div class="blog-container">
-                <div id="{{obj.key}}" class="blog-group" *ngFor="let obj of blogItems | keyvalue">
+                <div id="{{obj.key}}" class="blog-group" *ngFor="let obj of filteredBlogs | keyvalue">
                         <div class="blog" *ngFor="let obj of obj.value">
                                 <div class="header">
                                         <h3>{{obj.heading}}</h3>
                                         <h4>{{obj.category}}</h4>
-                                        <h4>{{obj.datecreated.split("T")[0]}}</h4>
+                                        <h4>{{obj.datecreated | date}}</h4>
                                 </div>
                                 <div [innerHTML]="obj.blogtext"></div>
                         </div>

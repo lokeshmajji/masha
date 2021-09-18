@@ -1,16 +1,26 @@
 .master-container{
     display: flex;
     flex-direction: row;
-    margin-top: 60px;
-
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    left: 0px;
 }
 
 .categories-container{
-    width: 200px;
+    width: 250px;
     border: 1px solid lightblue;
     position: sticky;
     top: 80px;
     left: 10px;
+    height: 90vh;
+    overflow-y: scroll;
+}
+.category {
+    border-bottom: 1px solid blueviolet;
+    margin: 5px;
+    padding: 5px;
+
 }
 
 .blog-container{
