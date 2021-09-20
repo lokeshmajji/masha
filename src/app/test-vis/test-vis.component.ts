@@ -93,6 +93,7 @@ export class TestVisComponent implements OnInit , OnDestroy {
     else return 0
   }
   categoriesset = new Set()
+  tagsObj = {}
   categories = []
   ngOnInit(): void {
 
@@ -107,7 +108,13 @@ export class TestVisComponent implements OnInit , OnDestroy {
  
   processInput(data) {
     Object.keys(data).forEach(key => {
-      this.categoriesset.add(data[key]["category"])
+      let catKey = data[key]["category"] || 'NA'
+      let tagsKey = this.tagsObj[catKey]
+
+      this.categoriesset.add(catKey)
+      if (tagsKey) this.tagsObj[catKey].push(...data[key]["tags"].split(" "))
+      else this.tagsObj[catKey] = [...data[key]["tags"].split(" ")]
+
       const dateKey = data[key]["datecreated"].split("T")[0]
       dateKey in this.blogItems ?  this.blogItems[dateKey].push(data[key]) : this.blogItems[dateKey ] = [data[key]]
       // this.datesset.add(data[key]["datecreated"].split("T")[0])
@@ -116,11 +123,12 @@ export class TestVisComponent implements OnInit , OnDestroy {
       // this.blogItems.sort(this.sortDate)
       // this.datesarr.sort(this.sortDate)
     this.filteredBlogs = this.blogItems
+    console.log(this.tagsObj)
   }
   filteredBlogs = {}
   processBlogs(blogItems) {
     this.datesarr = [...Object.keys(blogItems)].map((date: string) => new Date(date))
-    this.categories = [...this.categoriesset]
+    this.categories = ['All',...this.categoriesset]
     this.setTicks()
   }
   
@@ -203,19 +211,64 @@ export class TestVisComponent implements OnInit , OnDestroy {
     
   }
 
-  handleCategoryClick(event, category) {
+  handleCategoryClick(event, category, tag) {
+    this.filterBlogs(category,tag)
+    this.processBlogs(this.filteredBlogs)
+  }
+
+  filterBlogs(category, tag) {
     if (category == 'All') {
       this.filteredBlogs = this.blogItems
       return
+    } else if (category == 'NA') {
+      this.filteredBlogs = this.blogItems
     }
+
     this.filteredBlogs = {}
     for (let item in this.blogItems) {
-      const fb = this.blogItems[item].filter(blog => blog.category == category)
-      console.log(fb)
+      const fb = this.blogItems[item].filter(blog => {
+        if (!tag) return blog.category == (category == 'NA' ? '' : category)
+        else return (blog.category == (category == 'NA' ? '' : category) ) && (blog.tags && blog.tags.indexOf(tag) >= 0)
+      }
+      )
       if(fb.length > 0) this.filteredBlogs[item] = fb
     }
-    this.processBlogs(this.filteredBlogs)
-    console.log(this.filteredBlogs)
+
+    this.tempFilteredBlogs = Object.assign(this.filteredBlogs)
+   
   }
 
+  tags = []
+  filteredTags = []
+  getTags(category) {
+    this.tags = this.tagsObj[category] || []
+  }
+
+  mouseEnter(category) {
+    this.getTags(category)
+  }
+  mouseLeave() {
+    
+  }
+  handleTagClick($event, category, tag) {
+    this.handleCategoryClick($event,category,tag)
+  }
+  searchInput
+  tempFilteredBlogs
+  keyPress(event: KeyboardEvent) {
+    console.log(event)
+    let tempBlogs = this.tempFilteredBlogs
+    for (let key in tempBlogs) {
+      let blogs = tempBlogs[key].filter(blog => {
+        return blog.heading.toLowerCase().indexOf(this.searchInput ? this.searchInput.toLowerCase() : '') >= 0
+      })
+      if (blogs.length > 0) tempBlogs[key] = blogs
+      else delete tempBlogs[key]
+    }
+    console.log(tempBlogs)
+    this.filteredBlogs = tempBlogs
+  }
+  keyDown($event) {
+    console.log(this.searchInput)
+  }
 }

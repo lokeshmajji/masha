@@ -17,10 +17,30 @@
     overflow-y: scroll;
 }
 .category {
-    border-bottom: 1px solid blueviolet;
-    margin: 5px;
+    border-bottom: 2px solid #ffc6f0;
     padding: 5px;
+    background-color: #fff6fd; ;
 
+}
+.category:hover {
+     background-color: pink;
+     cursor: pointer;
+     
+}
+.category-container:hover  .tags{
+    display: block;
+}
+
+
+.tags {
+    display: none;
+    border-bottom: 1px solid #ffc6f0;
+    text-align: center;
+
+}
+.tags:hover{
+    background-color: pink;
+    cursor: pointer;
 }
 
 .blog-container{
@@ -48,10 +68,11 @@
     padding: 20px;
 
 }
-.header{
+.blg-header{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    border-bottom: 1px solid  #ffc6f0;
 }
 
 .slider-container{

@@ -3,17 +3,24 @@
 <div *ngIf="!loading" class="master-container">
         
         <div class="categories-container">
-                <div class="category" (click)="handleCategoryClick($event, category)" *ngFor="let category of categories; let i=index">
-                        {{category}}
+                <div class="category-container" (mouseenter)="mouseEnter(category)" (mouseLeave)="mouseLeave()" *ngFor="let category of categories; let i=index">
+                        <div class="category" (click)="handleCategoryClick($event, category, undefined)" >
+                                {{category}}
+                        </div>
+                        <div class="tags" (click)="handleTagClick($event, category, tag)"  *ngFor="let tag of tagsObj[category]; let i=index">{{tag}}</div>
                 </div>
         </div>
   
         <div class="blog-container">
+                <div class="blog-search">
+                        <input type="text" (keydown)="keyDown($event)" (keypress)="keyPress($event)" style=" color:#05386B ; margin: 10px; width: 50rem !important;" size="50" matInput placeholder="Ex. Pizza" name="search" [(ngModel)]="searchInput">
+                </div>
                 <div id="{{obj.key}}" class="blog-group" *ngFor="let obj of filteredBlogs | keyvalue">
                         <div class="blog" *ngFor="let obj of obj.value">
-                                <div class="header">
+                                <div class="blg-header">
                                         <h3>{{obj.heading}}</h3>
                                         <h4>{{obj.category}}</h4>
+                                        <h4>{{obj.tags}}</h4>
                                         <h4>{{obj.datecreated | date}}</h4>
                                 </div>
                                 <div [innerHTML]="obj.blogtext"></div>
