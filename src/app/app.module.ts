@@ -29,8 +29,9 @@ import { ViewBlogComponent } from './blog/view-blog/view-blog.component';
 import { EditBlogComponent } from './blog/edit-blog/edit-blog.component';
 import { ViewSingleComponent } from './blog/view-single/view-single.component';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
-import { TestVisComponent } from './test-vis/test-vis.component';  
 import { NgxEditorModule } from 'ngx-editor';
+import { EditBlogNewComponent } from './timelineview/edit-blog-new/edit-blog-new.component';
+import { TimeLineViewComponent } from './timelineview/timeline-view/timeline-view.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { NgxEditorModule } from 'ngx-editor';
     EditBlogComponent,
     ViewSingleComponent,
     ConfirmDialogComponent,
-    TestVisComponent,
+    TimeLineViewComponent,
+    EditBlogNewComponent,
     
   ],
   imports: [

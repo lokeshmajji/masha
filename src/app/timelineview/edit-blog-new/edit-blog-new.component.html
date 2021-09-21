@@ -1,0 +1,44 @@
+<div>
+
+    <p>{{blogId}}</p>
+    <div class="blog-container">
+  
+          <form (ngSubmit)="onSubmit(blogForm)" #blogForm="ngForm">  
+           
+                <!-- <input type="text" matInput placeholder="heading" name="heading" > -->
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Blog Heading</mat-label>
+                    <input matInput [(ngModel)]="heading" name="heading"  required>
+                  </mat-form-field>
+
+                <div class="NgxEditor__Wrapper">
+                    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+                    <ngx-editor
+                      [editor]="editor"
+                      [(ngModel)]="blogtext"
+                      [disabled]="false"
+                      [placeholder]="'Type here...'"
+                      name="blogtext"
+                    ></ngx-editor>
+                  </div>
+
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Blog Category</mat-label>
+                    <input type="text" matInput placeholder="category" name="category" [(ngModel)]="category" required>   
+                                  </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Tags</mat-label>
+                    <input type="text" matInput placeholder="tags" name="tags" [(ngModel)]="tags">         
+                </mat-form-field>
+                  
+                <div >
+                    <button mat-raised-button color="accent" type="submit">Update Blog</button>
+                </div>
+
+       
+
+        </form>
+
+    </div>
+
+</div>

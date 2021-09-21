@@ -13,17 +13,27 @@
   
         <div class="blog-container">
                 <div class="blog-search">
-                        <input type="text" (keydown)="keyDown($event)" (keypress)="keyPress($event)" style=" color:#05386B ; margin: 10px; width: 50rem !important;" size="50" matInput placeholder="Ex. Pizza" name="search" [(ngModel)]="searchInput">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Search Blogs</mat-label>
+                                <input type="text" (keydown)="keyDown($event)" (keypress)="keyPress($event)"  matInput placeholder="Ex. Spring Boot..." name="search" [(ngModel)]="searchInput">
+                        </mat-form-field>
+                        <p>Search Results: <span>{{getCounts()}}</span></p>
+            
                 </div>
                 <div id="{{obj.key}}" class="blog-group" *ngFor="let obj of filteredBlogs | keyvalue">
-                        <div class="blog" *ngFor="let obj of obj.value">
-                                <div class="blg-header">
-                                        <h3>{{obj.heading}}</h3>
-                                        <h4>{{obj.category}}</h4>
-                                        <h4>{{obj.tags}}</h4>
-                                        <h4>{{obj.datecreated | date}}</h4>
+                        <div class="blog" *ngFor="let blog of obj.value">
+                                <div class="blog-header">
+                                        <div class="title">
+                                                <h3>{{blog.heading}}</h3>
+                                                <button mat-mini-fab color="accent" (click)="editBlog(blog.id)">Edit</button>
+                                        </div>
+                                        <div class="extra">
+                                                <p>Category: {{blog.category}}</p>
+                                                <p>Tags: {{blog.tags}}</p>
+                                                <p>Created: {{blog.datecreated | date}}</p>
+                                        </div>
                                 </div>
-                                <div [innerHTML]="obj.blogtext"></div>
+                                <div [innerHTML]="blog.blogtext"></div>
                         </div>
              
                   <!-- <div id="scrolling-container">
@@ -33,15 +43,7 @@
                         </p-editor>  
                         </div>
                   </div> -->
-                  <!-- <div class="NgxEditor__Wrapper">
-                        <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-                        <ngx-editor
-                          [editor]="editor"
-                          [(ngModel)]="obj.blogtext"
-                          [disabled]="false"
-                          [placeholder]="'Type here...'"
-                        ></ngx-editor>
-                      </div> -->
+      
 
                        
                 </div>

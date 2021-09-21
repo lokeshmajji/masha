@@ -9,7 +9,8 @@ import { AddBlogComponent } from "./blog/add-blog/add-blog.component";
 import { ViewBlogComponent } from "./blog/view-blog/view-blog.component";
 import { EditBlogComponent } from "./blog/edit-blog/edit-blog.component";
 import { ViewSingleComponent } from "./blog/view-single/view-single.component";
-import { TestVisComponent } from "./test-vis/test-vis.component";
+import { TimeLineViewComponent } from "./timelineview/timeline-view/timeline-view.component";
+import { EditBlogNewComponent } from "./timelineview/edit-blog-new/edit-blog-new.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -26,7 +27,8 @@ const routes: Routes = [
     ],
   },
   { path: "auth", component: AuthComponent },
-  { path: "test", component: TestVisComponent },
+  { path: "timelineview", component: TimeLineViewComponent , canActivate: [AuthGuard]},
+  { path: "edit", component: EditBlogNewComponent },
 ];
 
 @NgModule({

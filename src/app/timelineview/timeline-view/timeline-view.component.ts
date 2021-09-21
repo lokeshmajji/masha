@@ -4,14 +4,14 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Editor } from 'ngx-editor';
 import { config } from 'rxjs';
-import { DataService } from '../dao/data.service';
+import { DataService } from '../../dao/data.service';
 
 @Component({
-  selector: 'app-test-vis',
-  templateUrl: './test-vis.component.html',
-  styleUrls: ['./test-vis.component.css']
+  selector: 'timeline-view',
+  templateUrl: './timeline-view.component.html',
+  styleUrls: ['./timeline-view.component.css']
 })
-export class TestVisComponent implements OnInit , OnDestroy {
+export class TimeLineViewComponent implements OnInit , OnDestroy {
   dragged = 0
   startpos = 0
   curpos = 0
@@ -108,22 +108,28 @@ export class TestVisComponent implements OnInit , OnDestroy {
  
   processInput(data) {
     Object.keys(data).forEach(key => {
-      let catKey = data[key]["category"] || 'NA'
+      let blogObj = data[key]
+      blogObj["id"] = key
+      let catKey = blogObj["category"] || 'NA'
       let tagsKey = this.tagsObj[catKey]
 
       this.categoriesset.add(catKey)
-      if (tagsKey) this.tagsObj[catKey].push(...data[key]["tags"].split(" "))
-      else this.tagsObj[catKey] = [...data[key]["tags"].split(" ")]
+      if (tagsKey) this.tagsObj[catKey].push(...blogObj["tags"].split(" "))
+      else {
+        this.tagsObj[catKey] = [...blogObj["tags"].split(" ")]
+        // console.log(this.tagsObj[catKey])
+      }
 
-      const dateKey = data[key]["datecreated"].split("T")[0]
-      dateKey in this.blogItems ?  this.blogItems[dateKey].push(data[key]) : this.blogItems[dateKey ] = [data[key]]
-      // this.datesset.add(data[key]["datecreated"].split("T")[0])
+      const dateKey = blogObj["datecreated"].split("T")[0]
+      
+      dateKey in this.blogItems ? this.blogItems[dateKey].push(blogObj) : this.blogItems[dateKey] = [blogObj]
+      // this.datesset.add(blogObj["datecreated"].split("T")[0])
     })
         // this.datesarr = [...this.datesset].map((date: string) => new Date(date))
       // this.blogItems.sort(this.sortDate)
       // this.datesarr.sort(this.sortDate)
-    this.filteredBlogs = this.blogItems
-    console.log(this.tagsObj)
+    this.filteredBlogs =Object.assign({}, this.blogItems)
+    this.tempFilteredBlogs = Object.assign({},this.filteredBlogs)
   }
   filteredBlogs = {}
   processBlogs(blogItems) {
@@ -234,14 +240,15 @@ export class TestVisComponent implements OnInit , OnDestroy {
       if(fb.length > 0) this.filteredBlogs[item] = fb
     }
 
-    this.tempFilteredBlogs = Object.assign(this.filteredBlogs)
+    this.tempFilteredBlogs = Object.assign({},this.filteredBlogs)
+    console.log(this.tempFilteredBlogs)
    
   }
 
   tags = []
   filteredTags = []
   getTags(category) {
-    this.tags = this.tagsObj[category] || []
+    this.tags = [...this.tagsObj[category]] || []
   }
 
   mouseEnter(category) {
@@ -256,19 +263,36 @@ export class TestVisComponent implements OnInit , OnDestroy {
   searchInput
   tempFilteredBlogs
   keyPress(event: KeyboardEvent) {
-    console.log(event)
-    let tempBlogs = this.tempFilteredBlogs
+    this.searchBlog()
+  }
+  keyDown($event) {
+    if ($event.target.value.substring(0, $event.target.value.length - 1) == '' || $event.target.value.length <= 1) this.filteredBlogs = this.tempFilteredBlogs
+    this.searchBlog()
+  }
+
+  searchBlog() {
+    let tempBlogs = Object.assign({}, this.tempFilteredBlogs)
+    let searchTag = this.searchInput ? this.searchInput.toLowerCase() : ''
+
     for (let key in tempBlogs) {
       let blogs = tempBlogs[key].filter(blog => {
-        return blog.heading.toLowerCase().indexOf(this.searchInput ? this.searchInput.toLowerCase() : '') >= 0
+        return blog.heading.toLowerCase().includes(searchTag) ||
+          blog.category.toLowerCase().includes(searchTag) ||
+          blog.tags.toLowerCase().includes(searchTag)
       })
       if (blogs.length > 0) tempBlogs[key] = blogs
       else delete tempBlogs[key]
     }
-    console.log(tempBlogs)
     this.filteredBlogs = tempBlogs
   }
-  keyDown($event) {
-    console.log(this.searchInput)
+
+  editBlog(key) {
+    console.log(key)
+    this.router.navigate(['edit'], { queryParams : { blogId : key} , queryParamsHandling : 'merge'}) 
   }
+
+  getCounts() {
+    return Object.keys(this.filteredBlogs).length
+  }
+
 }
