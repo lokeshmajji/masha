@@ -32,6 +32,8 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
 import { NgxEditorModule } from 'ngx-editor';
 import { EditBlogNewComponent } from './timelineview/edit-blog-new/edit-blog-new.component';
 import { TimeLineViewComponent } from './timelineview/timeline-view/timeline-view.component';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { AddBlogNewComponent } from './timelineview/add-blog-new/add-blog-new.component';
 
 
 @NgModule({
@@ -50,6 +52,7 @@ import { TimeLineViewComponent } from './timelineview/timeline-view/timeline-vie
     ConfirmDialogComponent,
     TimeLineViewComponent,
     EditBlogNewComponent,
+    AddBlogNewComponent,
     
   ],
   imports: [
@@ -67,9 +70,22 @@ import { TimeLineViewComponent } from './timelineview/timeline-view/timeline-vie
     MaterialModule,
     ReactiveFormsModule,
     NgxEditorModule,
+    HighlightModule
 
   ],
-  providers: [ {provide : HTTP_INTERCEPTORS , useClass: AuthInterceptorService,multi: true}],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    },
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        fullLibraryLoader: () => import('highlight.js'),
+      }
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

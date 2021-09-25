@@ -6,17 +6,17 @@ import { DataService } from 'src/app/dao/data.service';
 import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
-  selector: 'app-edit-blog-new',
-  templateUrl: './edit-blog-new.component.html',
-  styleUrls: ['./edit-blog-new.component.css']
+  selector: 'app-add-blog-new',
+  templateUrl: './add-blog-new.component.html',
+  styleUrls: ['./add-blog-new.component.css']
 })
-export class EditBlogNewComponent implements OnInit , OnDestroy{
+export class AddBlogNewComponent implements OnInit , OnDestroy{
 
   @Input() blogId;
   blogtext
-  heading
-  category
-  tags
+  heading : string = ''
+  category : string = ''
+  tags : string = ''
   @ViewChild('blogForm') blogForm;
   loading : boolean
   
@@ -32,31 +32,21 @@ export class EditBlogNewComponent implements OnInit , OnDestroy{
     ["align_left", "align_center", "align_right", "align_justify"]
   ];
   
-
   constructor(private route: ActivatedRoute, private service: DataService, private sharedService: SharedService) { }
+
+  
 
   ngOnInit(): void {
     this.editor = new Editor();
-
-    this.route.queryParams.subscribe(params => {
-      this.blogId = params.blogId
-      this.service.getBlog(this.blogId).subscribe( (data: any) => {
-        this.blogtext = data.blogtext
-        this.heading = data.heading
-        this.category = data.category
-        this.tags = data.tags
-      })
-     })
   }
-
   onSubmit(form: NgForm){
     console.log(form.value);
+    const html = toHTML(this.blogtext, schema);
     this.loading = true;
-    // const html = toHTML(this.blogtext, schema);
-    this.service.updateBlog( this.blogId,
+    this.service.saveBlog(
       {
         heading : form.value.heading,
-        blogtext: form.value.blogtext,
+        blogtext: html,
         category : form.value.category,
         tags: form.value.tags,
         datecreated : new Date(),
@@ -67,13 +57,13 @@ export class EditBlogNewComponent implements OnInit , OnDestroy{
       console.log(res)
       this.loading = false
       this.sharedService.blogAddedSubject.next(true);
-      this.sharedService.openSnackBar("Blog Updated successfully","Yay")
+      this.sharedService.openSnackBar("Blog Added successfully","Yay")
       form.reset()
       this.blogtext = ''
     }, err => {
       console.log(err)
       this.loading = false
-      this.sharedService.openSnackBar("Blog Update failed","Naa")
+      this.sharedService.openSnackBar("Blog Add failed","Naa")
     });
 
   }

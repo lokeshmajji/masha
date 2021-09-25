@@ -21,17 +21,18 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 @NgModule({
         imports : [MatButtonModule,MatCheckboxModule,MatSidenavModule,MatIconModule,MatListModule,MatToolbarModule,
             MatInputModule,MatFormFieldModule,MatDatepickerModule,MatNativeDateModule,MatTabsModule,MatCardModule,
             MatSelectModule,MatProgressSpinnerModule,MatDialogModule,MatTableModule,MatSortModule,MatPaginatorModule,
-            MatTooltipModule,MatSnackBarModule,MatAutocompleteModule],
+            MatTooltipModule,MatSnackBarModule,MatAutocompleteModule,MatSlideToggleModule],
         exports : [MatButtonModule,MatCheckboxModule,MatSidenavModule,MatIconModule,MatListModule,MatToolbarModule,
             MatInputModule,MatFormFieldModule,MatDatepickerModule,MatNativeDateModule,MatTabsModule,MatCardModule,
             MatSelectModule,MatProgressSpinnerModule,MatDialogModule,MatTableModule,MatSortModule,MatPaginatorModule,
-            MatTooltipModule,MatSnackBarModule,MatAutocompleteModule]
+            MatTooltipModule,MatSnackBarModule,MatAutocompleteModule,MatSlideToggleModule]
 })
 export class MaterialModule {
 

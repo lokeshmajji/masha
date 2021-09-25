@@ -100,17 +100,19 @@ export class ViewBlogComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
                                                 });
                                               this.categories.add(res[key].category == "" ? 'NA' : res[key].category)
                                               
-                                              res[key].tags.split(" ").forEach(element => {
-                                                    if(element == "") {
+                                                if (res[key].tags) {
+                                                  res[key].tags.split(" ").forEach(element => {
+                                                    if (element == "") {
                                                       //console.log("NA")
-                                                      if(this.tags.get("NA")) this.tags.set("NA",this.tags.get("NA") + 1)
-                                                      else this.tags.set("NA",1)
-                                                    } 
-                                                    else if(this.tags.has(element)) this.tags.set(element,this.tags.get(element) + 1);
-                                                    else {
-                                                      this.tags.set(element,1)
+                                                      if (this.tags.get("NA")) this.tags.set("NA", this.tags.get("NA") + 1)
+                                                      else this.tags.set("NA", 1)
                                                     }
-                                              });
+                                                    else if (this.tags.has(element)) this.tags.set(element, this.tags.get(element) + 1);
+                                                    else {
+                                                      this.tags.set(element, 1)
+                                                    }
+                                                  });
+                                                }
                                             }
                                             //console.log(this.tags.values)
                                             for(let tag of this.tags.keys()) {

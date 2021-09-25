@@ -1,13 +1,17 @@
 
+<div style="margin-top: 150px;" *ngIf="loading"></div>
 <app-spinner *ngIf="loading"></app-spinner>
 <div *ngIf="!loading" class="master-container">
         
         <div class="categories-container">
                 <div class="category-container" (mouseenter)="mouseEnter(category)" (mouseLeave)="mouseLeave()" *ngFor="let category of categories; let i=index">
                         <div class="category" (click)="handleCategoryClick($event, category, undefined)" >
-                                {{category}}
+                                {{category}}      
                         </div>
-                        <div class="tags" (click)="handleTagClick($event, category, tag)"  *ngFor="let tag of tagsObj[category]; let i=index">{{tag}}</div>
+                        <div  (click)="handleTagClick($event, category, tag)"  *ngFor="let tag of tagsObj[category]; let i=index">
+                              <!-- <div class="tags" *ngIf="handleTagShow(category)" >{{tag}}</div>   -->
+                              <div class="tags" [ngClass]="{'tagshow' : handleTagShow(category)}" >{{tag}}</div>  
+                        </div>
                 </div>
         </div>
   
@@ -15,34 +19,58 @@
                 <div class="blog-search">
                         <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label>Search Blogs</mat-label>
-                                <input type="text" (keydown)="keyDown($event)" (keypress)="keyPress($event)"  matInput placeholder="Ex. Spring Boot..." name="search" [(ngModel)]="searchInput">
+                                <input type="text" (keydown)="keyDown($event)" (keypress)="keyPress($event)"  matInput placeholder="Ex. Spring Boot..." name="search" [(ngModel)]="searchInput">  
                         </mat-form-field>
                         <p>Search Results: <span>{{getCounts()}}</span></p>
-            
+                        <button mat-fab color="accent" [routerLink]="['/add']">
+                                <mat-icon>post_add</mat-icon>
+                        </button>
+
                 </div>
-                <div id="{{obj.key}}" class="blog-group" *ngFor="let obj of filteredBlogs | keyvalue">
-                        <div class="blog" *ngFor="let blog of obj.value">
-                                <div class="blog-header">
-                                        <div class="title">
-                                                <h3>{{blog.heading}}</h3>
-                                                <button mat-mini-fab color="accent" (click)="editBlog(blog.id)">Edit</button>
+
+                <div id="{{obj.key}}" class="blog-group" *ngFor="let obj of filteredBlogs | keyvalue; index as i">
+                        <div class="blog" *ngFor="let blog of obj.value;index as j">
+                                <div >
+                                        <div class="blog-header">
+                                                <div class="title">
+                                                        <div>
+                                                                <h4>{{blog.heading}}</h4>
+                                                        </div>
+                                                        <div class="title-right">
+                                                                <button mat-mini-fab color="accent" (click)="openDialog($event,blog.id)"><mat-icon>delete</mat-icon></button>
+                                                                <button mat-mini-fab color="accent" (click)="editBlog(blog.id)"><mat-icon>edit_note</mat-icon></button>
+                                                        </div>
+                                                </div>
+                                                <div class="extra">
+                                                        <div class="info">
+                                                                <p>Category: {{blog.category}}</p>
+                                                                <p>Tags: {{blog.tags}}</p>
+                                                        </div>
+                                                        <div class="info">
+                                                                <p>Created: {{ getDate(blog.datecreated) | date}}</p>
+                                                                <mat-slide-toggle (change)="handleToggleChange(obj.key,j)">Toggle View</mat-slide-toggle>
+                                                        </div>
+                                                </div>
                                         </div>
-                                        <div class="extra">
-                                                <p>Category: {{blog.category}}</p>
-                                                <p>Tags: {{blog.tags}}</p>
-                                                <p>Created: {{blog.datecreated | date}}</p>
+
+                                       
+                                </div>
+                                <div class="toggle-parent" *ngIf="!blog.toggle" [innerHTML]="blog.blogtext"></div>
+                                <div class="toggle-parent" *ngIf="blog.toggle">
+                                        <div id="scrolling-container">
+                                            <div id="quill-container">
+                                                <p-editor  [(ngModel)]="blog.blogtext"  name="blogtext" [readonly]="true"> 
+                                                        <p-header> </p-header>    
+                                                </p-editor>  
+                                            </div>
                                         </div>
                                 </div>
-                                <div [innerHTML]="blog.blogtext"></div>
+                       
+                                <!-- <pre><code [innerHTML]="blog.blogtext"></code></pre> -->
+
                         </div>
              
-                  <!-- <div id="scrolling-container">
-                        <div id="quill-container">
-                        <p-editor  [(ngModel)]="obj.blogtext"   name="blogtext" [readonly]="true"> 
-                          <p-header> </p-header>    
-                        </p-editor>  
-                        </div>
-                  </div> -->
+         
       
 
                        

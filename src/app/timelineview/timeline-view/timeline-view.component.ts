@@ -1,9 +1,12 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Editor } from 'ngx-editor';
 import { config } from 'rxjs';
+import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
+import { SharedService } from 'src/app/shared/shared.service';
 import { DataService } from '../../dao/data.service';
 
 @Component({
@@ -67,7 +70,7 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
           ]
   slider = new FormControl();
 
-  constructor(private scroller: ViewportScroller, private router: Router,private dataService: DataService) { }
+  constructor(private dataService: DataService, private router: Router, private sharedService: SharedService, private dialog: MatDialog) { }
 
   blogItems = {}
   editor: Editor; //https://github.com/sibiraj-s/ngx-editor#demo
@@ -81,15 +84,15 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
 //     "tags": "Jenkins"
 // }
   loading: boolean = true
-  
-  sortDate(d1: any, d2: any) {
-    if (typeof d1 === "object") {
-      console.log("sorting ")
-      d1 = new Date(d1["datecreated"])
-      d2 = new Date(d2["datecreated"])
-    }
+  isChecked : boolean = false
+  sortDateDesc(d1: any, d2: any) {
     if (d1 < d2) return 1
     else if(d1 > d2) return -1
+    else return 0
+  }
+  sortDateAsc(d1: any, d2: any) {
+    if (d2 < d1) return 1
+    else if(d2 > d1) return -1
     else return 0
   }
   categoriesset = new Set()
@@ -99,41 +102,52 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
 
     this.editor = new Editor();
     
+    this.fetchDataFromDB()
+    
+  }
+
+  fetchDataFromDB() {
     this.dataService.getBlogs().subscribe(data => {
       this.processInput(data)
       this.processBlogs(this.blogItems);
     })
-    
   }
  
   processInput(data) {
+
+    // get the keys in the data
+    // for each key create an object with date as key : [all the blogs as an array]
     Object.keys(data).forEach(key => {
       let blogObj = data[key]
       blogObj["id"] = key
+      blogObj["toggle"] = false
       let catKey = blogObj["category"] || 'NA'
       let tagsKey = this.tagsObj[catKey]
 
       this.categoriesset.add(catKey)
-      if (tagsKey) this.tagsObj[catKey].push(...blogObj["tags"].split(" "))
-      else {
-        this.tagsObj[catKey] = [...blogObj["tags"].split(" ")]
-        // console.log(this.tagsObj[catKey])
-      }
+
+      const tagslocal = blogObj["tags"] || ""
+      if (tagsKey) tagslocal.split(' ').forEach( x => this.tagsObj[catKey].add(x) )
+      else this.tagsObj[catKey] = new Set([...tagslocal.split(' ')])
+      
 
       const dateKey = blogObj["datecreated"].split("T")[0]
-      
+      // blogObj["datecreated"] = new Date(blogObj["datecreated"])
       dateKey in this.blogItems ? this.blogItems[dateKey].push(blogObj) : this.blogItems[dateKey] = [blogObj]
       // this.datesset.add(blogObj["datecreated"].split("T")[0])
     })
-        // this.datesarr = [...this.datesset].map((date: string) => new Date(date))
-      // this.blogItems.sort(this.sortDate)
-      // this.datesarr.sort(this.sortDate)
+      
     this.filteredBlogs =Object.assign({}, this.blogItems)
-    this.tempFilteredBlogs = Object.assign({},this.filteredBlogs)
+    this.tempFilteredBlogs = Object.assign({}, this.filteredBlogs)
+    // console.log('blog array structure',this.blogItems)
+    // console.log(`this.tagsObj`, this.tagsObj)
   }
+
   filteredBlogs = {}
   processBlogs(blogItems) {
-    this.datesarr = [...Object.keys(blogItems)].map((date: string) => new Date(date))
+    // console.log(`Object.keys(blogItems)`, Object.keys(blogItems))
+    this.datesarr = [...Object.keys(blogItems)].map(date =>  new Date(date+ "T06:00:01.000Z"))
+    this.datesarr = this.datesarr.sort(this.sortDateAsc)
     this.categories = ['All',...this.categoriesset]
     this.setTicks()
   }
@@ -151,13 +165,6 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
     this.ticksarr = [this.startpos, ...[...Array(this.noofticks).keys()].map(x => (x + 1) * this.endpos / this.noofticks), this.endpos]
     this.loading = false;
   }
-  setTicks1() {
-    this.noofticks = 5
-    this.stepsize = this.endpos / this.noofticks
-    this.ticksarr = [this.startpos, this.endpos / 2, this.endpos]
-    this.loading = false;
-  }
-
 
   onDragStart(event: DragEvent) {
     console.log(`starting`, event);
@@ -187,6 +194,18 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
     this.scrollToDiv(this.dragged)
   }
  
+  resetDragPositions() {
+    this.prevDrag = undefined
+    this.nextDrag = undefined
+    this.dragged = 0
+    let datekey = this.datesarr[0].toISOString().split("T")[0]
+    console.log(`datekey`, datekey)
+    document.getElementsByClassName('blog-search')[0].scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest"
+    });
+  }
 
   onDragOver($event) {
       $event.preventDefault()
@@ -218,8 +237,14 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
   }
 
   handleCategoryClick(event, category, tag) {
+    if (this.clickedCategory != category) {
+      this.toggleTag = false
+    }
+    this.clickedCategory = category
+    this.toggleTag = !this.toggleTag
     this.filterBlogs(category,tag)
     this.processBlogs(this.filteredBlogs)
+    this.resetDragPositions()
   }
 
   filterBlogs(category, tag) {
@@ -241,7 +266,7 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
     }
 
     this.tempFilteredBlogs = Object.assign({},this.filteredBlogs)
-    console.log(this.tempFilteredBlogs)
+    // console.log(this.tempFilteredBlogs)
    
   }
 
@@ -257,9 +282,18 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
   mouseLeave() {
     
   }
+
+  clickedCategory
   handleTagClick($event, category, tag) {
-    this.handleCategoryClick($event,category,tag)
+    this.filterBlogs(category,tag)
+    this.processBlogs(this.filteredBlogs)
   }
+  
+  toggleTag : boolean = false
+  handleTagShow(category) {
+    return this.clickedCategory == category && this.toggleTag
+  }
+
   searchInput
   tempFilteredBlogs
   keyPress(event: KeyboardEvent) {
@@ -295,4 +329,39 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
     return Object.keys(this.filteredBlogs).length
   }
 
+  toggledKey
+  handleToggleChange(key,blogNumber) {
+    console.log(key,blogNumber)
+    this.filteredBlogs[key][blogNumber]["toggle"] = !this.filteredBlogs[key][blogNumber]["toggle"]
+  }
+
+  getDate(date) {
+    return new Date(date)
+  }
+
+  openDialog(event, blogId): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: "Confirm",
+        message: "Do you wanna delete the item?"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed' + result);
+      if (result == true) {
+        this.onDeletePost(event, blogId);
+      }
+    });
+  }
+  onDeletePost(event: Event, blogId) {
+    this.dataService.deletePost(blogId).subscribe(msg => {
+      this.sharedService.openSnackBar('Post Deleted Successfully', 'Tadaaa')
+      this.fetchDataFromDB()
+    }, err => {
+      console.log(err)
+      this.sharedService.openSnackBar('Post Delete failed', 'Ding...')
+    })
+  }
 }
