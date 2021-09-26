@@ -1,8 +1,12 @@
 .tabContainer{
     background-color:var(  --main-bg-color-light);
-    margin-top: 50px;
-    padding: 20px;
-    border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    padding: 30px;
+    margin: 30px;
+    margin-top: 80px;
+    position: sticky;
+    top: 80px;
+
 }
 
 .slidecontainer {

@@ -1,6 +1,6 @@
 
 <div class="tabContainer" >
-    <mat-tab-group [selectedIndex]="selectedIndex"   (selectedIndexChange)="selectedIndexChange($event)">
+    <mat-tab-group  mat-align-tabs="center" [selectedIndex]="selectedIndex"   (selectedIndexChange)="selectedIndexChange($event)">
         <router-outlet></router-outlet>
         <mat-tab label="View Posts">
             <!-- This will create the component once -->

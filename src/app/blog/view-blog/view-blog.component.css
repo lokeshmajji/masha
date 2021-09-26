@@ -34,6 +34,10 @@
 
 }
 
+.master-container{
+  margin-top: 10px;
+}
+
 mat-icon {
   font-size: 70px;
 }
@@ -86,4 +90,11 @@ a {
   color: #05386B;
   width: 40px;
   padding: 0px;
+}
+
+.example-form > *{
+  margin-right: 10px;
+}
+.example-full-width{
+  width: 25%;
 }

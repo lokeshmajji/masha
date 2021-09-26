@@ -9,18 +9,21 @@
           <a class="nav-link customcolordark" href="#" routerLink="/home" *ngIf="authenticated">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link customcolordark" href="#" routerLink="/blogs" *ngIf="authenticated">Blog</a>
+          <a class="nav-link customcolordark" href="#" routerLink="/blogs" *ngIf="authenticated">Regular View</a>
         </li>
         <li class="nav-item">
           <a class="nav-link customcolordark" href="#" routerLink="/auth" *ngIf="!authenticated">Authentication</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link customcolordark" href="#" routerLink="/timelineview" >Timeline View</a>
+          <a class="nav-link customcolordark" href="#" routerLink="/timelineview" *ngIf="authenticated">Timeline View</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link customcolordark" href="#" routerLink="/timelineview2" *ngIf="authenticated">Timeline View2</a>
         </li>
       </ul>
       <ul class="nav navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#" routerLink="/Logout" *ngIf="authenticated" (click)="onLogout()">Logout</a>
+          <a class="nav-link customcolordark" href="#" routerLink="/Logout" *ngIf="authenticated" (click)="onLogout()">Logout</a>
         </li>
       </ul>
     </div>

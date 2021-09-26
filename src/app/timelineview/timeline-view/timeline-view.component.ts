@@ -122,6 +122,7 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
       blogObj["id"] = key
       blogObj["toggle"] = false
       let catKey = blogObj["category"] || 'NA'
+      if (catKey == 'NA') console.log(`blogObj`, blogObj)
       let tagsKey = this.tagsObj[catKey]
 
       this.categoriesset.add(catKey)
@@ -139,7 +140,8 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
       
     this.filteredBlogs =Object.assign({}, this.blogItems)
     this.tempFilteredBlogs = Object.assign({}, this.filteredBlogs)
-    // console.log('blog array structure',this.blogItems)
+    //console.log('blog array structure', this.blogItems)
+    
     // console.log(`this.tagsObj`, this.tagsObj)
   }
 

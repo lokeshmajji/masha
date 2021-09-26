@@ -1,0 +1,35 @@
+<div style="margin-top: 80px;"></div>
+<div class="master-container">
+    <div class="blog-container" *ngFor="let obj of filteredBlogs | keyvalue; index as i">
+        <!-- -->
+        <div  *ngFor="let blog of obj.value">
+              <div class="even" *ngIf="i % 2 == 0">
+                <div class="blog">
+                    <p>{{blog.heading}} Category: {{blog.category}} , Tags: {{blog.tags}}</p>
+                    <pre><code [innerHTML]="blog.blogtext"></code></pre>
+                </div>
+                <div class="center-left">
+                    <div class="dot-left">
+                        <p>{{obj.key}} </p>
+                    </div>
+                  </div>
+              </div>
+              <div class="odd"  *ngIf="i % 2 == 1">
+                <div class="center-right">
+                    <div class="dot-right">
+                        <p>{{obj.key}} </p>
+                    </div>
+                  </div>
+                  <div class="blog">
+                    <p>{{blog.heading}} Category: {{blog.category}} , Tags: {{blog.tags}}</p>
+                    <pre><code [innerHTML]="blog.blogtext"></code></pre>
+                </div>
+              </div>
+        </div>
+        <!-- <div class="line-container">
+            <div class="line"></div>
+            <div class="dot"></div>
+        </div> -->
+    
+    </div>
+</div>
