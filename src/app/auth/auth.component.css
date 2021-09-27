@@ -30,7 +30,7 @@
 
 }
 
-@media( max-width: 400px) {
+@media( max-width: 414px) {
     .loginform{
         border: 3px solid #EDF5E1;
         padding: 90px;

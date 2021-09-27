@@ -97,7 +97,7 @@
     margin-right: 5px;
 }
 
-@media( max-width: 400px) {
+@media( max-width: 414px) {
     .navbar {
         display:flex;
         flex-direction: column;

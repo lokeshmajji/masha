@@ -94,7 +94,7 @@ white-space: pre !important;
 }
 
 
-@media( max-width: 400px) {
+@media( max-width: 414px) {
 ::ng-deep.NgxEditor__MenuBar {
   flex-wrap: wrap;
  }
