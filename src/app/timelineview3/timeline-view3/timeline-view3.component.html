@@ -1,0 +1,28 @@
+<div style="margin-top: 80px;"></div>
+<div class="master-container">
+
+    <mat-chip-list aria-label="Fish selection">
+        <mat-chip color="accent"  (click)="handleClick(cat)" *ngFor="let cat of categories">{{cat}}</mat-chip>
+      </mat-chip-list>
+
+      <div class="slider-container">
+        <mat-card class="card">
+            <mat-card-header>
+              <mat-card-title>{{heading}}</mat-card-title>
+              <mat-card-subtitle>{{category}}</mat-card-subtitle>
+              <mat-card-subtitle>{{tags}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <pre><code [innerHTML]="blogtext"></code></pre>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button>Delete</button>
+              <button mat-button>Edit</button>
+            </mat-card-actions>
+          </mat-card>
+          <span class="prev" (click)="handleCarouselClick(-1)">&lt;</span>
+          <span class="next" (click)="handleCarouselClick(1)">&gt;</span>
+          <span class="pagenumber">{{index+1}}/ {{selectedCategoryLength}}</span>
+      </div>
+
+</div>

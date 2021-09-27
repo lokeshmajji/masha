@@ -35,6 +35,7 @@ import { TimeLineViewComponent } from './timelineview/timeline-view/timeline-vie
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { AddBlogNewComponent } from './timelineview/add-blog-new/add-blog-new.component';
 import { TimelineView2Component } from './timelineview2/timeline-view2/timeline-view2.component';
+import { TimelineView3Component } from './timelineview3/timeline-view3/timeline-view3.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { TimelineView2Component } from './timelineview2/timeline-view2/timeline-
     EditBlogNewComponent,
     AddBlogNewComponent,
     TimelineView2Component,
+    TimelineView3Component,
     
   ],
   imports: [
