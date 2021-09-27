@@ -1,28 +1,31 @@
-<div style="margin-top: 80px;"></div>
-<div class="master-container">
+<div class="timeline-margin"></div>
+<app-spinner *ngIf="loading"></app-spinner>
+<div *ngIf="!loading" class="master-container">
 
+    <div class="addblog">
+        <button mat-fab color="accent" [routerLink]="['/add']">
+            <mat-icon>post_add</mat-icon>
+        </button>
+    </div>
     <mat-chip-list aria-label="Fish selection">
         <mat-chip color="accent"  (click)="handleClick(cat)" *ngFor="let cat of categories">{{cat}}</mat-chip>
       </mat-chip-list>
 
       <div class="slider-container">
-        <mat-card class="card">
-            <mat-card-header>
-              <mat-card-title>{{heading}}</mat-card-title>
-              <mat-card-subtitle>{{category}}</mat-card-subtitle>
-              <mat-card-subtitle>{{tags}}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <pre><code [innerHTML]="blogtext"></code></pre>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-button>Delete</button>
-              <button mat-button>Edit</button>
-            </mat-card-actions>
-          </mat-card>
-          <span class="prev" (click)="handleCarouselClick(-1)">&lt;</span>
-          <span class="next" (click)="handleCarouselClick(1)">&gt;</span>
+
+          <!-- <pre><code class="formatcode" [innerHTML]="blogtext"></code></pre> -->
+            <div class="formatcode" >
+                    <h4>{{heading}}</h4>
+                    <p>Tags: {{tags}}</p>
+            </div>
+          <div class="formatcode" [innerHTML]="blogtext"></div>
+          <span class="prev" (click)="handleCarouselClick(-1)">&#10094;</span>
+          <span class="next" (click)="handleCarouselClick(1)">&#10095;</span>
           <span class="pagenumber">{{index+1}}/ {{selectedCategoryLength}}</span>
+          <div class="title-right">
+            <button mat-mini-fab color="accent" (click)="openDialog($event)"><mat-icon>delete</mat-icon></button>
+            <button mat-mini-fab color="accent" (click)="editBlog()"><mat-icon>edit_note</mat-icon></button>
+        </div>
       </div>
 
 </div>

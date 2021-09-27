@@ -16,4 +16,26 @@
     text-align: center;
     color: #05386B ;
 }
+.slider-container{
+    margin-top: 20px;
+    /* margin-left: 5px; */
+    position: relative;
+    border: 1px solid #ffc6f0;
+}
+
+.formatcode{
+    word-wrap: break-word;
+    line-break: strict;
+    padding: 5px;
+    margin: 30px;
+}
+
+@media screen and ( max-width: 400px)  {
+    .container {
+        margin-top: 0px;
+        height: 85%;
+        display: block;
+        box-shadow: none;
+    }
+}
 

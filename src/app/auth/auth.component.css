@@ -29,3 +29,16 @@
     color: #EDF5E1;
 
 }
+
+@media( max-width: 400px) {
+    .loginform{
+        border: 3px solid #EDF5E1;
+        padding: 90px;
+            border-radius: 15px;
+            width: 525px;
+    }
+    .container {
+        height: 50%;
+    }
+    
+}

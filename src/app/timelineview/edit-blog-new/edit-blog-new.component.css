@@ -8,7 +8,7 @@
     padding: 50px;
     background-color: #fff6fd;
     border-radius: 20px;
-    margin-top: 60px;
+    margin-top: 70px;
 
 }
 .blog-container input {
@@ -17,7 +17,7 @@
     color: rgb(122, 14, 155);
 } 
 
-.example-full-width {
+.matinput-container {
     width: 75%;
   }
 
@@ -66,16 +66,19 @@
   border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
-::ng-deep.editor .NgxEditor__MenuBar {
+::ng-deep.NgxEditor__MenuBar {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
 }
 
 ::ng-deep.editor .NgxEditor {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border: none;
+  flex-wrap: wrap;
+
 }
 ::ng-deep.NgxEditor__Content {
     min-height: 300px; /* make all of the editor area clickable */
@@ -88,4 +91,26 @@
 }
 ::ng-deep.editor pre {
   white-space: pre !important;
+}
+
+
+@media( max-width: 400px) {
+  ::ng-deep.NgxEditor__MenuBar {
+    flex-wrap: wrap;
+   }
+   .matinput-container {
+    width: 100%;
+  }
+  .blog-container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #ffc6f0;
+    background-color: #fff6fd;
+    border-radius: 20px;
+    margin: 5px;
+    padding: 5px;
+    margin-top: 10px;
+
+}
+  
 }

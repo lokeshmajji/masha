@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/dao/data.service';
+import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
 import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
@@ -17,12 +18,13 @@ export class TimelineView3Component implements OnInit {
   filteredBlogs = {}
   tempFilteredBlogs = {}
   categories = []
+  loading: boolean = true
 
   heading
   category
   tags
   blogtext
-
+  id
   constructor(private dataService: DataService, private router: Router, private sharedService: SharedService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -30,8 +32,10 @@ export class TimelineView3Component implements OnInit {
   }
 
   fetchDataFromDB() {
+    this.loading = true
     this.dataService.getBlogs().subscribe(data => {
       this.processInput(data)
+      this.loading = false
     })
   }
 
@@ -55,7 +59,8 @@ export class TimelineView3Component implements OnInit {
     })
     
     this.categories = [...this.categoriesset]
-    this.filteredBlogs =Object.assign({}, this.blogItems)
+    this.filteredBlogs = Object.assign({}, this.blogItems)
+    this.handleClick(this.categories[0])
   }
 
   selectedChips = []
@@ -90,10 +95,42 @@ export class TimelineView3Component implements OnInit {
     this.blogtext = this.blogItems[cat][index].blogtext
     this.category = this.blogItems[cat][index].category
     this.tags = this.blogItems[cat][index].tags
+    this.id = this.blogItems[cat][index].id
   }
   handleClick(cat) {
     this.selectedCategory = cat
     this.index = 0
+    this.selectedCategoryLength =  this.blogItems[this.selectedCategory].length
     this.setCard(cat,0)
   }
+
+  editBlog() {
+    this.router.navigate(['edit'], { queryParams : { blogId : this.id} , queryParamsHandling : 'merge'}) 
+  }
+  openDialog(event): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: "Confirm",
+        message: "Do you wanna delete the item?"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed' + result);
+      if (result == true) {
+        this.onDeletePost();
+      }
+    });
+  }
+  onDeletePost() {
+    this.dataService.deletePost(this.id).subscribe(msg => {
+      this.sharedService.openSnackBar('Post Deleted Successfully', 'Tadaaa')
+      this.fetchDataFromDB()
+    }, err => {
+      console.log(err)
+      this.sharedService.openSnackBar('Post Delete failed', 'Ding...')
+    })
+  }
+
 }
