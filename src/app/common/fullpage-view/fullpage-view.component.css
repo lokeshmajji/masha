@@ -1,0 +1,135 @@
+.full-view{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 60px;
+    left: 0px;
+    background-color: darkgrey;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+.master-container{
+    width: 70%;
+    height: 80%;
+    background-color: white;
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    border: 1px solid red;
+    border-radius: 10px;
+    z-index: 2;
+    overflow:scroll;
+    padding: 10px;
+    
+}
+
+.close-btn{
+   
+    /* display: block; */
+    /* font-size: 40px;
+    font-weight: 600;
+    color: black;
+    width: 35px;
+    height: 35px; */
+    float: right;
+    color: white;
+    
+
+}
+.close-btn:hover{
+    font-weight: 700;
+    font-size: 40px;
+    color: blue;
+}
+
+
+.blog-container {
+    display: flex;
+    width: 1200px;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+  
+  .blog-search {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  
+  .blog-group {
+    border: 1px solid rgb(231 237 243);
+    padding: 10px;
+    margin: 10px;
+  }
+  .blog {
+    border: 1px solid rgb(226 195 219);
+    padding: 10px;
+    margin: 10px;
+  }
+  .blog p {
+    line-break: strict;
+    white-space: pre-wrap;
+  }
+  .blog-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 1px solid #ffc6f0;
+  }
+  .blog-header .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .blog-header .extra {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 5px;
+    padding: 5px;
+  }
+  .blog-header .extra .info {
+    display: flex;
+    justify-content: space-between;
+  }
+  .blog-header .extra .info > * {
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  .title-right > * {
+    margin-right: 10px;
+  }
+
+
+
+@media (max-width: 414px) {
+    .full-view{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background-color: darkgrey;
+        opacity: 0.5;
+        z-index: 1;
+    }
+    
+    .master-container{
+        width: 99%;
+        height: 95%;
+        background-color: white;
+        position: absolute;
+        top: 40%;
+        left: 1%;
+        border: 1px solid red;
+        border-radius: 10px;
+        z-index: 2;
+        overflow:scroll;
+        padding: 5px;
+        
+    }
+    
+}

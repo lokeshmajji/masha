@@ -142,4 +142,13 @@ export class TimelineView3Component implements OnInit {
     })
   }
 
+  fullPageViewShow: number = -1
+  
+  fullPageBlog = {}
+  viewFull() {
+    
+    this.fullPageViewShow++
+    this.fullPageBlog = this.blogItems[this.category][this.index]
+  }
+
 }

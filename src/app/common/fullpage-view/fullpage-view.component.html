@@ -1,0 +1,42 @@
+<div *ngIf="show > -1">
+    <div class="full-view" (click)="handlClose()">
+    </div>
+    <div class="master-container">
+       
+        <button class="close-btn" mat-mini-fab color="accent" (click)="handlClose()"><mat-icon>close_fullscreen</mat-icon></button>
+
+        <div >
+            <div class="blog-header">
+                    <div class="title">
+                            <div>
+                                    <h4>{{blog.heading}}</h4>
+                            </div>
+                            <div class="title-right">
+                                    <button mat-mini-fab color="accent" (click)="openDialog($event,blog.id)"><mat-icon>delete</mat-icon></button>
+                                    <button mat-mini-fab color="accent" (click)="editBlog(blog.id)"><mat-icon>edit_note</mat-icon></button>
+                            </div>
+                    </div>
+                    <div class="extra">
+                            <div class="info">
+                                    <p>Category: {{blog.category}}</p>
+                                    <p>Tags: {{blog.tags}}</p>
+                                    <p>Created: {{ blog.datecreated | date}}</p>
+                                    <mat-slide-toggle (change)="handleToggleChange()">Toggle View</mat-slide-toggle>
+                            </div>
+                    </div>
+            </div>
+        </div>
+        <!-- <div [innerHTML]="blog.blogtext"></div> -->
+        <div class="toggle-parent" *ngIf="!toggle" [innerHTML]="blog.blogtext"></div>
+        <div class="toggle-parent" *ngIf="toggle">
+                <div id="scrolling-container">
+                    <div id="quill-container">
+                        <p-editor  [(ngModel)]="blog.blogtext"  name="blogtext" [readonly]="true"> 
+                                <p-header> </p-header>    
+                        </p-editor>  
+                    </div>
+                </div>
+        </div>
+
+    </div>
+</div>

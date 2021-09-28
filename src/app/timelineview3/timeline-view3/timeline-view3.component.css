@@ -95,6 +95,21 @@
     border: 0 5px 5px 5px;
 
 }
+.pagenumbertop{
+    width: 60px;
+    height: 25px;
+    position: absolute;
+    top:0;
+    left: 40%;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: #d4aec8;
+    color: black;
+    opacity: 0.4;
+    border: 0 5px 5px 5px;
+
+}
 
 .title {
     display: flex;
@@ -104,8 +119,8 @@
 .title-right {
     /* float: right; */
     position: absolute;
-    right: 0;
-    bottom: 1px;
+    right: 30px;
+    top: 1px;
 }
 .title-right > * {
     margin-right: 5px;
