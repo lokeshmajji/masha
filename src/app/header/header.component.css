@@ -7,6 +7,14 @@
     background-color: #fff3fc;
     z-index:1; 
 }
+.hideme{
+   display: flex;
+}
+
+.toggleMenu{
+    display: none;
+}
+
 
 @media( max-width: 414px) {
     .navbar {
@@ -18,9 +26,19 @@
     }
 
     #navbarNav {
-        display: flex;
         flex-direction: column;
     }
+
+    .hideme{
+        display: none;
+
+    }
+
+
+    .toggleMenu{
+        display: block;
+    }
+
     .row {
         margin: 0;
     }

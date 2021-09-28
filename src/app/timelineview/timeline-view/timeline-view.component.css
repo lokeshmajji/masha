@@ -5,6 +5,8 @@
   position: absolute;
   top: 50px;
   left: 0px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;;
 }
 
 .categories-container {
@@ -25,26 +27,29 @@
   background-color: pink;
   cursor: pointer;
 }
-/* .category-container:hover  .tags{
+.category-container{
     display: block;
-} */
+}
 
 .tags {
-  /* display: none; */
-  text-align: center;
-  transform: translateY(-50%);
-  visibility: collapse;
-  opacity: 0;
-  height: 0;
+    background-color: #774fd8;
+    color: white;
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ffc6f0;
+    display: none;
+    border-radius: 15px;
+
 }
 
 .tagshow {
-  visibility: visible;
-  opacity: 1;
-  height: 100%;
   transform: translateY(0%);
   border-bottom: 1px solid #ffc6f0;
   transition: all 0.5s ease;
+  color: black;
+  display: none;
 }
 
 .tags:hover {
@@ -171,7 +176,20 @@
   margin-left: 10px;
 }
 
-@media (max-width: 400px) {
+.toggle-parent{
+    display: flex;
+    flex-direction: column;
+    white-space: break-spaces;
+    overflow: hidden;
+}
+.toggle-parent > * {
+    white-space: pre-wrap;
+}
+.tags-container{
+   display: none;
+}
+
+@media (max-width: 414px) {
   .navbar {
     display: flex;
     flex-direction: column;
@@ -209,10 +227,45 @@
     overflow-y: unset;
     height: auto;
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 10px;
+    position: initial;
   }
+  .category-container{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+  }
+  .category {
+    background-color:  #ff4081;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    margin: 5px;
+  }
+  .tags-container{
+    display: none;
+}
+  .tagshow {
+    display: block;
+    transform: translateY(0%);
+    border-bottom: 1px solid #ffc6f0;
+    transition: all 0.5s ease;
+  }
+  .tags {
+      display: block;
+  }
+  
+  .tags:hover {
+    background-color: pink;
+    cursor: pointer;
+  }
+
+  
   .slider-container {
     display: none;
   }

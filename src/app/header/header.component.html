@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg justify-content-between">
     <a class="navbar-brand customcolordark" href="#" routerLink="/home">Masha</a>
-    <button mat-mini-fab color="accent" >
+    <button class="toggleMenu" mat-mini-fab color="accent" (click)="handleMenuClick()" >
       <mat-icon>menu</mat-icon>
-</button>
-   <div class="row" id="navbarNav">
+     </button>
+   <div class="row" id="navbarNav"  [ngClass]="{ 'hideme' : toggleMenu}">
       <ul class="navbar-nav">
         <li class="nav-item active">
           <a class="nav-link customcolordark" href="#" routerLink="/home" *ngIf="authenticated">Home <span class="sr-only">(current)</span></a>
@@ -17,9 +17,9 @@
         <li class="nav-item">
           <a class="nav-link customcolordark" href="#" routerLink="/timelineview" *ngIf="authenticated">Timeline View</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link customcolordark" href="#" routerLink="/timelineview2" *ngIf="authenticated">Timeline View2</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link customcolordark" href="#" routerLink="/timelineview3" *ngIf="authenticated">Scroll View</a>
         </li>

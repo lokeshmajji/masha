@@ -3,13 +3,22 @@
 <div *ngIf="!loading" class="master-container">
 
     <div class="addblog">
+        <p >Add a Post</p>
         <button mat-fab color="accent" [routerLink]="['/add']">
             <mat-icon>post_add</mat-icon>
         </button>
     </div>
-    <mat-chip-list aria-label="Fish selection">
-        <mat-chip color="accent"  (click)="handleClick(cat)" *ngFor="let cat of categories">{{cat}}</mat-chip>
+    <p class="categoryheading">Categories</p>
+    <mat-chip-list aria-label="Category selection">
+        <mat-chip color="accent" selected (click)="handleClick(cat)" *ngFor="let cat of categories">{{cat}}</mat-chip>
       </mat-chip-list>
+      <p class="categoryheadingselected">Selected category: {{selectedCategory}}</p>
+      
+      <p class="tagsheading">Tags for {{selectedCategory}}</p>
+      <mat-chip-list aria-label="Tags selection">
+        <mat-chip  color="primary" selected (click)="handleTagClick(tag)" *ngFor="let tag of selectedCategoryTags">{{tag}}</mat-chip>
+      </mat-chip-list>
+      <p class="categorytagselected">Selected category: {{selectedTag}}</p>
 
       <div class="slider-container">
 
@@ -25,7 +34,7 @@
           <div class="title-right">
             <button mat-mini-fab color="accent" (click)="openDialog($event)"><mat-icon>delete</mat-icon></button>
             <button mat-mini-fab color="accent" (click)="editBlog()"><mat-icon>edit_note</mat-icon></button>
-        </div>
+          </div>
       </div>
 
 </div>

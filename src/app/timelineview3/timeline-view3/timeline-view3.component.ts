@@ -97,13 +97,22 @@ export class TimelineView3Component implements OnInit {
     this.tags = this.blogItems[cat][index].tags
     this.id = this.blogItems[cat][index].id
   }
+
+  selectedCategoryTags = []
   handleClick(cat) {
     this.selectedCategory = cat
     this.index = 0
-    this.selectedCategoryLength =  this.blogItems[this.selectedCategory].length
+    this.selectedCategoryLength = this.blogItems[this.selectedCategory].length
+    this.selectedCategoryTags = [...this.tagsObj[this.selectedCategory]]
     this.setCard(cat,0)
   }
 
+  selectedTag
+  handleTagClick(tag) {
+    this.selectedTag = tag
+    let index = this.blogItems[this.selectedCategory].findIndex(x => x.tags.includes(tag))
+    this.setCard(this.selectedCategory,index)
+  }
   editBlog() {
     this.router.navigate(['edit'], { queryParams : { blogId : this.id} , queryParamsHandling : 'merge'}) 
   }

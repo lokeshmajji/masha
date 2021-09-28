@@ -290,6 +290,12 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
     this.filterBlogs(category,tag)
     this.processBlogs(this.filteredBlogs)
   }
+
+  getStyle(category) {
+    console.log(`style `, this.toggleTag)
+    if (this.clickedCategory == category && this.toggleTag) return "block"
+    else return "none"
+  }
   
   toggleTag : boolean = false
   handleTagShow(category) {

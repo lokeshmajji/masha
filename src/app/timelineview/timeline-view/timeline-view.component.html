@@ -8,9 +8,10 @@
                         <div class="category" (click)="handleCategoryClick($event, category, undefined)" >
                                 {{category}}      
                         </div>
-                        <div  (click)="handleTagClick($event, category, tag)"  *ngFor="let tag of tagsObj[category]; let i=index">
+                        <div  class="tags-container" [style.display]="getStyle(category)" (click)="handleTagClick($event, category, tag)"  *ngFor="let tag of tagsObj[category]; let i=index">
                               <!-- <div class="tags" *ngIf="handleTagShow(category)" >{{tag}}</div>   -->
-                              <div class="tags" [ngClass]="{'tagshow' : handleTagShow(category)}" >{{tag}}</div>  
+                              <!-- <div [ngClass]="{'tags' : handleTagShow(category)}" [ngStyle]="{ 'display' : handleTagShow(category) ? 'block' : 'none'}" >{{tag}}</div>   -->
+                              <div class="tags"  >{{tag}}</div>  
                         </div>
                 </div>
         </div>

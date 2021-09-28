@@ -28,4 +28,10 @@ export class HeaderComponent implements OnInit,OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
+  toggleMenu: boolean = true
+  handleMenuClick() {
+    console.log(`toggleMenu`, this.toggleMenu)
+    this.toggleMenu = !this.toggleMenu
+  }
+
 }

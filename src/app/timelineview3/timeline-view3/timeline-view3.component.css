@@ -2,7 +2,7 @@
     max-width: 1250px;
     margin: auto;
     padding: 20px;
-    /* border: 1px solid fuchsia; */
+    margin-top: 60px;;
 }
 .card{
     margin-top: 10px;
@@ -11,15 +11,26 @@
 
 .addblog{
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
     margin-bottom: 10px;
+    background-color: #fbe1f2;
+    border-radius: 10px;
+    color: black;
+    padding: 5px;
+}
+.addblog p {
+    font-size: 20px;
+    margin-top: 10px;
 }
 .slider-container{
     margin-top: 20px;
     /* margin-left: 5px; */
     position: relative;
-    border: 1px solid goldenrod;
+    /* border: 1px solid goldenrod; */
+    margin-bottom: 20px;
+    padding-bottom: 20px;;
 }
 
 .formatcode{
@@ -44,9 +55,12 @@
     color: black;
     opacity: 0.2;
     cursor: pointer;
-    padding-top: 50%;
+    padding-top: 20px;
     transition: 0.5s ease;
     border-radius: 0 5px 5px 0;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;;
 
 
 }
@@ -97,6 +111,37 @@
     margin-right: 5px;
 }
 
+.categoryheading{
+    font-size: large;
+    margin-top: 10px;
+    background-color: #ff4081;;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+
+}
+.categoryheadingselected{
+    font-size: large;
+    margin-top: 10px;
+    color: #ff4081;
+}
+.categorytagselected{
+    font-size: large;
+    margin-top: 10px;
+    color: #3f51b5;
+}
+
+.tagsheading{
+    font-size: large;
+    margin-top: 10px;
+    background-color: #3f51b5;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+
+}
 @media( max-width: 414px) {
     .navbar {
         display:flex;
@@ -120,5 +165,10 @@
     .timeline-margin{
         margin-top: 10px;
     }
+
+    .master-container {
+        margin-top: 5px;
+    }
+
 }
 
