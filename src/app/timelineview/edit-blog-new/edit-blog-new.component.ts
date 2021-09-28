@@ -52,13 +52,16 @@ export class EditBlogNewComponent implements OnInit , OnDestroy{
   onSubmit(form: NgForm){
     console.log(form.value);
     this.loading = true;
-    // const html = toHTML(this.blogtext, schema);
+    if (form.value.heading.trim() == ''|| form.value.category.trim() == ''|| form.value.tags.trim() == '') {
+      this.sharedService.openSnackBar("Please enter mandatory fields", "oops")
+      return;
+    }
     this.service.updateBlog( this.blogId,
       {
-        heading : form.value.heading,
-        blogtext: form.value.blogtext,
-        category : form.value.category,
-        tags: form.value.tags,
+        heading : form.value.heading.trim(),
+        blogtext: form.value.blogtext.trim(),
+        category : form.value.category.trim(),
+        tags: form.value.tags.trim(),
         datecreated : new Date(),
         datemodified: new Date(),
         comments : [new Comment()]
