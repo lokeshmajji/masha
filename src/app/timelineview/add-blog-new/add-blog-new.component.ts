@@ -39,17 +39,19 @@ export class AddBlogNewComponent implements OnInit , OnDestroy{
   ngOnInit(): void {
     this.editor = new Editor();
   }
+
+  template
   onSubmit(form: NgForm){
     if (form.value.heading.trim() == ''|| form.value.category.trim() == ''|| form.value.tags.trim() == '') {
       this.sharedService.openSnackBar("Please enter mandatory fields", "oops")
       return;
     }
-    const html = toHTML(this.blogtext, schema);
+    // const html = toHTML(this.blogtext, schema);
     this.loading = true;
     this.service.saveBlog(
       {
         heading : form.value.heading.trim(),
-        blogtext: html,
+        blogtext: form.value.blogtext,
         category : form.value.category.trim(),
         tags: form.value.tags.trim(),
         datecreated : new Date(),
@@ -77,6 +79,9 @@ export class AddBlogNewComponent implements OnInit , OnDestroy{
   }
   ngOnDestroy(): void {
     this.editor.destroy();
+  }
+  onEditorReady() {
+    
   }
 
 }

@@ -29,14 +29,16 @@ import { ViewBlogComponent } from './blog/view-blog/view-blog.component';
 import { EditBlogComponent } from './blog/edit-blog/edit-blog.component';
 import { ViewSingleComponent } from './blog/view-single/view-single.component';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
-import { NgxEditorModule } from 'ngx-editor';
 import { EditBlogNewComponent } from './timelineview/edit-blog-new/edit-blog-new.component';
 import { TimeLineViewComponent } from './timelineview/timeline-view/timeline-view.component';
-import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+// import { NgxEditorModule } from 'ngx-editor';
+// import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { AddBlogNewComponent } from './timelineview/add-blog-new/add-blog-new.component';
 import { TimelineView2Component } from './timelineview2/timeline-view2/timeline-view2.component';
 import { TimelineView3Component } from './timelineview3/timeline-view3/timeline-view3.component';
 import { FullpageViewComponent } from './common/fullpage-view/fullpage-view.component';
+import { ViewBlogNewComponent } from './timelineview/view-blog-new/view-blog-new.component';
+import { CKEditorModule } from 'ckeditor4-angular';
 
 
 @NgModule({
@@ -59,6 +61,7 @@ import { FullpageViewComponent } from './common/fullpage-view/fullpage-view.comp
     TimelineView2Component,
     TimelineView3Component,
     FullpageViewComponent,
+    ViewBlogNewComponent,
     
   ],
   imports: [
@@ -75,8 +78,9 @@ import { FullpageViewComponent } from './common/fullpage-view/fullpage-view.comp
     QuillModule.forRoot(),
     MaterialModule,
     ReactiveFormsModule,
-    NgxEditorModule,
-    HighlightModule
+    // NgxEditorModule,
+    // HighlightModule,
+    CKEditorModule,
 
   ],
   providers: [
@@ -85,12 +89,12 @@ import { FullpageViewComponent } from './common/fullpage-view/fullpage-view.comp
       useClass: AuthInterceptorService,
       multi: true
     },
-    {
-      provide: HIGHLIGHT_OPTIONS,
-      useValue: {
-        fullLibraryLoader: () => import('highlight.js'),
-      }
-    }
+    // {
+    //   provide: HIGHLIGHT_OPTIONS,
+    //   useValue: {
+    //     fullLibraryLoader: () => import('highlight.js'),
+    //   }
+    // }
   ],
   bootstrap: [AppComponent]
 })

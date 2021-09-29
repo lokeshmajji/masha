@@ -88,5 +88,8 @@ export class EditBlogNewComponent implements OnInit , OnDestroy{
   ngOnDestroy(): void {
     this.editor.destroy();
   }
+  onEditorReady() {
+    
+  }
 
 }

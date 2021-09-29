@@ -1,0 +1,54 @@
+::ng-deep.ck-editor__editable {
+    min-height: 500px !important;
+}
+::ng-deep.ck-editor__editable_inline {
+    min-height: 500px !important;
+}
+
+
+.editor-container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 80%;
+}
+
+.blog {
+    border: 1px solid rgb(226 195 219);
+    padding: 10px;
+    margin: 10px;
+  }
+  .blog p {
+    line-break: strict;
+    white-space: pre-wrap;
+  }
+  .blog-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 1px solid #ffc6f0;
+  }
+  .blog-header .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .blog-header .extra {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 5px;
+    padding: 5px;
+  }
+  .blog-header .extra .info {
+    display: flex;
+    justify-content: space-between;
+  }
+  .blog-header .extra .info > * {
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  .title-right > * {
+    margin-right: 10px;
+  }
+  

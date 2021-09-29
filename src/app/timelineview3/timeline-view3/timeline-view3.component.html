@@ -32,6 +32,7 @@
               <button mat-mini-fab color="accent" (click)="openDialog($event)"><mat-icon>delete</mat-icon></button>
               <button mat-mini-fab color="accent" (click)="editBlog()"><mat-icon>edit_note</mat-icon></button>
               <button mat-mini-fab color="accent" (click)="viewFull()"><mat-icon>open_in_full</mat-icon></button>
+              <button mat-mini-fab color="accent" (click)="viewSeparately()"><mat-icon>fullscreen</mat-icon></button>
             </div>
           <div class="formatcode" [innerHTML]="blogtext"></div>
           <span class="prev" (click)="handleCarouselClick(-1)">&#10094;</span>

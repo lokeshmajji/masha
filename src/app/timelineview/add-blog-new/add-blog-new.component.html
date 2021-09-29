@@ -11,17 +11,17 @@
                     <input matInput [(ngModel)]="heading" name="heading"  required>
                   </mat-form-field>
 
-                <div class="NgxEditor__Wrapper">
-                    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
-                    <ngx-editor
-                      [editor]="editor"
-                      [(ngModel)]="blogtext"
-                      [disabled]="false"
-                      [placeholder]="'Type here...'"
-                      name="blogtext"
-                      height="500px"
-                    ></ngx-editor>
+      
+                  <div>
+                    <ckeditor
+                    name="blogtext"
+                    [(ngModel)]="blogtext"
+                    editorUrl="/assets/ckeditor/ckeditor.js"
+                    (ready)="onEditorReady()"
+                  >
+                  </ckeditor>
                   </div>
+     
 
                   <mat-form-field class="matinput-container" appearance="fill">
                     <mat-label>Blog Category</mat-label>
@@ -39,6 +39,7 @@
        
 
         </form>
+     
 
     </div>
 

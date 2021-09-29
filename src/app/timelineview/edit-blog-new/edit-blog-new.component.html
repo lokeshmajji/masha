@@ -12,15 +12,23 @@
                   </mat-form-field>
 
                 <div class="NgxEditor__Wrapper">
-                    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+                    <!-- <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
                     <ngx-editor
                       [editor]="editor"
                       [(ngModel)]="blogtext"
                       [disabled]="false"
                       [placeholder]="'Type here...'"
                       name="blogtext"
-                    ></ngx-editor>
+                    ></ngx-editor> -->
+                    <ckeditor
+                          name="blogtext"
+                          [(ngModel)]="blogtext"
+                          editorUrl="/assets/ckeditor/ckeditor.js"
+                          (ready)="onEditorReady()"
+                        >
+                        </ckeditor>
                   </div>
+
 
                   <mat-form-field class="matinput-container" appearance="fill">
                     <mat-label>Blog Category</mat-label>

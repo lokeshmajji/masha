@@ -3,7 +3,7 @@
 @import '~quill/dist/quill.core.css';
 @import '~quill/dist/quill.bubble.css';
 @import '~quill/dist/quill.snow.css';
-@import '~highlight.js/styles/github.css';
+
 
 :root {
     /* --main-bg-color-dark: #5CDB95;

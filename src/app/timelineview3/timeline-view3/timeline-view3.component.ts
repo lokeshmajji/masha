@@ -116,6 +116,9 @@ export class TimelineView3Component implements OnInit {
   editBlog() {
     this.router.navigate(['edit'], { queryParams : { blogId : this.id} , queryParamsHandling : 'merge'}) 
   }
+  viewSeparately() {
+    this.router.navigate(['view'], { queryParams : { blogId : this.id} , queryParamsHandling : 'merge'}) 
+  }
   openDialog(event): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',

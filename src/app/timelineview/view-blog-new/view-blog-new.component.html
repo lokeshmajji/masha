@@ -1,0 +1,37 @@
+<div style="margin-top: 100px"></div>
+
+<div class="editor-container">
+<div >
+    <div class="blog-header">
+            <div class="title">
+                    <div>
+                            <h4>{{heading}}</h4>
+                    </div>
+                    
+            </div>
+            <div class="extra">
+                    <div class="info">
+                            <p>Category: {{category}}</p>
+                            <p>Tags: {{tags}}</p>
+                    </div>
+              
+            </div>
+    </div>
+
+   
+</div>
+
+
+    <ckeditor
+    name="blogtext"
+    [(ngModel)]="blogtext"
+    editorUrl="/assets/ckeditor/ckeditor.js"
+    (ready)="onEditorReady()"
+    readOnly="true"
+
+  >
+  </ckeditor>
+</div>
+          
+<!-- [config]="editorConfig" -->
+  
