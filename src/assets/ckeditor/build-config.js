@@ -13,10 +13,10 @@
  * (1) https://ckeditor.com/cke4/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) https://ckeditor.com/cke4/builder/4330cb14596bfa4adec932dde73acf19
+ * (2) https://ckeditor.com/cke4/builder/d9b5dea9f2abfffb7154a734ff926ad9
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) https://ckeditor.com/cke4/builder/download/4330cb14596bfa4adec932dde73acf19
+ * (3) https://ckeditor.com/cke4/builder/download/d9b5dea9f2abfffb7154a734ff926ad9
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -25,7 +25,7 @@
  */
 
 var CKBUILDER_CONFIG = {
-	skin: 'moono-dark',
+	skin: 'moono-lisa',
 	preset: 'full',
 	ignore: [
 		'.DS_Store',
@@ -61,9 +61,7 @@ var CKBUILDER_CONFIG = {
 		'blockquote' : 1,
 		'clipboard' : 1,
 		'codeTag' : 1,
-		'codemirror' : 1,
 		'codesnippet' : 1,
-		'codesnippetgeshi' : 1,
 		'colorbutton' : 1,
 		'colordialog' : 1,
 		'contextmenu' : 1,
@@ -101,10 +99,8 @@ var CKBUILDER_CONFIG = {
 		'pastefromlibreoffice' : 1,
 		'pastefromword' : 1,
 		'pastetext' : 1,
-		'pbckcode' : 1,
 		'preview' : 1,
 		'print' : 1,
-		'prism' : 1,
 		'removeformat' : 1,
 		'resize' : 1,
 		'save' : 1,
@@ -116,7 +112,6 @@ var CKBUILDER_CONFIG = {
 		'sourcearea' : 1,
 		'specialchar' : 1,
 		'stylescombo' : 1,
-		'syntaxhighlight' : 1,
 		'tab' : 1,
 		'table' : 1,
 		'tableselection' : 1,
