@@ -7,13 +7,17 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
-	config.extraPlugins = 'codesnippet';
 	// config.skin = "moonocolor";
-	config.codeSnippet_theme = 'xcode';
+	config.codeSnippet_theme = 'googlecode';
 	// config.codeSnippet_languages = {
 	// 	javascript: 'JavaScript',
 	// 	php: 'PHP'
 	// };
-	config.height = '450px';  
+	config.height = '450px';
+	config.toolbarCanCollapse = true;
+
+	config.toolbarStartupExpanded = false;
+	config.removePlugins = 'elementspath';
+
 
 };
