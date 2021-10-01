@@ -18,7 +18,7 @@ export class ViewBlogNewComponent implements OnInit {
   blogtext
   heading : string = ''
   category : string = ''
-  tags : string = ''
+  tags 
   @ViewChild('blogForm') blogForm;
   loading: boolean
   editorConfig = {
@@ -109,7 +109,8 @@ export class ViewBlogNewComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.blogId = params.blogId
-      this.service.getBlog(this.blogId).subscribe( (data: any) => {
+      this.service.getBlog(this.blogId).subscribe((data: any) => {
+        console.log(`data`, data)
         this.blogtext = data.blogtext
         this.heading = data.heading
         this.category = data.category
@@ -123,6 +124,30 @@ export class ViewBlogNewComponent implements OnInit {
   }
   showCode() {
     console.log(this.template)
+  }
+  
+  saveBlog() {
+    this.service.updateBlog( this.blogId,
+      {
+        heading : this.heading ,
+        blogtext: this.blogtext,
+        category : this.category,
+        tags: this.tags,
+        datecreated : new Date(),
+        datemodified: new Date(),
+        comments : [new Comment()]
+      }
+    ).subscribe( res => {
+      console.log(res)
+      this.loading = false
+      this.sharedService.blogAddedSubject.next(true);
+      this.sharedService.openSnackBar("Changes saved successfully","Yay")
+    }, err => {
+      console.log(err)
+      this.loading = false
+      this.sharedService.openSnackBar("Blog Update failed","Naa")
+    });
+
   }
 
 }

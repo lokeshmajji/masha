@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DataService } from '../dao/data.service';
 import { Blog } from '../model/blog.model';
 import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,27 +15,28 @@ export class HomeComponent implements OnInit , AfterViewInit{
   blogs = []
   randomBlog : Blog
   userEmail = ''
-  constructor(private dataService: DataService, private authService: AuthService) { }
+  blogLimit : 2
+  randomId
+  constructor(private router: Router, private dataService: DataService, private authService: AuthService) { }
 
   ngOnInit() {
     this.loading = true;
     this.authService.getUserEmail().subscribe(email => {
-      //console.log(email)
       this.userEmail += email
     })
-    this.dataService.getBlogs().subscribe(res => {
+    this.dataService.getBlogsRecent(2).subscribe(res => {
       for (let key of Object.keys(res)) {
-        //console.log(key)
-        //console.log(res[key])
+        
         this.blogs.push({
-          key: key,
+          id: key,
           value: res[key]
         });
       }  
-      //console.log(this.blogs[2])
-      this.randomBlog = this.blogs[this.getRandomInt(this.blogs.length)].value
-      //console.log(this.randomBlog)   
-      
+      if (this.blogs.length > 0) {
+        let randomInt = this.getRandomInt(this.blogs.length)
+        this.randomBlog = this.blogs[randomInt].value
+        this.randomId = this.blogs[randomInt].id
+      }
       this.loading = false;
     }
   , err => {
@@ -49,5 +51,9 @@ export class HomeComponent implements OnInit , AfterViewInit{
 
    getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
+   }
+  editBlog() {
+    
+    this.router.navigate(['edit'], { queryParams : { blogId : this.randomId} , queryParamsHandling : 'merge'}) 
   }
 }

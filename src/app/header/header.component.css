@@ -15,6 +15,24 @@
     display: none;
 }
 
+.session-expiry{
+    /* float: right; */
+    display: block;
+    width: 190px;
+    align-items: flex-end;
+    position: absolute;
+    right: 1px;
+    top: 40px;
+    z-index: 2;
+    /* background-color: #fff3fc; */
+}
+.session-expiry p {
+    padding: 0px;
+    font-size: small;
+    margin: 0px;
+    font-style: italic;
+}
+
 
 @media( max-width: 414px) {
     .navbar {
@@ -51,5 +69,11 @@
     }
     .ml-auto{
         margin-left: 0 !important;
+    }
+    .session-expiry{
+      
+      
+        top: 75px;
+      
     }
 }

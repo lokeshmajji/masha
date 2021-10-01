@@ -13,7 +13,7 @@ import { SharedService } from 'src/app/shared/shared.service';
 export class EditBlogNewComponent implements OnInit , OnDestroy{
 
   @Input() blogId;
-  blogtext
+  blogtext = ''
   heading
   category
   tags
@@ -40,6 +40,7 @@ export class EditBlogNewComponent implements OnInit , OnDestroy{
 
     this.route.queryParams.subscribe(params => {
       this.blogId = params.blogId
+      console.log(`blogId`, this.blogId)
       this.service.getBlog(this.blogId).subscribe( (data: any) => {
         this.blogtext = data.blogtext
         this.heading = data.heading
@@ -61,7 +62,7 @@ export class EditBlogNewComponent implements OnInit , OnDestroy{
         heading : form.value.heading.trim(),
         blogtext: form.value.blogtext.trim(),
         category : form.value.category.trim(),
-        tags: form.value.tags.trim(),
+        tags: form.value.tags.toString().trim(),
         datecreated : new Date(),
         datemodified: new Date(),
         comments : [new Comment()]
@@ -71,8 +72,6 @@ export class EditBlogNewComponent implements OnInit , OnDestroy{
       this.loading = false
       this.sharedService.blogAddedSubject.next(true);
       this.sharedService.openSnackBar("Blog Updated successfully","Yay")
-      form.reset()
-      this.blogtext = ''
     }, err => {
       console.log(err)
       this.loading = false
@@ -82,7 +81,7 @@ export class EditBlogNewComponent implements OnInit , OnDestroy{
   }
 
   clearForm(){
-    this.blogForm.clear();
+    this.blogForm.form.reset({})
     this.blogtext = ''
   }
   ngOnDestroy(): void {

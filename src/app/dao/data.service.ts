@@ -45,6 +45,17 @@ export class DataService implements OnInit {
     );
   }
 
+  getBlogsRecent(blogLimit) {
+    // https://masha-3f6b0.firebaseio.com/posts/lokeshinspire-gmail-com.json?auth=<token>&orderBy="datecreated"&equalTo="2021-09-30T19:08:19.161Z"&=
+    //https://firebase.google.com/docs/database/rest/retrieve-data
+    const date = new Date()
+    const weekbefore = date.setDate(date.getDate() - 7)
+    return this.http.get(
+      `https://masha-3f6b0.firebaseio.com/posts/${this.getUserEmail()}.json?&orderBy="datecreated"&startAt="${date.toISOString()}"&limitToLast=${blogLimit}`
+    );
+  }
+  
+
   updateBlog(key: string, blog: Blog) {
     // curl -X PUT -d '{
     //     "alanisawesome": {

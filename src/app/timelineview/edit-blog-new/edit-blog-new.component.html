@@ -6,10 +6,22 @@
           <form (ngSubmit)="onSubmit(blogForm)" #blogForm="ngForm">  
            
                 <!-- <input type="text" matInput placeholder="heading" name="heading" > -->
-                <mat-form-field class="matinput-container" appearance="fill">
-                    <mat-label>Blog Heading</mat-label>
-                    <input matInput [(ngModel)]="heading" name="heading"  required>
-                  </mat-form-field>
+
+                  <div class="input-container">
+                    <mat-form-field class="matinput-container" appearance="fill">
+                      <mat-label>Blog Heading</mat-label>
+                      <input matInput [(ngModel)]="heading" name="heading"  required>
+                    </mat-form-field>
+                    <mat-form-field class="matinput-container" appearance="fill">
+                      <mat-label>Blog Category</mat-label>
+                      <input type="text" matInput placeholder="category" name="category" [(ngModel)]="category" required>   
+                    </mat-form-field>
+                    <mat-form-field class="matinput-container" appearance="fill">
+                      <mat-label>Tags</mat-label>
+                      <input type="text" matInput placeholder="tags" name="tags" [(ngModel)]="tags">         
+                    </mat-form-field>
+                  </div>
+
 
                 <div class="NgxEditor__Wrapper">
                     <!-- <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
@@ -30,19 +42,11 @@
                   </div>
 
 
-                  <mat-form-field class="matinput-container" appearance="fill">
-                    <mat-label>Blog Category</mat-label>
-                    <input type="text" matInput placeholder="category" name="category" [(ngModel)]="category" required>   
-                                  </mat-form-field>
-                    <mat-form-field class="matinput-container" appearance="fill">
-                    <mat-label>Tags</mat-label>
-                    <input type="text" matInput placeholder="tags" name="tags" [(ngModel)]="tags">         
-                </mat-form-field>
+
                   
-                <div >
+                <div class="margin-left: 80px">
                     <button mat-raised-button color="accent" type="submit">Update Blog</button>
                 </div>
-
        
 
         </form>

@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-lg justify-content-between">
     <a class="navbar-brand customcolordark" href="#" routerLink="/home">Masha</a>
+
+       
     <button class="toggleMenu" mat-mini-fab color="accent" (click)="handleMenuClick()" >
       <mat-icon>menu</mat-icon>
      </button>
@@ -29,5 +31,9 @@
           <a class="nav-link customcolordark" href="#" routerLink="/Logout" *ngIf="authenticated" (click)="onLogout()">Logout</a>
         </li>
       </ul>
+  
     </div>
   </nav>
+  <div class="session-expiry" *ngIf="authenticated" >
+    <p>Session Timeout in Min: {{expiry }} </p>
+  </div>

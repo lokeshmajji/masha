@@ -18,7 +18,12 @@
 } 
 
 .matinput-container {
-    width: 75%;
+    /* width: 75%; */
+  }
+  .input-container{
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1rem;
   }
 
   .mat-form-field{
@@ -100,6 +105,10 @@
    }
    .matinput-container {
     width: 100%;
+  }
+  .input-container{
+    display: grid; 
+    grid-template-columns: 1fr;
   }
   .blog-container {
     display: flex;

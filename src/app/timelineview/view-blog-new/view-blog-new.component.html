@@ -21,15 +21,20 @@
    
 </div>
 
+ <div>
+     <ckeditor
+     name="blogtext"
+     [(ngModel)]="blogtext"
+     editorUrl="/assets/ckeditor/ckeditor.js"
+     (ready)="onEditorReady()"
+   >
+   </ckeditor>
+ </div>
 
-    <ckeditor
-    name="blogtext"
-    [(ngModel)]="blogtext"
-    editorUrl="/assets/ckeditor/ckeditor.js"
-    (ready)="onEditorReady()"
+<div class="margin-top: 20px">
+    <button mat-raised-button color="accent" type="submit" (click)="saveBlog()">Save Changes</button>
+</div>
 
-  >
-  </ckeditor>
 </div>
           
 <!-- [config]="editorConfig" -->

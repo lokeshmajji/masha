@@ -50,8 +50,7 @@ export class TimelineView3Component implements OnInit {
       let tagsKey = this.tagsObj[catKey]
 
       this.categoriesset.add(catKey)
-
-      const tagslocal = blogObj["tags"] || ""
+      const tagslocal = blogObj["tags"].toString() || ""
       if (tagsKey) tagslocal.split(' ').forEach( x => this.tagsObj[catKey].add(x) )
       else this.tagsObj[catKey] = new Set([...tagslocal.split(' ')])
 

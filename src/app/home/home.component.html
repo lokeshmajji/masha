@@ -1,38 +1,19 @@
-<div class="container">
+<div class="home-container">
   <app-spinner *ngIf="loading"></app-spinner>  
-  <div class="row" *ngIf="!loading">
-        <div class="col-md-12">
-          <h4 class="heading">Welcome {{userEmail}}</h4>
-
-            <!-- <mat-card class="example-card">
-                <mat-card-header>
-                  <mat-card-title>{{randomBlog.heading}}</mat-card-title>
-                  <mat-card-subtitle>Category:{{randomBlog.category}}, Tags:{{randomBlog.tags}}</mat-card-subtitle>
-                  <mat-card-subtitle>                  <a routerLink="/blogs">View Blogs</a>
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                    <div id="scrolling-container">
-                        <div id="quill-container">
-                        <p-editor  [(ngModel)]="randomBlog.blogtext"   [style]="{'width':'750px'}"   name="blogtext" [readonly]="true"> 
-                          <p-header> </p-header>    
-                        </p-editor>  
-                        </div>
-                      </div>
-                </mat-card-content>
-                <mat-card-footer>
-                </mat-card-footer>
-              </mat-card> -->
-              <div class="slider-container">
-
-                <!-- <pre><code class="formatcode" [innerHTML]="blogtext"></code></pre> -->
-                  <div class="formatcode" >
+  <div *ngIf="!loading">
+        <div class="grid">
+              <div>
+                <h4 class="heading">Welcome {{userEmail}}</h4>
+                <h4 class="heading">Blog changes lastweek:{{blogs.length}}</h4>
+              </div>
+              <div class="formatcode" >
                           <h4>{{randomBlog.heading}}</h4>
                           <p>Tags: {{randomBlog.tags}}</p>
-                  </div>
-                <div class="formatcode" [innerHTML]="randomBlog.blogtext"></div>
+                          <button mat-mini-fab color="accent" (click)="editBlog()"><mat-icon>edit_note</mat-icon></button>
+                          <div [innerHTML]="randomBlog.blogtext"></div>
+                </div>
+ 
 
             </div>
         </div>
-    </div>
 </div>

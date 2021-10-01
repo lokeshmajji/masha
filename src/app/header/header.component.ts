@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
     this.userSubscription = this.authService.user.subscribe(user =>{
       this.authenticated = !!user;
     });
+    setInterval( this.timeRemaining.bind(this), 1000)
   }
 
   onLogout(){
@@ -33,5 +34,18 @@ export class HeaderComponent implements OnInit,OnDestroy {
     console.log(`toggleMenu`, this.toggleMenu)
     this.toggleMenu = !this.toggleMenu
   }
+
+  expiry = 0
+  timeRemaining() {
+    if (localStorage.getItem("userData")) {
+      const expirationDate = new Date(JSON.parse(localStorage.getItem("userData"))._tokenExpirationDate)
+      const currentDate = new Date()
+      // console.log('currentDate',expirationDate)
+      // console.log('expirationDate',expirationDate)
+      this.expiry = parseFloat(((expirationDate.getTime() - currentDate.getTime()) / 60000).toFixed(2))
+    }
+  }
+
+
 
 }
