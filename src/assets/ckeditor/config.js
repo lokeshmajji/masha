@@ -19,6 +19,6 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.toolbarStartupExpanded = false;
 	config.removePlugins = 'elementspath';
-
-
+	config.extraAllowedContent = 'iframe[*]';
+	config.allowedContent = true;
 };

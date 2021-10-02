@@ -1,28 +1,25 @@
     <div class="master-container">
-      <!-- <h4>Search</h4> -->
-      <!-- <input matInput type="text" class="" (keydown)="keypressEvent($event)" [(ngModel)]="searchInput"> -->
-      <form class="example-form">
-        <mat-form-field class="example-full-width">
+      <form class="form">
+        <mat-form-field appearance="fill" >
           <mat-label>Search </mat-label>
-          <input type="text" size="50" matInput placeholder="Ex. Unix" name="search" [(ngModel)]="searchInput">
+          <input type="text" size="100" matInput placeholder="Ex. Unix" name="search" [(ngModel)]="searchInput">
         </mat-form-field>
 
-        <span class="material-icons big-icons" (click)="handleSearch($event)">
-          search
-          </span>
-        <!-- <button style="background-color: #05386B; color:#EDF5E1 ; margin-left: 10px;margin-right: 10px;" mat-button type="button" (click)="handleSearch($event)">Go</button> -->
-        
-        <span class="material-icons big-icons" (click)="handleClear($event)">
-          backspace
-          </span>
-        <!-- <button style="background-color: #05386B; color:#EDF5E1 ; margin-right: 10px;" mat-button type="button" (click)="handleClear($event)">Clear</button> -->
-        <!-- <button style="background-color: #05386B; color:#EDF5E1 ; margin-right: 10px;" mat-button type="button" (click)="handleRefresh(false)">Refresh Data</button> -->
-        <span class="material-icons big-icons" (click)="handleRefresh(false)">
-          refresh
-          </span>
-          <span class="material-icons big-icons"  (click)="onSortGlobal($event)">
-            sort
-            </span>
+        <div class="control-btn-container">
+          <button class="toggleMenu" mat-fab color="accent" (click)="handleSearch($event)" >
+            <mat-icon>search</mat-icon>
+           </button>
+           <button class="toggleMenu" mat-fab color="accent" (click)="handleClear($event)" >
+            <mat-icon>backspace</mat-icon>
+           </button>
+    
+           <button class="toggleMenu" mat-fab color="accent" (click)="handleRefresh(false)" >
+            <mat-icon>refresh</mat-icon>
+           </button>
+           <button class="toggleMenu" mat-fab color="accent" (click)="onSortGlobal($event)" >
+            <mat-icon>sort</mat-icon>
+           </button>
+          </div>
 
         <mat-form-field appearance="fill" class="margin">
           <mat-label>Categories</mat-label>
@@ -38,7 +35,7 @@
             <mat-option *ngFor="let tag of tagsArr" [value]="tag">{{tag}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="fill">
           <input type="text"
                  placeholder="Search Tags"
                  aria-label="Number"
@@ -50,119 +47,88 @@
               {{option}}
             </mat-option>
           </mat-autocomplete>
-        </mat-form-field>
-
-        <!-- <span style="color:#05386B ; margin-left: 10px;font-size: 1.2rem;">Sort:</span> -->
-      
-    
-    
-      </form>
+        </mat-form-field>  
+    </form>
 
 
    
-      <div> 
-        <div class="paginator">
-           <div>
+        <div class="paginator-container">
+           <div class="paginator">
              <span style="margin-right: 40px;">Results for:{{searchInput}} </span> 
           </div>
            
            <div class="paginator">
-            <div>
-              <span *ngIf="filtered"> {{blogsFiltered.length}} item(s) found in category:{{selected}}.&nbsp;</span >
-              <span *ngIf="!filtered"> {{blogs.length}} items in category:{{selected}}. &nbsp;</span >
-              <span > Items per page &nbsp;</span> 
-              <input type="number" [(ngModel)]="pageSize" name="pageSize" size="2" class="paginatorinput" (change)="handlePageNumberChange($event)" min="1"></div>
-            <div>
-              <button style="background-color: #05386B; color:#EDF5E1 ;" pButton type="submit" iconPos="left" label="&lt;&lt;" (click)="handleFirst($event)"></button>
-              <button style="background-color: #05386B; color:#EDF5E1 ;" pButton type="submit" iconPos="left" label="&lt;" (click)="handlePrevV2()"></button>
+              <div>
+                  <span *ngIf="filtered"> {{blogsFiltered.length}} item(s) found in category:{{selected}}.&nbsp;</span >
+                  <span *ngIf="!filtered"> {{blogs.length}} items in category:{{selected}}. &nbsp;</span >
+              </div>
+              <div>
+                  <span > Items per page &nbsp;</span> 
+                  <input type="number" [(ngModel)]="pageSize" name="pageSize" size="2" class="paginatorinput" (change)="handlePageNumberChange($event)" min="1">
+              </div>
             </div>
+
+          <div class="paginator-controls">
+              <div>
+                <button class="paginator-btn" pButton type="submit" iconPos="left" label="&lt;&lt;" (click)="handleFirst($event)"></button>
+                <button class="paginator-btn" pButton type="submit" iconPos="left" label="&lt;" (click)="handlePrevV2()"></button>
+              </div>
               <div><a *ngIf="showPage1" (click)="handlePage(page1)">{{page1}}</a></div>
               <div><a *ngIf="showPage2" (click)="handlePage(page2)">{{page2}}</a></div>
-            <div><input type="number" [(ngModel)]="currentPage" name="pageNumber" size="2" class="paginatorinput" disabled></div>
+              <div><input type="number" [(ngModel)]="currentPage" name="pageNumber" size="2" class="paginatorinput" disabled></div>
               <div><a *ngIf="showPage3" (click)="handlePage(page3)">{{page3}}</a></div>
               <div><a *ngIf="showPage4" (click)="handlePage(page4)">{{page4}}</a></div>
-            <div>
-              <button style="background-color: #05386B; color:#EDF5E1 ; " pButton type="submit" iconPos="left" label="&gt;" (click)="handleNextV2()"></button>
-              <button style="background-color: #05386B; color:#EDF5E1 ; " pButton type="submit" iconPos="left" label="&gt;&gt;" (click)="handleLast($event)"></button>
+              <div>
+                <button  class="paginator-btn" pButton type="submit" iconPos="left" label="&gt;" (click)="handleNextV2()"></button>
+                <button  class="paginator-btn" pButton type="submit" iconPos="left" label="&gt;&gt;" (click)="handleLast($event)"></button>
+              </div>
             </div>
-           </div>
-           <!-- <div class="paginator">
-            <div>
-              <span class="material-icons"> note </span>
-              <input type="number" [(ngModel)]="pageSize" name="pageSize" size="2" style="width: 60px;" (change)="handlePageNumberChange($event)" min="1"></div>
-            <div>
-              <button style="background-color: #05386B; color:#EDF5E1 ;" pButton type="submit" iconPos="left" label="&lt;&lt;" (click)="handleFirst($event)"></button>
-              <button style="background-color: #05386B; color:#EDF5E1 ;" pButton type="submit" iconPos="left" label="&lt;" (click)="handlePrev($event)"></button>
-            </div>
-            <div><input type="number" [(ngModel)]="currentPage" name="pageNumber" size="2" style="width: 60px;" disabled></div>
-            <div>
-              <button style="background-color: #05386B; color:#EDF5E1 ; " pButton type="submit" iconPos="left" label="&gt;" (click)="handleNext($event)"></button>
-              <button style="background-color: #05386B; color:#EDF5E1 ; " pButton type="submit" iconPos="left" label="&gt;&gt;" (click)="handleLast($event)"></button>
-            </div>
-           </div> -->
-        
-       </div>
-      </div>
-      <!-- <p>You selected: {{selected}}</p> -->
-      <hr>
-    </div>
+        </div>
+        <hr>
+
     <app-spinner *ngIf="loading"></app-spinner>
 
 
-    <div class="" *ngFor="let blog of blogsPager; index as i">
-
-      <!-- <div *ngIf="searchInputFilter !== undefined && searchInputFilter !== ' '  && blog.value.heading.toLowerCase().includes(searchInputFilter.toLowerCase()) && (blog.value.category == selected || selected == 'All' || (selected == 'NA' && blog.value.category == ''))"> -->
+    <div class="blog" *ngFor="let blog of blogsPager; index as i">
         <div>
 
                   <div class="view-heading">
-                    <h4>{{ (i+1 + ((currentPage - 1) * pageSize)) }}.{{blog.value.heading}}</h4>
-                    <div>
-                      <span class="material-icons">
-                        event
-                        </span>
-                      <span>{{blog.value.datemodified | date}}</span>
+                    <div class="view-heading-controls">
+                      <h4>{{ (i+1 + ((currentPage - 1) * pageSize)) }}.{{blog.value.heading}}</h4>
 
-                      <span *ngIf="blog.value.tags"><span class="material-icons">
-                        loyalty
-                        </span>: {{blog.value.tags}} &nbsp;</span>
-
-                      <span *ngIf="blog.value.category"><span class="material-icons">
-                        category
-                        </span>: {{blog.value.category}} &nbsp;</span>
-                      <!-- <a  class="badge badge-dark" (click)="onFullPageView($event,blog)">Full Page View</a> -->
-                      <span class="material-icons" (click)="onFullPageView($event,blog)">
-                        preview
-                        </span>
-                      <!-- <a  class="badge badge-primary" (click)="onEdit($event,blog)">Edit</a> -->
-                      <span class="material-icons" (click)="onEdit($event,blog)">
-                        edit
-                        </span>
-                      <!-- <a  class="badge badge-primary" (click)="onDeletePost($event,blog)">Delete Post</a> -->
-
-                      <!-- <span class="material-icons" (click)="onDeletePost($event,blog)"> -->
-                        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon">delete_forever</mat-icon> -->
-
-                        <span class="material-icons" (click)="openDialog($event,blog)">
-                        delete_forever
-                        </span>
-                    </div>
-                  </div>
-             
-                  <!-- <div [innerHTML]="blog.blogtext"></div> -->
-                  
-                  
-                  <!-- <div class="ql-container ql-snow">
-                      <div class="ql-editor" [innerHTML]="blog.blogtext">
+                      <div *ngIf="blog.value.category">
+                        <span>Category:{{blog.value.category}} &nbsp;</span>
                       </div>
-                  </div> -->
+                      <div *ngIf="blog.value.tags"> 
+                        <span>Tags:{{blog.value.tags}}</span>
+                      </div>
+                    </div>
+
+                    <div class="view-heading-controls">
+                
+                      <div (click)="onFullPageView($event,blog)">
+                        <button class="toggleMenu" mat-mini-fab color="accent" ><mat-icon>open_in_full</mat-icon></button>
+                      </div>
+                      <div (click)="onEdit($event,blog)">
+                        <button class="toggleMenu" mat-mini-fab color="accent" ><mat-icon>edit</mat-icon></button>
+                      </div>
+                      <div (click)="openDialog($event,blog)">
+                        <button class="toggleMenu" mat-mini-fab color="accent" ><mat-icon>delete_forever</mat-icon></button>
+                      </div>
+                      <div>
+                        <span>{{blog.value.datemodified | date}}</span>
+                      </div>
+
+                   </div>
+                  </div>
 
                   <div id="scrolling-container">
                     <div id="quill-container">
-                    <p-editor  [(ngModel)]="blog.value.blogtext"  [style]="{'height':'150px'}"  name="blogtext" [readonly]="true"> 
+                    <p-editor  [(ngModel)]="blog.value.blogtext"  class="quill-editor"  name="blogtext" [readonly]="true"> 
                       <p-header> </p-header>    
                     </p-editor>  
                     </div>
                   </div>
-            </div>
+        </div>
 
     </div>

@@ -2,7 +2,7 @@
 <div class="tabContainer" >
     <mat-tab-group  mat-align-tabs="center" [selectedIndex]="selectedIndex"   (selectedIndexChange)="selectedIndexChange($event)">
         <router-outlet></router-outlet>
-        <mat-tab label="View Posts">
+        <mat-tab label="View">
             <!-- This will create the component once -->
             <!-- <ng-template matTabContent> -->
                     <app-view-blog></app-view-blog>
@@ -10,19 +10,19 @@
     
         </mat-tab>
         
-    <mat-tab label="Add Post"> 
+    <mat-tab label="Add"> 
         <ng-template matTabContent>
             <app-add-blog></app-add-blog>
           </ng-template>
     </mat-tab>
 
-    <mat-tab label="Edit Post">
+    <mat-tab label="Edit">
         <!-- This will load the component everytime -->
         <ng-template matTabContent>
             <app-edit-blog></app-edit-blog>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Full Page View">
+    <mat-tab label="Page View">
         <ng-template matTabContent>
             <app-view-single></app-view-single>
         </ng-template>
