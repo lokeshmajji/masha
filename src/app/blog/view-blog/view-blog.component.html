@@ -62,7 +62,7 @@
                   <span *ngIf="filtered"> {{blogsFiltered.length}} item(s) found in category:{{selected}}.&nbsp;</span >
                   <span *ngIf="!filtered"> {{blogs.length}} items in category:{{selected}}. &nbsp;</span >
               </div>
-              <div>
+              <div class="items-perpage">
                   <span > Items per page &nbsp;</span> 
                   <input type="number" [(ngModel)]="pageSize" name="pageSize" size="2" class="paginatorinput" (change)="handlePageNumberChange($event)" min="1">
               </div>
@@ -94,17 +94,21 @@
 
                   <div class="view-heading">
                     <div class="view-heading-controls">
-                      <h4>{{ (i+1 + ((currentPage - 1) * pageSize)) }}.{{blog.value.heading}}</h4>
-
+                      <div>
+                        <h4>{{ (i+1 + ((currentPage - 1) * pageSize)) }}.{{blog.value.heading}}</h4>
+                      </div>
                       <div *ngIf="blog.value.category">
                         <span>Category:{{blog.value.category}} &nbsp;</span>
                       </div>
                       <div *ngIf="blog.value.tags"> 
                         <span>Tags:{{blog.value.tags}}</span>
                       </div>
+                      <div>
+                        <span>{{blog.value.datemodified | date}}</span>
+                      </div>
                     </div>
 
-                    <div class="view-heading-controls">
+                    <div class="view-heading-controls-2">
                 
                       <div (click)="onFullPageView($event,blog)">
                         <button class="toggleMenu" mat-mini-fab color="accent" ><mat-icon>open_in_full</mat-icon></button>
@@ -115,9 +119,7 @@
                       <div (click)="openDialog($event,blog)">
                         <button class="toggleMenu" mat-mini-fab color="accent" ><mat-icon>delete_forever</mat-icon></button>
                       </div>
-                      <div>
-                        <span>{{blog.value.datemodified | date}}</span>
-                      </div>
+
 
                    </div>
                   </div>

@@ -20,7 +20,7 @@ export class FullpageViewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-    console.log(`changes`, changes)
+    // console.log(`changes`, changes)
   }
   handlClose() {
     this.show = -1
@@ -57,7 +57,6 @@ export class FullpageViewComponent implements OnInit, OnChanges {
   }
 
   editBlog(key) {
-    console.log(key)
     this.router.navigate(['edit'], { queryParams : { blogId : key} , queryParamsHandling : 'merge'}) 
   }
 

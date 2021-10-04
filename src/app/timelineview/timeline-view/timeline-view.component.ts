@@ -292,7 +292,7 @@ export class TimeLineViewComponent implements OnInit , OnDestroy {
   }
 
   getStyle(category) {
-    console.log(`style `, this.toggleTag)
+    // console.log(`style `, this.toggleTag)
     if (this.clickedCategory == category && this.toggleTag) return "block"
     else return "none"
   }

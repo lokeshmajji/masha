@@ -35,15 +35,23 @@ export class HeaderComponent implements OnInit,OnDestroy {
     this.toggleMenu = !this.toggleMenu
   }
 
-  expiry = 0
+  expiry 
   timeRemaining() {
     if (localStorage.getItem("userData")) {
       const expirationDate = new Date(JSON.parse(localStorage.getItem("userData"))._tokenExpirationDate)
       const currentDate = new Date()
       // console.log('currentDate',expirationDate)
       // console.log('expirationDate',expirationDate)
-      this.expiry = parseFloat(((expirationDate.getTime() - currentDate.getTime()) / 60000).toFixed(2))
+      this.expiry = this.getExpiryTime(expirationDate.getTime() - currentDate.getTime())
     }
+  }
+
+  getExpiryTime(ms) {
+    
+    const min = ms / 60000;
+    const sec = (ms % 60000) / 1000;
+
+    return `${min.toFixed(0)}:${sec.toFixed(0)}`
   }
 
 

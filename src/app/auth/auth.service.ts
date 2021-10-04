@@ -69,38 +69,38 @@ export class AuthService implements OnInit{
         this.autoLogout(+res.expiresIn * 1000); //convert to ms for setinterval
         localStorage.setItem('userData', JSON.stringify(user));
     }
+
+    getExpiry(expiresIn) {
+        //TODO DEV Purposes only
+        // return 180 * 1000;
+        return +expiresIn*1000 //convert to ms for setinterval 
+    }
     handleAuthenticationSignIn(res: ResponseData) {
         console.log("In handleAuthenticationSignIn()")
-        // TODO Dev Purpose
-        // const expirationDate = new Date(new Date().getTime() + 60*1000);
-        const expirationDate = new Date(new Date().getTime() + +res.expiresIn*1000);
+        const expiryTime = this.getExpiry(res.expiresIn) 
+        const expirationDate = new Date(new Date().getTime() + expiryTime);
         const user = new User(res.email,res.localId, res.idToken, expirationDate, res.refreshToken);
         this.user.next(user);
-        // TODO Dev Purpose
-        // this.autoRenew(60 * 1000); //convert to ms for setinterval
-        this.autoRenew(+res.expiresIn * 1000); //convert to ms for setinterval 
+        this.autoRenew(expiryTime); //convert to ms for setinterval 
         localStorage.setItem('userData', JSON.stringify(user));
         this.expirationDate = expirationDate
     }
     handleAuthenticationAutoRefresh(res: any) {
         console.log("In handleAuthenticationAutoRefresh()")
+        console.log(`res.expires_in`, +res.expires_in)
         console.log("Clearing the interval ")
-        console.log(`res.expiresIn`, +res.expiresIn)
         this.clearGivenInterval(this.autoRenewInterval)
 
         let userObj = JSON.parse(localStorage.getItem('userData'));
-        // console.log(`res`, res)
-        // console.log(`userObj`, userObj)
-        // TODO Dev Purpose
-        // const expirationDate = new Date(new Date().getTime() + 60 * 1000);
-        const expirationDate = new Date(new Date().getTime() + +res.expiresIn*1000);
+        console.log(`res`, res)
+        console.log(`userObj`, userObj)
+        const expiryTime = this.getExpiry(res.expires_in) 
+        const expirationDate = new Date(new Date().getTime() + expiryTime);
 
         const user = new User(userObj.email,userObj.id, res.id_token, expirationDate, res.refresh_token);
         this.user.next(user);
         localStorage.setItem('userData', JSON.stringify(user));
-        // TODO Dev Purpose
-        // this.autoRenew(60 * 1000); //convert to ms for setinterval
-        this.autoRenew(+res.expiresIn * 1000); //convert to ms for setinterval 
+        this.autoRenew(expiryTime); 
         this.expirationDate = expirationDate
     }
 

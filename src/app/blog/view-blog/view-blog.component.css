@@ -38,7 +38,7 @@
   padding: 5px;
 }
 .view-heading-controls{
-  display: flex;
+    display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
@@ -124,7 +124,7 @@ mat-icon {
   color: white;
   border-color: #ff4081;
   margin-right: 1px;
-  font-size: 18px;
+  font-size: 20px;
 }
 span {
   display: inline-flex;
@@ -146,12 +146,16 @@ a {
 
 }
 
+.items-perpage{
+  display: flex;
+  align-items: center;
+}
 .paginatorinput{
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 600;
-  color: #05386B;
+  color: #ff4081;
   width: 40px;
-  padding: 0px;
+  padding: 6px;
 }
 
 .example-form > *{
@@ -208,6 +212,18 @@ a {
     justify-content: space-between;
   
   }
+  .view-heading-controls{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+.view-heading-controls-2{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
 
   #quill-container {
     padding: 0px;
@@ -216,5 +232,6 @@ a {
   .quill-editor{
     height: auto;
   }
+
 
 }
