@@ -15,6 +15,7 @@ import { AddBlogNewComponent } from "./timelineview/add-blog-new/add-blog-new.co
 import { TimelineView2Component } from "./timelineview2/timeline-view2/timeline-view2.component";
 import { TimelineView3Component } from "./timelineview3/timeline-view3/timeline-view3.component";
 import { ViewBlogNewComponent } from "./timelineview/view-blog-new/view-blog-new.component";
+import { BlogViewComponent } from "./blog/blog-view/blog-view.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: "view", component: ViewBlogNewComponent },
   { path: "timelineview2", component: TimelineView2Component, canActivate: [AuthGuard] },
   { path: "timelineview3", component: TimelineView3Component, canActivate: [AuthGuard] },
+  { path: "test", component: BlogViewComponent },
 ];
 
 @NgModule({

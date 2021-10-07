@@ -39,6 +39,11 @@ import { TimelineView3Component } from './timelineview3/timeline-view3/timeline-
 import { FullpageViewComponent } from './common/fullpage-view/fullpage-view.component';
 import { ViewBlogNewComponent } from './timelineview/view-blog-new/view-blog-new.component';
 import { CKEditorModule } from 'ckeditor4-angular';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { BlogModule } from './blog/blog.module';
 
 
 @NgModule({
@@ -81,6 +86,9 @@ import { CKEditorModule } from 'ckeditor4-angular';
     // NgxEditorModule,
     // HighlightModule,
     CKEditorModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    BlogModule,
 
   ],
   providers: [

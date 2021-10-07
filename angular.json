@@ -29,8 +29,7 @@
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./src/styles.css"
             ],
-            "scripts": [
-            ],
+            "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
@@ -133,6 +132,7 @@
   },
   "defaultProject": "masha",
   "cli": {
-    "analytics": "7daeb5eb-8e33-4ebf-a591-c1ba43f58288"
+    "analytics": "7daeb5eb-8e33-4ebf-a591-c1ba43f58288",
+    "defaultCollection": "@ngrx/schematics"
   }
 }

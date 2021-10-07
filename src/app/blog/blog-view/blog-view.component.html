@@ -1,0 +1,7 @@
+<div style="margin-top: 80px;"></div>
+
+<h4>List of Customers</h4>
+<div *ngFor="let blog of blogs$ | async; let i=index">
+  <span >{{i+1}}.</span> {{blog}}
+</div>
+  <app-blog-add></app-blog-add>
